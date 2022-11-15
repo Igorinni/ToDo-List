@@ -1,15 +1,40 @@
+/*Обнуление*/
+*{padding: 0;margin: 0;border: 0;}
+*,*:before,*:after{-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}
+:focus,:active{outline: none;}
+a:focus,a:active{outline: none;}
+nav,footer,header,aside{display: block;}
+html,body{height:100%;width:100%;font-size:100%;line-height:1;font-size:14px;-ms-text-size-adjust:100%;-moz-text-size-adjust:100%;-webkit-text-size-adjust:100%;}
+input,button,textarea{font-family:inherit;}
+input::-ms-clear{display: none;}
+button{cursor: pointer;}
+button::-moz-focus-inner {padding:0;border:0;}
+a,a:visited{text-decoration: none;}
+a:hover{text-decoration: none;}
+ul li{list-style: none;}
+img{vertical-align: top;}
+h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
+/*--------------------*/
+
 body {
+    background: linear-gradient(45deg, #a88eca, #8ec4dd);
 
 }
 
 .App{
-    margin: 20px 40px;
+    margin: 80px auto;
+    max-width: 600px;
+    padding: 5px 5px;
     text-align: center;
+    background-color: #ffffffb0;
+    border-radius: 6px;
 }
+
 
 .header{
     font-style: italic;
-    font-size: 30px;
+    font-size: 50px;
+    padding: 20px 0px;
 }
 
 .addTask{
@@ -17,19 +42,47 @@ body {
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: center;
-    border: 1px solid green;
-    border-radius: 4px;
+    background-color: white;
+    border-radius: 5px;
     margin: 10px 10px;
+    padding: 6px;
     
 }
 .addInput{
-    width: 75%;
+    width: 83%;
     font-size: 22px;
-
 }
 .addButton{
     font-size: 18px;
-    padding: 3.5px 20px;
+    padding: 3.5px 30px;
+    background-color: rgb(113, 199, 192);
+    border-radius: 5px;
+}
+.addButton:hover{
+    transform: scale(1.1);
 }
 
+.task{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 25px 10px;
+    font-size: 22px;
+}
+
+.titleTask{
+    flex-grow: 1;
+    text-align: left;
+}
+.deleteButton, .checkbox{
+    flex-basis: 25px;
+    transform: scale(1.1);
+    color: rgb(236, 48, 48);
+    opacity: 0.8;
+}
+.deleteButton:hover, .checkbox:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+    opacity: 1.0;
+}
 
