@@ -1,9 +1,10 @@
 import Task from "./Task";
 
-function TaskList({tasks}) {
+function TaskList({tasks, deleteTask, checkTask}) {
     return (
       <div className="taskList">
-        {tasks.map(elem => <Task task={elem} key={elem.id}></Task>)}
+        {tasks.map(elem => <Task task={elem} key={elem.id} deleteTask={deleteTask}
+        checkTask={checkTask}></Task>)}
       </div>
     )
   }

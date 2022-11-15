@@ -23,11 +23,28 @@ function App() {
     }
   ])
 
+
+  function deleteTask(id) {
+    const newTasks = [...tasks].filter(elem => elem.id != id);
+    setTasks(newTasks);
+  }
+
+  function checkTask(id){
+    const newTasks = [...tasks]
+    newTasks.forEach(elem => {
+      if (elem.id === id) {
+        elem.completed = !elem.completed;
+      }
+      return elem;
+    })
+    setTasks(newTasks)
+  }
+
   return (
     <div className="App">
       <Header></Header>
       <AddTask></AddTask>
-      <TaskList tasks={tasks}></TaskList>
+      <TaskList tasks={tasks} deleteTask={deleteTask} checkTask={checkTask}></TaskList>
     </div>
   );
 }

@@ -66,10 +66,18 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 25px 10px;
+    margin: 10px 5px;
+    padding: 10px 5px;
     font-size: 22px;
 }
-
+.taskCompleted{
+    background-color: rgba(54, 197, 54, 0.527);
+    border-radius: 6px;
+    text-decoration: line-through;
+}
+.task p{
+    padding: 0px 0px 0px 10px;
+}
 .titleTask{
     flex-grow: 1;
     text-align: left;
