@@ -25,6 +25,10 @@ function App() {
 
   const [actualTasks, setActualTasks] = useState(tasks)
 
+  useEffect( () => {
+    setActualTasks(tasks)
+  }, [tasks] )
+
   function deleteTask(id) {
     const newTasks = [...tasks].filter(elem => elem.id != id);
     setTasks(newTasks);
