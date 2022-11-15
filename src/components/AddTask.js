@@ -1,9 +1,28 @@
+import { useState } from "react";
 
-function AddTask() {
+function AddTask({tasks, setTasks}) {
+
+  const [value, setValue] = useState('')
+
+  function saveTask(){
+    const task = {
+      id: tasks[tasks.length - 1].id + 1,
+      title: value,
+      completed: false,
+    }
+    const newTasks = [...tasks]
+    newTasks.push(task)
+    setTasks(newTasks)
+    setValue('')
+  }
+
   return (
     <div className="addTask">
-      <input className="addInput" placeholder="Enter a task..." ></input>
-      <button className="addButton">Add</button>
+      <input autoFocus value={value} onKeyUp={(e) => e.code == 'Enter' ? saveTask() : '' } 
+        onChange={(e) => setValue(e.target.value)} className="addInput" 
+        placeholder="Enter a task..." 
+      ></input>
+      <button className="addButton" onClick={saveTask}>Add</button>
     </div>
   );
 }

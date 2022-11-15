@@ -38,7 +38,7 @@ function App() {
   return (
     <div className="App">
       <Header></Header>
-      <AddTask></AddTask>
+      <AddTask tasks={tasks} setTasks={setTasks}></AddTask>
       <TaskList tasks={tasks} deleteTask={deleteTask} checkTask={checkTask}></TaskList>
     </div>
   );
