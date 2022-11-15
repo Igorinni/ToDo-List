@@ -10,7 +10,17 @@ function AddTask({tasks, setTasks}) {
       id: tasks[tasks.length - 1].id + 1,
       title: value,
       completed: false,
-      dateCreation: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
+      date: date.getTime(),
+      dateCreation: [
+          [date.getDate(),
+          date.getMonth(),
+          date.getFullYear(),].join('/'),
+          [
+            date.getHours(), 
+            date.getMinutes(), 
+            date.getSeconds()].map( x => x <  10 ? '0' + x : x ).join(':')
+        ]
+        
     }
     const newTasks = [...tasks]
     newTasks.push(task)

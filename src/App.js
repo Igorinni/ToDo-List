@@ -2,6 +2,7 @@ import Header from "./components/Header";
 import AddTask from "./components/AddTask";
 import TaskList from "./components/TaskList";
 import { useEffect, useState } from "react";
+import { FaArrowCircleUp, FaArrowCircleDown } from "react-icons/fa";
 
 function App() {
 
@@ -51,16 +52,38 @@ function App() {
     }
   }
 
+  function sortTasks(condition){
+    const newArray = [...actualTasks];
+    newArray.sort( (a, b) => {
+      if (condition === 'old') {
+        if (a.date < b.date) return 1;
+        if (a.date == b.date) return 0;
+        if (a.date > b.date) return -1;
+      }
+      if (condition === 'new') {
+        if (a.date > b.date) return 1;
+        if (a.date == b.date) return 0;
+        if (a.date < b.date) return -1;
+      }
+    })
+    setActualTasks(newArray)
+  }
+
   return (
     <div className="App">
       <Header></Header>
       <AddTask tasks={tasks} setTasks={setTasks}></AddTask>
 
-      <div>
+      <div className="filterAndSort">
         <ul className="filterTasks">
           <li onClick={() => displayActualTasks('All')}>All</li>
           <li onClick={() => displayActualTasks(true)}>Done</li>
           <li onClick={() => displayActualTasks(false)}>Undone</li>
+        </ul>
+        <ul className="sortTask">
+          <li>Sort by Date</li>
+          <li><FaArrowCircleUp className="sortUp" onClick={() => sortTasks('old')}></FaArrowCircleUp></li>
+          <li><FaArrowCircleDown className="sortDown" onClick={() => sortTasks('new')}></FaArrowCircleDown></li>
         </ul>
       </div>
 
