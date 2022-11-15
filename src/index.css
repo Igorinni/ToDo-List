@@ -37,6 +37,8 @@ body {
     padding: 20px 0px;
 }
 
+
+
 .addTask{
     display: flex;
     justify-content: space-between;
@@ -61,6 +63,8 @@ body {
 .addButton:hover{
     transform: scale(1.1);
 }
+
+
 
 .task{
     display: flex;
@@ -94,3 +98,20 @@ body {
     opacity: 1.0;
 }
 
+
+.filterTasks{
+    display: flex;
+}
+
+.filterTasks li{
+    margin: 4px 10px;
+    padding: 5px 10px;
+    background-color: rgb(214, 163, 238);
+    cursor: pointer;
+    border-radius: 7px;
+    font-size: 18px;
+}
+
+.filterTasks li:hover{
+    transform: scale(1.1);
+}

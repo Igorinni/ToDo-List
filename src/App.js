@@ -1,7 +1,7 @@
 import Header from "./components/Header";
 import AddTask from "./components/AddTask";
 import TaskList from "./components/TaskList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
 
@@ -23,6 +23,7 @@ function App() {
     }
   ])
 
+  const [actualTasks, setActualTasks] = useState(tasks)
 
   function deleteTask(id) {
     const newTasks = [...tasks].filter(elem => elem.id != id);
@@ -35,11 +36,31 @@ function App() {
     setTasks(newTasks)
   }
 
+  function displayActualTasks(condition){
+    
+    if (condition === "All") {
+      const newArray = [...tasks]
+      setActualTasks(newArray)
+    } else {
+      const newArray = [...tasks].filter(elem => elem.completed == condition)
+      setActualTasks(newArray)
+    }
+  }
+
   return (
     <div className="App">
       <Header></Header>
       <AddTask tasks={tasks} setTasks={setTasks}></AddTask>
-      <TaskList tasks={tasks} deleteTask={deleteTask} checkTask={checkTask}></TaskList>
+
+      <div>
+        <ul className="filterTasks">
+          <li onClick={() => displayActualTasks('All')}>All</li>
+          <li onClick={() => displayActualTasks(true)}>Done</li>
+          <li onClick={() => displayActualTasks(false)}>Undone</li>
+        </ul>
+      </div>
+
+      <TaskList tasks={actualTasks} deleteTask={deleteTask} checkTask={checkTask}></TaskList>
     </div>
   );
 }
