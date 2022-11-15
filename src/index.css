@@ -2,9 +2,14 @@ body {
 
 }
 
+.App{
+    margin: 20px 40px;
+    text-align: center;
+}
 
 .header{
-    
+    font-style: italic;
+    font-size: 30px;
 }
 
 
