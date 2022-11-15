@@ -12,4 +12,24 @@ body {
     font-size: 30px;
 }
 
+.addTask{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    border: 1px solid green;
+    border-radius: 4px;
+    margin: 10px 10px;
+    
+}
+.addInput{
+    width: 75%;
+    font-size: 22px;
+
+}
+.addButton{
+    font-size: 18px;
+    padding: 3.5px 20px;
+}
+
 
