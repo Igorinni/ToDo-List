@@ -5,10 +5,12 @@ function AddTask({tasks, setTasks}) {
   const [value, setValue] = useState('')
 
   function saveTask(){
+    const date = new Date();
     const task = {
       id: tasks[tasks.length - 1].id + 1,
       title: value,
       completed: false,
+      dateCreation: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
     }
     const newTasks = [...tasks]
     newTasks.push(task)

@@ -80,11 +80,14 @@ body {
     text-decoration: line-through;
 }
 .task p{
-    padding: 0px 0px 0px 10px;
+    padding: 0px 10px;
 }
 .titleTask{
     flex-grow: 1;
     text-align: left;
+}
+.dateTask{
+    font-size: 18px;
 }
 .deleteButton, .checkbox{
     flex-basis: 25px;
@@ -102,7 +105,6 @@ body {
 .filterTasks{
     display: flex;
 }
-
 .filterTasks li{
     margin: 4px 10px;
     padding: 5px 10px;
@@ -111,7 +113,6 @@ body {
     border-radius: 7px;
     font-size: 18px;
 }
-
 .filterTasks li:hover{
     transform: scale(1.1);
 }
