@@ -40,7 +40,7 @@ function App() {
 
   function checkTask(id){
     const newTasks = [...tasks]
-    newTasks.forEach(elem => elem.id === id ? elem.completed = !elem.completed : '')
+    newTasks.forEach(elem => elem.id === id && (elem.completed = !elem.completed))
     setTasks(newTasks)
   }
 
