@@ -2,8 +2,8 @@ import Header from "./components/Header";
 import AddTask from "./components/AddTask";
 import TaskList from "./components/TaskList";
 import { useEffect, useState } from "react";
-import { FaArrowCircleUp, FaArrowCircleDown } from "react-icons/fa";
 import ButtonFilterAndSort from "./components/ButtonFilterAndSort";
+import Pages from "./components/Pages";
 
 function App() {
 
@@ -76,6 +76,7 @@ function App() {
       <AddTask tasks={tasks} setTasks={setTasks}></AddTask>
       <ButtonFilterAndSort displayActualTasks={displayActualTasks} sortTasks={sortTasks}></ButtonFilterAndSort>
       <TaskList tasks={actualTasks} deleteTask={deleteTask} checkTask={checkTask}></TaskList>
+      <Pages></Pages>
     </div>
   );
 }
