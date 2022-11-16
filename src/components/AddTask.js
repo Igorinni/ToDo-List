@@ -11,15 +11,15 @@ function AddTask({tasks, setTasks}) {
       title: value,
       completed: false,
       date: date.getTime(),
-      dateCreation: [
-          [date.getDate(),
+      dateCreation: `
+          ${[date.getDate(),
           date.getMonth(),
-          date.getFullYear(),].join('/'),
-          [
+          date.getFullYear(),].join('/')}  
+          ${[
             date.getHours(), 
             date.getMinutes(), 
-            date.getSeconds()].map( x => x <  10 ? '0' + x : x ).join(':')
-        ]
+            date.getSeconds()].map( x => x <  10 ? '0' + x : x ).join(':')}
+        `
         
     }
     const newTasks = [...tasks]
