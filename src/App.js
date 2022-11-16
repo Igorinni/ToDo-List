@@ -25,7 +25,7 @@ function App() {
     }
   ])
 
-  // const handleTaskChange = (value) => {setTasks(value)}
+  const handleTaskChange = (value) => {setTasks(value)}
 
   const [actualTasks, setActualTasks] = useState(tasks)
 
@@ -80,12 +80,12 @@ function App() {
   return (
     <div className="App">
       <Header></Header>
-      <AddTaskInput tasks={tasks} setTasks={setTasks}></AddTaskInput> 
+      <AddTaskInput tasks={tasks} setTasks={handleTaskChange}></AddTaskInput> 
       <ButtonFilterAndSort displayActualTasks={displayActualTasks} sortTasks={sortTasks}></ButtonFilterAndSort>
       <TaskList tasks={actualTasks} deleteTask={deleteTask} checkTask={checkTask}></TaskList>
       <Pages></Pages>
       <div>
-      <button onClick={navigationPages}>Click me</button>
+        <button onClick={navigationPages}>Click me</button>
       </div>
     </div>
   );

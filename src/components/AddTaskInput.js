@@ -4,6 +4,8 @@ function AddTaskInput({tasks, setTasks}) {
 
   const [value, setValue] = useState('')
 
+  const handleValueChange = (e) => setValue(e.target.value)
+
   function saveTask(){
     if (value.trim() == '') return;
     const date = new Date();
@@ -33,7 +35,7 @@ function AddTaskInput({tasks, setTasks}) {
   return (
     <div className="addTask">
       <input autoFocus value={value} onKeyUp={(e) => e.code == 'Enter' ? saveTask() : '' } 
-        onChange={(e) => setValue(e.target.value)} className="addInput" 
+        onChange={handleValueChange} className="addInput" 
         placeholder="Enter a task..." 
       ></input>
       <button className="addButton" onClick={saveTask}>Add</button>
