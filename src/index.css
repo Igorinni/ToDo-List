@@ -87,6 +87,7 @@ h1{
     padding: 10px 5px;
     font-size: 22px;
     font-style: italic;
+    color: rgb(56, 27, 102);
 }
 .taskCompleted{
     background-color: rgba(54, 197, 54, 0.527);
@@ -196,6 +197,8 @@ h1{
     font-size: 16px;
     border: 1px solid rgb(139, 140, 141);
     border-radius: 5px;
+    color: rgb(56, 27, 102);
+    font-weight: 600;
 }
 .Pages li{
     padding: 0px 10px;
