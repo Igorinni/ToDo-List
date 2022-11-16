@@ -86,6 +86,7 @@ h1{
     margin: 10px 5px;
     padding: 10px 5px;
     font-size: 22px;
+    font-style: italic;
 }
 .taskCompleted{
     background-color: rgba(54, 197, 54, 0.527);
@@ -94,13 +95,17 @@ h1{
 }
 .task p{
     padding: 0px 10px;
+    width: min-content;
 }
 .titleTask{
     flex-grow: 1;
     text-align: left;
+    flex-basis: auto;
+    word-break: break-all;
 }
 .dateTask{
     font-size: 18px;
+    flex-basis: 25px;
 }
 .deleteButton{
     display: flex;
@@ -133,9 +138,11 @@ h1{
 .filterAndSort{
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 .filterTasks{
     display: flex;
+    flex-wrap: wrap;
 }
 .filterTasks button{
     margin: 4px 7px;
