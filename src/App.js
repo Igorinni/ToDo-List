@@ -22,6 +22,21 @@ function App() {
       id: 3,
       title: "Побывать в Калифорнии",
       completed: false,
+    },
+    {
+      id: 4,
+      title: "Съездить на Карибы",
+      completed: false,
+    },
+    {
+      id: 5,
+      title: "Сходить на концерт",
+      completed: false,
+    },
+    {
+      id: 6,
+      title: "Купить бинокль",
+      completed: false,
     }
   ])
 
@@ -72,10 +87,6 @@ function App() {
     setActualTasks(newArray)
   }
 
-  function navigationPages(){
-    const ul = document.querySelector('.pages');
-    const lastNum = ul.childNodes[ul.childNodes.length - 2];
-  }
 
   return (
     <div className="App">
@@ -83,10 +94,7 @@ function App() {
       <AddTaskInput tasks={tasks} setTasks={handleTaskChange}></AddTaskInput> 
       <ButtonFilterAndSort displayActualTasks={displayActualTasks} sortTasks={sortTasks}></ButtonFilterAndSort>
       <TaskList tasks={actualTasks} deleteTask={deleteTask} checkTask={checkTask}></TaskList>
-      <Pages></Pages>
-      <div>
-        <button onClick={navigationPages}>Click me</button>
-      </div>
+      <Pages tasks={tasks} setActualTasks={setActualTasks}></Pages>
     </div>
   );
 }
