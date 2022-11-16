@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function AddTask({tasks, setTasks}) {
+function AddTaskInput({tasks, setTasks}) {
 
   const [value, setValue] = useState('')
 
@@ -27,6 +27,7 @@ function AddTask({tasks, setTasks}) {
     newTasks.push(task)
     setTasks(newTasks)
     setValue('')
+
   }
 
   return (
@@ -40,4 +41,4 @@ function AddTask({tasks, setTasks}) {
   );
 }
 
-export default AddTask;
+export default AddTaskInput;

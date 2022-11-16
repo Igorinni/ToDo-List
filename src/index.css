@@ -189,7 +189,7 @@ h1{
 }
 
 
-.Pages{
+.pages{
     margin: 10px 0px;
     padding: 5px;
     display: inline-flex;
@@ -200,11 +200,11 @@ h1{
     color: rgb(56, 27, 102);
     font-weight: 600;
 }
-.Pages li{
+.pages li{
     padding: 0px 10px;
     cursor: pointer;
 }
-.Pages li:hover{
+.pages li:hover{
     transform: scale(1.2);
     background-color: rgba(108, 0, 248, 0.274);
 }

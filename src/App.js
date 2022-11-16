@@ -1,5 +1,5 @@
 import Header from "./components/Header";
-import AddTask from "./components/AddTask";
+import AddTaskInput from "./components/AddTaskInput";
 import TaskList from "./components/TaskList";
 import { useEffect, useState } from "react";
 import ButtonFilterAndSort from "./components/ButtonFilterAndSort";
@@ -24,6 +24,8 @@ function App() {
       completed: false,
     }
   ])
+
+  // const handleTaskChange = (value) => {setTasks(value)}
 
   const [actualTasks, setActualTasks] = useState(tasks)
 
@@ -70,13 +72,21 @@ function App() {
     setActualTasks(newArray)
   }
 
+  function navigationPages(){
+    const ul = document.querySelector('.pages');
+    const lastNum = ul.childNodes[ul.childNodes.length - 2];
+  }
+
   return (
     <div className="App">
       <Header></Header>
-      <AddTask tasks={tasks} setTasks={setTasks}></AddTask>
+      <AddTaskInput tasks={tasks} setTasks={setTasks}></AddTaskInput> 
       <ButtonFilterAndSort displayActualTasks={displayActualTasks} sortTasks={sortTasks}></ButtonFilterAndSort>
       <TaskList tasks={actualTasks} deleteTask={deleteTask} checkTask={checkTask}></TaskList>
       <Pages></Pages>
+      <div>
+      <button onClick={navigationPages}>Click me</button>
+      </div>
     </div>
   );
 }
