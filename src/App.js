@@ -3,6 +3,7 @@ import AddTask from "./components/AddTask";
 import TaskList from "./components/TaskList";
 import { useEffect, useState } from "react";
 import { FaArrowCircleUp, FaArrowCircleDown } from "react-icons/fa";
+import ButtonFilterAndSort from "./components/ButtonFilterAndSort";
 
 function App() {
 
@@ -73,20 +74,7 @@ function App() {
     <div className="App">
       <Header></Header>
       <AddTask tasks={tasks} setTasks={setTasks}></AddTask>
-
-      <div className="filterAndSort">
-        <ul className="filterTasks">
-          <li><button onClick={() => displayActualTasks('All')}>All</button></li>
-          <li><button onClick={() => displayActualTasks(true)}>Done</button></li>
-          <li><button onClick={() => displayActualTasks(false)}>Undone</button></li>
-        </ul>
-        <ul className="sortTask">
-          <li>Sort by Date</li>
-          <li><button className="sortUp" onClick={() => sortTasks('old')}><FaArrowCircleUp></FaArrowCircleUp></button></li>
-          <li><button className="sortDown" onClick={() => sortTasks('new')}><FaArrowCircleDown></FaArrowCircleDown></button></li>
-        </ul>
-      </div>
-
+      <ButtonFilterAndSort displayActualTasks={displayActualTasks} sortTasks={sortTasks}></ButtonFilterAndSort>
       <TaskList tasks={actualTasks} deleteTask={deleteTask} checkTask={checkTask}></TaskList>
     </div>
   );
