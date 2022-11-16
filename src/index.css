@@ -70,6 +70,7 @@ h1{
     padding: 3.5px 30px;
     background-color: rgb(113, 199, 192);
     border-radius: 5px;
+    transition-duration: 300ms;
 }
 .addButton:hover{
     transform: scale(1.1);
@@ -100,14 +101,28 @@ h1{
 .dateTask{
     font-size: 18px;
 }
-.deleteButton, .checkbox{
+.deleteButton{
+    display: flex;
+    justify-content: center;
+    color: rgb(236, 48, 48);
+    transform: scale(1.8);
+    flex-basis: 25px;
+    opacity: 0.8;
+    transition-duration: 300ms;
+    background-color: rgba(236, 48, 48, 0);
+}
+.deleteButton:hover{
+    transform: scale(2.0);
+    opacity: 1.0;
+}
+.checkbox{
     flex-basis: 25px;
     transform: scale(1.1);
-    color: rgb(236, 48, 48);
     opacity: 0.8;
-}
-.deleteButton:hover, .checkbox:hover{
+    transition-duration: 300ms;
     cursor: pointer;
+}
+.checkbox:hover{
     transform: scale(1.2);
     opacity: 1.0;
 }
@@ -121,25 +136,24 @@ h1{
 .filterTasks{
     display: flex;
 }
-.filterTasks li{
+.filterTasks button{
     margin: 4px 7px;
     padding: 5px 12px;
     background-color: rgba(147, 33, 240, 0.37);
     color: rgb(255, 250, 250);
     font-weight: 700;
     font-style: italic;
-    cursor: pointer;
     border-radius: 7px;
     font-size: 18px;
+    transition-duration: 300ms;
 }
-.filterTasks li:hover{
+.filterTasks button:hover{
     transform: scale(1.1);
 }
 .sortTask{
     margin: 0px 9px;
     display: flex;
     align-items: center;
-    justify-content: center;
     color: rgba(91, 32, 139, 0.719);
     background-color: #8ec4dd3a;
     border-radius: 9px;
@@ -147,16 +161,20 @@ h1{
 }
 .sortTask li{
     padding: 5px;
+    
 }
 .sortTask li:first-child{
     margin: 0px 5px;
     font-size: 18px;
 }
 .sortUp, .sortDown{
+    color: rgba(91, 32, 139, 0.719);
+    background-color:  rgba(91, 32, 139, 0);
+    display: flex;
     margin: 0px 3px;
-    transform: scale(1.4);
-    cursor: pointer;
+    transform: scale(1.6);
+    transition-duration: 300ms;
 }
 .sortUp:hover, .sortDown:hover{
-    transform: scale(1.7);
+    transform: scale(1.8);
 }

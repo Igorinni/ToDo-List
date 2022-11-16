@@ -76,14 +76,14 @@ function App() {
 
       <div className="filterAndSort">
         <ul className="filterTasks">
-          <li onClick={() => displayActualTasks('All')}>All</li>
-          <li onClick={() => displayActualTasks(true)}>Done</li>
-          <li onClick={() => displayActualTasks(false)}>Undone</li>
+          <li><button onClick={() => displayActualTasks('All')}>All</button></li>
+          <li><button onClick={() => displayActualTasks(true)}>Done</button></li>
+          <li><button onClick={() => displayActualTasks(false)}>Undone</button></li>
         </ul>
         <ul className="sortTask">
           <li>Sort by Date</li>
-          <li><FaArrowCircleUp className="sortUp" onClick={() => sortTasks('old')}></FaArrowCircleUp></li>
-          <li><FaArrowCircleDown className="sortDown" onClick={() => sortTasks('new')}></FaArrowCircleDown></li>
+          <li><button className="sortUp" onClick={() => sortTasks('old')}><FaArrowCircleUp></FaArrowCircleUp></button></li>
+          <li><button className="sortDown" onClick={() => sortTasks('new')}><FaArrowCircleDown></FaArrowCircleDown></button></li>
         </ul>
       </div>
 
