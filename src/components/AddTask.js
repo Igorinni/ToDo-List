@@ -5,6 +5,7 @@ function AddTask({tasks, setTasks}) {
   const [value, setValue] = useState('')
 
   function saveTask(){
+    if (value.trim() == '') return;
     const date = new Date();
     const task = {
       id: tasks[tasks.length - 1].id + 1,
