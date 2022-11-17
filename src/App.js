@@ -42,11 +42,8 @@ function App() {
 
   const handleTaskChange = (value) => {setTasks(value)}
 
-  const [actualTasks, setActualTasks] = useState(tasks)
-
-  useEffect( () => {
-    setActualTasks(tasks)
-  }, [tasks] )
+  
+  
 
   function deleteTask(id) {
     const newTasks = [...tasks].filter(elem => elem.id != id);
@@ -59,18 +56,55 @@ function App() {
     setTasks(newTasks)
   }
 
-  function displayActualTasks(condition){
-    
-    if (condition === "All") {
-      const newArray = [...tasks]
-      setActualTasks(newArray)
+        const [page, setPage] = useState(1);
+        const [limit] = useState(5)
+
+        const [lastTask, setLastTask] = useState(limit * page);
+        const [firstTask, setFirstTask] = useState(lastTask - limit);
+
+        function displayTask(num){
+          setPage(num);
+        }
+
+        const [actualTasks, setActualTasks] = useState(tasks);
+        const [displayTasks, setDisplayTasks] = useState(actualTasks.slice(firstTask, lastTask))
+
+        useEffect( () => {
+          setLastTask(limit * page);
+        }, [page])
+
+        useEffect( () => {
+          setFirstTask(lastTask - limit);
+        }, [lastTask])
+
+        useEffect(() => {
+          setDisplayTasks(actualTasks.slice(firstTask, lastTask))
+        }, [firstTask])
+
+        useEffect(() => {
+          setDisplayTasks(actualTasks.slice(firstTask, lastTask))
+        }, [actualTasks])
+
+        useEffect( () => {
+          setActualTasks(tasks)
+        }, [tasks])        
+        
+
+  function filterTasks(status){
+
+    if (status === "All") {
+      const array = [...tasks];
+      setActualTasks(array)
+      setPage(1)
     } else {
-      const newArray = [...tasks].filter(elem => elem.completed == condition)
-      setActualTasks(newArray)
+      const array = [...tasks].filter(elem => elem.completed === status);
+      setActualTasks(array)
+      setPage(1)
     }
+    
   }
 
-  function sortTasks(condition){
+  /* function sortTasks(condition){
     const newArray = [...actualTasks];
     newArray.sort( (a, b) => {
       if (condition === 'old') {
@@ -85,16 +119,16 @@ function App() {
       }
     })
     setActualTasks(newArray)
-  }
+  } */
 
 
   return (
     <div className="App">
       <Header></Header>
       <AddTaskInput tasks={tasks} setTasks={handleTaskChange}></AddTaskInput> 
-      <ButtonFilterAndSort displayActualTasks={displayActualTasks} sortTasks={sortTasks}></ButtonFilterAndSort>
-      <TaskList tasks={actualTasks} deleteTask={deleteTask} checkTask={checkTask}></TaskList>
-      <Pages tasks={tasks} setActualTasks={setActualTasks}></Pages>
+      <ButtonFilterAndSort filterTasks={filterTasks} ></ButtonFilterAndSort>
+      <TaskList tasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask}></TaskList>
+      <Pages tasks={actualTasks} limit={limit} displayTask={displayTask}></Pages>
     </div>
   );
 }
