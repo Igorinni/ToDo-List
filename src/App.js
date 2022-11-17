@@ -53,11 +53,7 @@ function App() {
   const [status, setStatus] = useState('All');
   const [sort, setSort] = useState('old')
   
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(tasks.length / limit); i++) {
-    pageNumbers.push(i)
-  }
-  
+  let pageNumbers = [];
 
   const displayTasks = useMemo(() => {
     const lastTask = limit * page
@@ -81,9 +77,18 @@ function App() {
         } )
         kek = array.slice(firstTask, lastTask);
 
+        for (let i = 1; i <= Math.ceil(tasks.length / limit); i++) {
+          pageNumbers.push(i)
+        }
+
     } else {
 
         const array = [...tasks].filter(elem => elem.completed === status)
+
+        for (let i = 1; i <= Math.ceil(array.length / limit); i++) {
+          pageNumbers.push(i)
+        }
+
         array.sort( (a, b) => {
           if (sort === 'old') {
             if (a.date < b.date) return 1;
@@ -99,7 +104,7 @@ function App() {
         kek = array.slice(firstTask, lastTask)
 
     }
-
+    
     return kek;
   }, [tasks, page, status, sort])
 
@@ -144,7 +149,7 @@ function App() {
       <AddTaskInput tasks={tasks} setTasks={handleTaskChange}></AddTaskInput> 
       <ButtonFilterAndSort filterTasks={filterTasks} sortTasks={sortTasks}></ButtonFilterAndSort>
       <TaskList tasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask}></TaskList>
-      <Pages goToPage={goToPage} page={page} pageNumbers={pageNumbers}></Pages>
+      <Pages goToPage={goToPage} page={page} pageNumbers={pageNumbers} tasks={displayTasks}></Pages>
     </div>
   );
 }

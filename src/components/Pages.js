@@ -1,7 +1,8 @@
 
-function Pages({goToPage, page, pageNumbers}) {
+function Pages({goToPage, page, pageNumbers, tasks}) {
 
   return (
+    tasks.length == 0 ? ' ' :
     <ul className="paginationButtons">
       <li><button onClick={() => goToPage("Left")}>&#60;&#60;</button></li>
       {
