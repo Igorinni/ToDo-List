@@ -4,6 +4,7 @@ import TaskList from "./components/TaskList";
 import { useEffect, useMemo, useState } from "react";
 import ButtonFilterAndSort from "./components/ButtonFilterAndSort";
 import Pages from "./components/Pages";
+import { dblClick } from "@testing-library/user-event/dist/click";
 
 function App() {
 
@@ -142,7 +143,7 @@ function App() {
   function sortTasks(condition){
     setSort(condition);    
   }
-
+  
 
   return (
     <div className="App">
