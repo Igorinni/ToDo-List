@@ -9,8 +9,9 @@ function AddTaskInput({tasks, setTasks}) {
   function saveTask(){
     if (value.trim() == '') return;
     const date = new Date();
+    const id = tasks.length == 0 ? 1 : tasks[tasks.length - 1].id + 1
     const task = {
-      id: tasks[tasks.length - 1].id + 1,
+      id: id,
       title: value,
       completed: false,
       date: date.getTime(),
