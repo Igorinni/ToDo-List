@@ -39,10 +39,40 @@ function App() {
       completed: false,
     }
   ])
-
   const handleTaskChange = (value) => {setTasks(value)}
 
-  
+
+  const [page, setPage] = useState(1);
+  const [limit] = useState(5)
+  const [lastTask, setLastTask] = useState(limit * page);
+  const [firstTask, setFirstTask] = useState(lastTask - limit);
+
+  function displayTask(num){
+    setPage(num);
+  }
+
+  const [actualTasks, setActualTasks] = useState(tasks);
+  const [displayTasks, setDisplayTasks] = useState(actualTasks.slice(firstTask, lastTask))
+
+  useEffect( () => {
+    setLastTask(limit * page);
+  }, [page])
+
+  useEffect( () => {
+    setFirstTask(lastTask - limit);
+  }, [lastTask])
+
+  useEffect(() => {
+    setDisplayTasks(actualTasks.slice(firstTask, lastTask))
+  }, [firstTask])
+
+  useEffect(() => {
+    setDisplayTasks(actualTasks.slice(firstTask, lastTask))
+  }, [actualTasks])
+
+  useEffect( () => {
+    setActualTasks(tasks)
+  }, [tasks])        
   
 
   function deleteTask(id) {
@@ -55,40 +85,6 @@ function App() {
     newTasks.forEach(elem => elem.id === id && (elem.completed = !elem.completed))
     setTasks(newTasks)
   }
-
-        const [page, setPage] = useState(1);
-        const [limit] = useState(5)
-
-        const [lastTask, setLastTask] = useState(limit * page);
-        const [firstTask, setFirstTask] = useState(lastTask - limit);
-
-        function displayTask(num){
-          setPage(num);
-        }
-
-        const [actualTasks, setActualTasks] = useState(tasks);
-        const [displayTasks, setDisplayTasks] = useState(actualTasks.slice(firstTask, lastTask))
-
-        useEffect( () => {
-          setLastTask(limit * page);
-        }, [page])
-
-        useEffect( () => {
-          setFirstTask(lastTask - limit);
-        }, [lastTask])
-
-        useEffect(() => {
-          setDisplayTasks(actualTasks.slice(firstTask, lastTask))
-        }, [firstTask])
-
-        useEffect(() => {
-          setDisplayTasks(actualTasks.slice(firstTask, lastTask))
-        }, [actualTasks])
-
-        useEffect( () => {
-          setActualTasks(tasks)
-        }, [tasks])        
-        
 
   function filterTasks(status){
 
