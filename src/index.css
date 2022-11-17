@@ -192,12 +192,14 @@ h1{
     margin: 10px 0px;
     padding: 2px;
     display: inline-flex;
+    flex-wrap: wrap;
     font-size: 16px;
     border: 1px solid rgb(139, 140, 141);
     border-radius: 5px;
     color: rgb(56, 27, 102);
     font-weight: 600;
     text-align: center;
+    max-width: 200px;
 }
 .paginationButtons button{
     padding: 0px 10px 3px 10px;
