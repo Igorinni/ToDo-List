@@ -100,7 +100,7 @@ function App() {
     
   }
 
-  /* function sortTasks(condition){
+  function sortTasks(condition){
     const newArray = [...actualTasks];
     newArray.sort( (a, b) => {
       if (condition === 'old') {
@@ -115,14 +115,14 @@ function App() {
       }
     })
     setActualTasks(newArray)
-  } */
+  }
 
 
   return (
     <div className="App">
       <Header></Header>
       <AddTaskInput tasks={tasks} setTasks={handleTaskChange}></AddTaskInput> 
-      <ButtonFilterAndSort filterTasks={filterTasks} ></ButtonFilterAndSort>
+      <ButtonFilterAndSort filterTasks={filterTasks} sortTasks={sortTasks}></ButtonFilterAndSort>
       <TaskList tasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask}></TaskList>
       <Pages tasks={actualTasks} limit={limit} displayTask={displayTask}></Pages>
     </div>
