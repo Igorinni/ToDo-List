@@ -25,10 +25,9 @@ function AddTaskInput({tasks, setTasks}) {
         `
         
     }
-    const newTasks = [...tasks]
-    newTasks.push(task)
-    setTasks(newTasks)
-    setValue('')
+    const newTasks = [...tasks, task];
+    setTasks(newTasks);
+    setValue('');
 
   }
 
