@@ -1,35 +1,15 @@
-import { useEffect, useState } from "react";
 
-function Pages({tasks, limit, displayTask}) {
-  
-  /* const [page, setPage] = useState(1);
-  const [limit] = useState(5) */
-
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(tasks.length / limit); i++) {
-    pageNumbers.push(i)
-  }
-
- /*  const lastTask = limit * page;
-  const firstTask = lastTask - limit;
-
-
-  function displayTask(num){
-    setPage(num);
-  }
-
-  useEffect( () => {
-    const displayTasks = tasks.slice(firstTask, lastTask)
-    setActualTasks(displayTasks)
-  }, [page]) */
+function Pages({displayTask, page, pageNumbers}) {
 
   return (
     <ul className="paginationButtons">
+      <li><button onClick={() => displayTask("Left")}>&#60;&#60;</button></li>
       {
         pageNumbers.map(number => (
-          <li key={number} onClick={() => displayTask(number)}>{number}</li>
+          <li key={number} className={page == number ? "activePage" : ""}>< button onClick={() => displayTask(number)}> {number} </button></li>
         ))
       }
+      <li><button onClick={() => displayTask("Right")}>&#62;&#62;</button></li>
     </ul>
   );
 }

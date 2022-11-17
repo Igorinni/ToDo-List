@@ -46,9 +46,21 @@ function App() {
   const [limit] = useState(5)
   const [lastTask, setLastTask] = useState(limit * page);
   const [firstTask, setFirstTask] = useState(lastTask - limit);
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(tasks.length / limit); i++) {
+    pageNumbers.push(i)
+  }
 
-  function displayTask(num){
-    setPage(num);
+  function displayTask(result){
+    
+    if (result === "Left") {
+     (page === 1) ? setPage(page) : setPage(page - 1)
+    } else if (result === "Right") {
+      (page === pageNumbers.length) ? setPage(page) : setPage(page + 1)
+    } else {
+      setPage(result)
+    }
+    
   }
 
   const [actualTasks, setActualTasks] = useState(tasks);
@@ -127,7 +139,7 @@ function App() {
       <AddTaskInput tasks={tasks} setTasks={handleTaskChange}></AddTaskInput> 
       <ButtonFilterAndSort filterTasks={filterTasks} sortTasks={sortTasks}></ButtonFilterAndSort>
       <TaskList tasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask}></TaskList>
-      <Pages tasks={actualTasks} limit={limit} displayTask={displayTask}></Pages>
+      <Pages displayTask={displayTask} page={page} pageNumbers={pageNumbers}></Pages>
     </div>
   );
 }
