@@ -37,7 +37,7 @@ function App() {
       id: 6,
       title: "Купить бинокль",
       completed: false,
-    }
+    },
   ])
   const handleTaskChange = (value) => {setTasks(value)}
 
@@ -68,10 +68,13 @@ function App() {
 
   useEffect(() => {
     setDisplayTasks(actualTasks.slice(firstTask, lastTask))
+    
   }, [actualTasks])
 
   useEffect( () => {
-    setActualTasks(tasks)
+    if (!displayTasks.find(item => item.completed == true)) {
+      setActualTasks(tasks)
+    }
   }, [tasks])        
   
 
