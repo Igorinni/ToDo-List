@@ -10,8 +10,8 @@ function ButtonFilterAndSort({filterTasks, sortTasks}) {
         </ul>
         <ul className="sortTask">
           <li>Sort by Date</li>
-          <li><button className="sortUp" onClick={() => sortTasks('old')}><FaArrowCircleUp></FaArrowCircleUp></button></li>
-          <li><button className="sortDown" onClick={() => sortTasks('new')}><FaArrowCircleDown></FaArrowCircleDown></button></li>
+          <li><button className="sortUp" onClick={() => sortTasks('new')}><FaArrowCircleUp></FaArrowCircleUp></button></li>
+          <li><button className="sortDown" onClick={() => sortTasks('old')}><FaArrowCircleDown></FaArrowCircleDown></button></li>
         </ul>
       </div>
   );

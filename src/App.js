@@ -208,38 +208,36 @@ function App() {
 
     if (status === 'All') {
       
-      const array = [...tasks].sort( (a, b) => {
-        if (sort === 'old') {
-          if (a.date < b.date) return 1;
-          if (a.date == b.date) return 0;
-          if (a.date > b.date) return -1;
-        }
-        if (sort === 'new') {
-          if (a.date > b.date) return 1;
-          if (a.date == b.date) return 0;
-          if (a.date < b.date) return -1;
-        }
-      } )
-
-      kek = array.slice(firstTask, lastTask);
+        const array = [...tasks].sort( (a, b) => {
+          if (sort === 'old') {
+            if (a.date < b.date) return 1;
+            if (a.date == b.date) return 0;
+            if (a.date > b.date) return -1;
+          }
+          if (sort === 'new') {
+            if (a.date > b.date) return 1;
+            if (a.date == b.date) return 0;
+            if (a.date < b.date) return -1;
+          }
+        } )
+        kek = array.slice(firstTask, lastTask);
 
     } else {
 
-      const array = [...tasks].filter(elem => elem.completed === status)
-      array.sort( (a, b) => {
-        if (sort === 'old') {
-          if (a.date < b.date) return 1;
-          if (a.date == b.date) return 0;
-          if (a.date > b.date) return -1;
-        }
-        if (sort === 'new') {
-          if (a.date > b.date) return 1;
-          if (a.date == b.date) return 0;
-          if (a.date < b.date) return -1;
-        }
-      } )
-
-      kek = array.slice(firstTask, lastTask)
+        const array = [...tasks].filter(elem => elem.completed === status)
+        array.sort( (a, b) => {
+          if (sort === 'old') {
+            if (a.date < b.date) return 1;
+            if (a.date == b.date) return 0;
+            if (a.date > b.date) return -1;
+          }
+          if (sort === 'new') {
+            if (a.date > b.date) return 1;
+            if (a.date == b.date) return 0;
+            if (a.date < b.date) return -1;
+          }
+        })
+        kek = array.slice(firstTask, lastTask)
 
     }
 

@@ -133,7 +133,13 @@ h1{
     transform: scale(1.2);
     opacity: 1.0;
 }
-
+.taskZero{
+    margin: 50px;
+    font-size: 26px;
+    font-style: italic;
+    color: rgb(56, 27, 102);
+    text-decoration: underline;
+}
 
 
 .filterAndSort{
