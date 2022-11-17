@@ -147,11 +147,11 @@ h1{
     justify-content: space-between;
     flex-wrap: wrap;
 }
-.filterTasks{
+.boxFilterButtons{
     display: flex;
     flex-wrap: wrap;
 }
-.filterTasks button{
+.buttonFilter{
     margin: 4px 7px;
     padding: 5px 12px;
     background-color: rgba(147, 33, 240, 0.37);
@@ -162,8 +162,11 @@ h1{
     font-size: 18px;
     transition-duration: 300ms;
 }
-.filterTasks button:hover{
+.buttonFilter:hover{
     transform: scale(1.1);
+}
+.activeButtonFilter{
+    background-color: rgba(97, 10, 236, 0.747);
 }
 .sortTask{
     margin: 0px 9px;

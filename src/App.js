@@ -50,8 +50,9 @@ function App() {
 
   const [page, setPage] = useState(1);
   const limit = 5;
-  const [status, setStatus] = useState('All');
+  const [valueFilter, setValueFilter] = useState('All');
   const [sort, setSort] = useState('old')
+
   
   let pageNumbers = [];
 
@@ -61,7 +62,7 @@ function App() {
     
     let kek = [];
 
-    if (status === 'All') {
+    if (valueFilter === 'All') {
       
         const array = [...tasks].sort( (a, b) => {
           if (sort === 'old') {
@@ -83,7 +84,7 @@ function App() {
 
     } else {
 
-        const array = [...tasks].filter(elem => elem.completed === status)
+        const array = [...tasks].filter(elem => elem.completed === valueFilter)
 
         for (let i = 1; i <= Math.ceil(array.length / limit); i++) {
           pageNumbers.push(i)
@@ -106,7 +107,7 @@ function App() {
     }
     
     return kek;
-  }, [tasks, page, status, sort])
+  }, [tasks, page, valueFilter, sort])
 
 
   function goToPage(result){
@@ -133,8 +134,8 @@ function App() {
     setTasks(newTasks)
   }
 
-  function filterTasks(status){
-    setStatus(status)
+  function filterTasks(value){
+    setValueFilter(value)
     setPage(1)    
   }
 
@@ -147,7 +148,7 @@ function App() {
     <div className="App">
       <Header></Header>
       <AddTaskInput tasks={tasks} setTasks={handleTaskChange}></AddTaskInput> 
-      <ButtonFilterAndSort filterTasks={filterTasks} sortTasks={sortTasks}></ButtonFilterAndSort>
+      <ButtonFilterAndSort filterTasks={filterTasks} sortTasks={sortTasks} valueFilter={valueFilter}></ButtonFilterAndSort>
       <TaskList tasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask}></TaskList>
       <Pages goToPage={goToPage} page={page} pageNumbers={pageNumbers} tasks={displayTasks}></Pages>
     </div>
