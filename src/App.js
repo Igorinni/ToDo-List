@@ -239,7 +239,7 @@ function App() {
     <div className="App">
       <Header />
       <AddTaskInput tasks={tasks} setTasks={handleTaskChange} />
-      <ButtonFilterAndSort filterTasks={filterTasks} sortTasks={sortTasks} valueFilter={valueFilter} />
+      <ButtonFilterAndSort filterTasks={filterTasks} sort={sort} sortTasks={sortTasks} valueFilter={valueFilter} />
       <TaskList tasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask} setTasks={setTasks} totalTasks={tasks}/>
       <Pagination setNowPage={setNowPage} nowPage={nowPage} pageNumbers={pageNumbers} tasks={displayTasks} />
     </div>

@@ -204,6 +204,9 @@ h1{
 .sortUp:hover, .sortDown:hover{
     transform: scale(1.8);
 }
+.sortActive{
+    color: rgba(82, 11, 196, 0.918);
+}
 
 @media (width < 520px) {
     .addButton{
