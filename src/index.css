@@ -100,6 +100,7 @@ h1{
     width: min-content;
 }
 .titleTask{
+    display: flex;
     flex-grow: 1;
     text-align: left;
     flex-basis: auto;
@@ -141,7 +142,13 @@ h1{
     color: rgb(56, 27, 102);
     text-decoration: underline;
 }
-
+.inputEditTask{
+    width: 80%;
+}
+.iconSaveEditTask{
+    margin-left: 20px;
+    color: rgb(1, 138, 1);
+}
 
 .filterAndSort{
     display: flex;
