@@ -1,10 +1,9 @@
 import Header from "./components/Header";
 import AddTaskInput from "./components/AddTaskInput";
 import TaskList from "./components/TaskList";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import ButtonFilterAndSort from "./components/ButtonFilterAndSort";
 import Pages from "./components/Pages";
-import { dblClick } from "@testing-library/user-event/dist/click";
 
 function App() {
 
@@ -53,7 +52,6 @@ function App() {
   const limit = 5;
   const [valueFilter, setValueFilter] = useState('All');
   const [sort, setSort] = useState('old')
-
   
   let pageNumbers = [];
 
