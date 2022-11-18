@@ -14,17 +14,7 @@ function AddTaskInput({tasks, setTasks}) {
       id: id,
       title: value,
       completed: false,
-      date: date.getTime(),
-      dateCreation: `
-          ${[date.getDate(),
-          date.getMonth(),
-          date.getFullYear(),].join('/')}  
-          ${[
-            date.getHours(), 
-            date.getMinutes(), 
-            date.getSeconds()].map( x => x <  10 ? '0' + x : x ).join(':')}
-        `
-        
+      date: date.getTime(),        
     }
     const newTasks = [...tasks, task];
     setTasks(newTasks);
@@ -34,7 +24,7 @@ function AddTaskInput({tasks, setTasks}) {
 
   return (
     <div className="addTask">
-      <input autoFocus value={value} onKeyUp={(e) => e.code == 'Enter' ? saveTask() : '' } 
+      <input autoFocus value={value} onKeyUp={(e) => e.code === 'Enter' || e.key === 13 ? saveTask() : '' } 
         onChange={handleValueChange} className="addInput" 
         placeholder="Enter a task..." 
       ></input>
