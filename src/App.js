@@ -153,7 +153,7 @@ function App() {
   const handleTaskChange = (value) => { setTasks(value) }
 
 
-  const [nowPage, setNowPage] = useState(2);
+  const [nowPage, setNowPage] = useState(1);
   const limit = 5;
   const [valueFilter, setValueFilter] = useState('All');
   const [sort, setSort] = useState('old')

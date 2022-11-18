@@ -6,7 +6,7 @@ function Task({task, deleteTask, checkTask}) {
     const date = task.date ? new Date(task.date) : '';
 
     return (
-      <div className={task.completed ? "task taskCompleted" : "task" } onDoubleClick={() => checkTask(task.id)}>
+      <div className={task.completed ? "task taskCompleted" : "task" }>
         <input checked={task.completed ? true : false} onChange={() => checkTask(task.id)} className="checkbox" type='checkbox'></input>
         <p className="titleTask">{task.title}</p>
         <p className="dateTask">
