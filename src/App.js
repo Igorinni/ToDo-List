@@ -234,6 +234,9 @@ function App() {
     setSort(condition);
   }
 
+  if (displayTasks == 0 && nowPage > 1) {
+    setNowPage(nowPage - 1)
+  }
 
   return (
     <div className="App">
