@@ -1,28 +1,9 @@
-import { useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
 
 
-function Task({task, deleteTask, checkTask, totalTasks, controlChangeTask, setControlChangeTask}) {
+function Task({task, deleteTask, checkTask, changeTitleTask, saveСhangedTitle, valueTask, handleValueChange}) {
 
   const date = task.date ? new Date(task.date) : '';
-
-  const [valueTask, setValueTask] = useState('')
-  const handleValueChange = (e) => setValueTask(e.target.value)
-
-  const changeTitleTask = (id) => {
-    let editTask = totalTasks.find(item => item.id === id);
-    editTask.edit ? editTask.edit = !editTask.edit : editTask.edit = true;
-    setValueTask(editTask.title)
-    setControlChangeTask(!controlChangeTask)
-  }
-
-  const saveСhangedTitle = (id) => { 
-    let editTask = totalTasks.find(item => item.id === id);
-    editTask.title = valueTask;
-    editTask.edit = !editTask.edit;
-    setValueTask('');
-    setControlChangeTask(!controlChangeTask)
-  }
 
   return (
     <div className={task.completed ? "task taskCompleted" : "task" }>
@@ -38,11 +19,13 @@ function Task({task, deleteTask, checkTask, totalTasks, controlChangeTask, setCo
           ></input>
           : task.title}
         </p>
-      <p className="dateTask">
-        {[date.getDate(), date.getMonth(), date.getFullYear(),].join('/')}
-        &nbsp;
-        {[date.getHours(), date.getMinutes(), date.getSeconds()].map( x => x <  10 ? '0' + x : x ).join(':')}
-      </p>
+      {task.date &&
+        <p className="dateTask">
+          {[date.getDate(), date.getMonth(), date.getFullYear(),].join('/')}
+          &nbsp;
+          {[date.getHours(), date.getMinutes(), date.getSeconds()].map( x => x <  10 ? '0' + x : x ).join(':')}
+        </p>
+      }
       <button  className="deleteButton" onClick={() => deleteTask(task.id)}><MdDeleteForever></MdDeleteForever></button>
     </div>
   )

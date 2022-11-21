@@ -1,52 +1,15 @@
 import Header from "./components/Header";
 import AddTaskInput from "./components/AddTaskInput";
 import TaskList from "./components/TaskList";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ButtonFilterAndSort from "./components/ButtonFilterAndSort";
 import Pagination from "./components/Pagination";
+import axios from 'axios';
 
 function App() {
-
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "Покушать бананы в Эквадоре",
-      completed: false,
-      date: 16686934194371,
-    },
-    {
-      id: 2,
-      title: "Заняться сёрфингом",
-      completed: true,
-      date: 16686934194372,
-    },
-    {
-      id: 3,
-      title: "Побывать в Калифорнии",
-      completed: false,
-      date: 16686934194373,
-    },
-    {
-      id: 4,
-      title: "Съездить на Карибы",
-      completed: false,
-      date: 16686934194374,
-    },
-    {
-      id: 5,
-      title: "Сходить на концерт",
-      completed: false,
-      date: 16686934194375,
-    },
-    {
-      id: 6,
-      title: "Купить бинокль",
-      completed: false,
-      date: 16686934194376,
-    },
-  ])
+  
+  const [tasks, setTasks] = useState([])
   const handleTaskChange = (value) => { setTasks(value) }
-
 
   const [nowPage, setNowPage] = useState(1);
   const limit = 5;
