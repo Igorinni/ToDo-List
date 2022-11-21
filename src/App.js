@@ -11,6 +11,11 @@ function App() {
   const [tasks, setTasks] = useState([])
   const handleTaskChange = (value) => { setTasks(value) }
 
+  useEffect( () => {
+    axios.get('https://jsonplaceholder.typicode.com/todos') 
+    .then( data => setTasks(data.data)) } 
+  , [])
+
   const [nowPage, setNowPage] = useState(1);
   const limit = 5;
   const [valueFilter, setValueFilter] = useState('All');
