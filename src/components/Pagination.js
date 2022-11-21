@@ -1,5 +1,4 @@
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
 function Pagination({setNowPage, nowPage, pageNumbers, tasks}) {
 
