@@ -12,9 +12,11 @@ function App() {
   const handleTaskChange = (value) => { setTasks(value) }
 
   useEffect( () => {
-    axios.get('https://jsonplaceholder.typicode.com/todos') 
-    .then( data => setTasks(data.data)) } 
-  , [])
+    axios
+      .get('https://todo-api-learning.herokuapp.com/v1/tasks/3?order=asc&pp=5&page=1') 
+      .then( res => setTasks(res.data.tasks))
+      .catch( error => console.error("ОШибка вот: ", error))
+  }, [])
 
   const [nowPage, setNowPage] = useState(1);
   const limit = 5;
@@ -29,6 +31,7 @@ function App() {
     const firstTask = lastTask - limit;
 
     let kek = [];
+    
 
     if (valueFilter === 'All') {
 

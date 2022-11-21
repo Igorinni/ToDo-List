@@ -11,10 +11,10 @@ function AddTaskInput({tasks, setTasks}) {
     const date = new Date();
     const id = tasks.length == 0 ? 1 : tasks[tasks.length - 1].id + 1
     const task = {
-      id: id,
-      title: value,
-      completed: false,
-      date: date.getTime(),        
+      uuid: id,
+      name: value,
+      done: false,
+      createdAt: date.getTime(),        
     }
     const newTasks = [...tasks, task];
     setTasks(newTasks);
