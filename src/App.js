@@ -43,111 +43,6 @@ function App() {
       title: "Купить бинокль",
       completed: false,
       date: 16686934194376,
-    }, {
-      id: 7,
-      title: "Покушать бананы в Эквадоре",
-      completed: false,
-      date: 16686934194371,
-    },
-    {
-      id: 8,
-      title: "Заняться сёрфингом",
-      completed: true,
-      date: 16686934194372,
-    },
-    {
-      id: 9,
-      title: "Побывать в Калифорнии",
-      completed: false,
-      date: 16686934194373,
-    },
-    {
-      id: 10,
-      title: "Съездить на Карибы",
-      completed: false,
-      date: 16686934194374,
-    },
-    {
-      id: 11,
-      title: "Сходить на концерт",
-      completed: false,
-      date: 16686934194375,
-    },
-    {
-      id: 12,
-      title: "Купить бинокль",
-      completed: false,
-      date: 16686934194376,
-    }, {
-      id: 13,
-      title: "Покушать бананы в Эквадоре",
-      completed: false,
-      date: 16686934194371,
-    },
-    {
-      id: 14,
-      title: "Заняться сёрфингом",
-      completed: true,
-      date: 16686934194372,
-    },
-    {
-      id: 15,
-      title: "Побывать в Калифорнии",
-      completed: false,
-      date: 16686934194373,
-    },
-    {
-      id: 16,
-      title: "Съездить на Карибы",
-      completed: false,
-      date: 16686934194374,
-    },
-    {
-      id: 17,
-      title: "Сходить на концерт",
-      completed: false,
-      date: 16686934194375,
-    },
-    {
-      id: 18,
-      title: "Купить бинокль",
-      completed: false,
-      date: 16686934194376,
-    }, {
-      id: 19,
-      title: "Покушать бананы в Эквадоре",
-      completed: false,
-      date: 16686934194371,
-    },
-    {
-      id: 20,
-      title: "Заняться сёрфингом",
-      completed: true,
-      date: 16686934194372,
-    },
-    {
-      id: 21,
-      title: "Побывать в Калифорнии",
-      completed: false,
-      date: 16686934194373,
-    },
-    {
-      id: 22,
-      title: "Съездить на Карибы",
-      completed: false,
-      date: 16686934194374,
-    },
-    {
-      id: 23,
-      title: "Сходить на концерт",
-      completed: false,
-      date: 16686934194375,
-    },
-    {
-      id: 24,
-      title: "Купить бинокль",
-      completed: false,
-      date: 16686934194376,
     },
   ])
   const handleTaskChange = (value) => { setTasks(value) }
@@ -156,7 +51,8 @@ function App() {
   const [nowPage, setNowPage] = useState(1);
   const limit = 5;
   const [valueFilter, setValueFilter] = useState('All');
-  const [sort, setSort] = useState('old')
+  const [sort, setSort] = useState('old');
+  const [controlChangeTask, setControlChangeTask] = useState(false);
 
   let pageNumbers = [];
 
@@ -211,7 +107,7 @@ function App() {
     }
 
     return kek;
-  }, [tasks, nowPage, valueFilter, sort])
+  }, [tasks, nowPage, valueFilter, sort, controlChangeTask])
 
 
   function deleteTask(id) {
@@ -243,7 +139,8 @@ function App() {
       <Header />
       <AddTaskInput tasks={tasks} setTasks={handleTaskChange} />
       <ButtonFilterAndSort filterTasks={filterTasks} sort={sort} sortTasks={sortTasks} valueFilter={valueFilter} />
-      <TaskList tasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask} setTasks={setTasks} totalTasks={tasks}/>
+      <TaskList displayTasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask} totalTasks={tasks} 
+      controlChangeTask={controlChangeTask} setControlChangeTask={setControlChangeTask} />
       <Pagination setNowPage={setNowPage} nowPage={nowPage} pageNumbers={pageNumbers} tasks={displayTasks} />
     </div>
   );
