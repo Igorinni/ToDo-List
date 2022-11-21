@@ -1,3 +1,5 @@
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
 function Pagination({setNowPage, nowPage, pageNumbers, tasks}) {
 
@@ -16,7 +18,11 @@ function Pagination({setNowPage, nowPage, pageNumbers, tasks}) {
   return (
     tasks.length == 0 ? ' ' :
     <div className="paginationButtons">
-      {nowPage >= 2 && <button className="buttonPagination" onClick={() => goToPage("Left")}>&#60;&#60;</button>}
+      {nowPage >= 2 && <button className="buttonPaginationArrow" onClick={() => goToPage("Left")}><IoIosArrowBack /></button>}
+      {nowPage > 2 && <button className={1 === nowPage ? "buttonPagination activePage" : "buttonPagination"} key={1}
+          onClick={() => goToPage(1)}>{1}</button>}
+      {nowPage > 3 && <button className="buttonPaginationPoints">...</button>}
+
       {pageNumbers.map((item) => {
         
         if (item === nowPage || item === nowPage - 1 || item === nowPage + 1) {
@@ -25,8 +31,13 @@ function Pagination({setNowPage, nowPage, pageNumbers, tasks}) {
           onClick={() => goToPage(item)}
           >{item}</button>)}
         return null;
+
       })}
-      {nowPage < pageNumbers.length && <button className="buttonPagination" onClick={() => goToPage("Right")}>&#62;&#62;</button>}
+
+      {nowPage < pageNumbers.length - 2 && <button className="buttonPaginationPoints">...</button>}
+      {nowPage < pageNumbers.length - 1 && <button className={pageNumbers.length === nowPage ? "buttonPagination activePage" : "buttonPagination"} key={pageNumbers.length}
+          onClick={() => goToPage(pageNumbers.length)}>{pageNumbers.length}</button>}
+      {nowPage < pageNumbers.length && <button className="buttonPaginationArrow" onClick={() => goToPage("Right")}><IoIosArrowForward /></button>}
     </div>
     
   );
