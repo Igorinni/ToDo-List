@@ -1,8 +1,7 @@
 import Task from "./Task";
 import { useState } from "react";
 
-function TaskList({displayTasks, deleteTask, checkTask, totalTasks, controlChangeTask, setControlChangeTask}) {
-
+function TaskList({displayTasks, deleteTask, checkTask, totalTasks, controlChangeTask, setControlChangeTask}) {  
   const [valueTask, setValueTask] = useState('');
   const handleValueChange = (e) => setValueTask(e.target.value);
 
