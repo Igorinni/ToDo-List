@@ -1,10 +1,9 @@
 import Header from "./components/Header";
 import AddTaskInput from "./components/AddTaskInput";
 import TaskList from "./components/TaskList";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import ButtonFilterAndSort from "./components/ButtonFilterAndSort";
 import Pagination from "./components/Pagination";
-import axios from 'axios';
 
 function App() {
   
@@ -30,12 +29,12 @@ function App() {
       const array = [...tasks].sort((a, b) => {
         if (sort === 'old') {
           if (a.date < b.date) return 1;
-          if (a.date == b.date) return 0;
+          if (a.date === b.date) return 0;
           if (a.date > b.date) return -1;
         }
         if (sort === 'new') {
           if (a.date > b.date) return 1;
-          if (a.date == b.date) return 0;
+          if (a.date === b.date) return 0;
           if (a.date < b.date) return -1;
         }
       })
@@ -56,12 +55,12 @@ function App() {
       array.sort((a, b) => {
         if (sort === 'old') {
           if (a.date < b.date) return 1;
-          if (a.date == b.date) return 0;
+          if (a.date === b.date) return 0;
           if (a.date > b.date) return -1;
         }
         if (sort === 'new') {
           if (a.date > b.date) return 1;
-          if (a.date == b.date) return 0;
+          if (a.date === b.date) return 0;
           if (a.date < b.date) return -1;
         }
       })
@@ -74,7 +73,7 @@ function App() {
 
 
   function deleteTask(id) {
-    const newTasks = [...tasks].filter(elem => elem.id != id);
+    const newTasks = [...tasks].filter(elem => elem.id !== id);
     setTasks(newTasks);
   }
 
@@ -93,7 +92,7 @@ function App() {
     setSort(condition);
   }
 
-  if (displayTasks == 0 && nowPage > 1) {
+  if (displayTasks === 0 && nowPage > 1) {
     setNowPage(nowPage - 1)
   }
 

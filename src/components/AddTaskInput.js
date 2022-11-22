@@ -7,9 +7,9 @@ function AddTaskInput({tasks, setTasks}) {
   const handleValueChange = (e) => setValue(e.target.value)
 
   function saveTask(){
-    if (value.trim() == '') return;
+    if (value.trim() === '') return;
     const date = new Date();
-    const id = tasks.length == 0 ? 1 : tasks[tasks.length - 1].id + 1
+    const id = tasks.length === 0 ? 1 : tasks[tasks.length - 1].id + 1
     const task = {
       id: id,
       title: value,
