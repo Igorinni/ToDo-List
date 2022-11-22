@@ -153,7 +153,7 @@ function App() {
   }, [filter, sort, nowPage])
 
   async function addTask(newTask){
-    await axios.post('https://todo-api-learning.herokuapp.com/v1/task/3', newTask)
+    await axios.post('https://todo-api-learning.herokuapp.com/v1/task/3', newTask) 
     getTasks()
   }
 
@@ -184,11 +184,11 @@ function App() {
 
   let pageNumbers = [];
 
-  for (let i = 1; i < Math.ceil(amountTask / limit); i++) {
+  for (let i = 1; i <= Math.ceil(amountTask / limit); i++) {
     pageNumbers.push(i)
   }
 
-  if (displayTasks === 0 && nowPage !== 1) {
+  if (displayTasks == 0 && nowPage > 1) {
     setNowPage(nowPage - 1)
   }
 
