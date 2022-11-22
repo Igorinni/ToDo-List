@@ -125,14 +125,22 @@ function App() {
   const [amountTask, setAmountTask] = useState(0)
 
   const [nowPage, setNowPage] = useState(1);
-  const limit = 5;
-  const [valueFilter, setValueFilter] = useState('All');
-  const [sort, setSort] = useState('old');
+  const limit = 7;
+  const [filter, setValueFilter] = useState('');
+  const [sort, setSort] = useState('asc');
+
   const [controlChangeTask, setControlChangeTask] = useState(false);
 
-  const getTasks = async ( filter = '' ) => {
+  const getTasks = async () => {
     try{
-      const response = await axios.get(`https://todo-api-learning.herokuapp.com/v1/tasks/3?${filter}order=asc&pp=6&page=1`) 
+      const response = await axios.get(`https://todo-api-learning.herokuapp.com/v1/tasks/3`, {
+        params: {
+          filterBy: filter,
+          order: sort,
+          pp: limit,
+          page: nowPage,
+        }
+      }) 
       setDisplayTasks(response.data.tasks)
       setAmountTask(response.data.count)
     } catch (error){
@@ -144,14 +152,17 @@ function App() {
     getTasks()
   }, [])
 
+  useEffect( () => {
+    getTasks()
+  }, [filter, sort])
+
   function filterTasks(value) {
     setValueFilter(value);
+  }
 
-    let filter = (value === 'All') ? '' :
-     (value === true) ? 'filterBy=done&' :
-     'filterBy=undone';
-    getTasks(filter);
-   }
+  function sortTasks(condition) {
+    setSort(condition);
+  }
 
   function deleteTask(id) {
     /* const newTasks = [...tasks].filter(elem => elem.id != id);
@@ -164,9 +175,6 @@ function App() {
     setTasks(newTasks) */
   }
 
-  function sortTasks(condition) {
-   /*  setSort(condition); */
-  }
 
   /* if (displayTasks == 0 && nowPage > 1) {
     setNowPage(nowPage - 1)
@@ -179,7 +187,7 @@ function App() {
     <div className="App">
       <Header />
       <AddTaskInput tasks={displayTasks} setTasks={handleTaskChange} />
-      <ButtonFilterAndSort filterTasks={filterTasks} sort={sort} sortTasks={sortTasks} valueFilter={valueFilter} />
+      <ButtonFilterAndSort filterTasks={filterTasks} sort={sort} sortTasks={sortTasks} valueFilter={filter} />
       <TaskList displayTasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask} totalTasks={displayTasks} 
       controlChangeTask={controlChangeTask} setControlChangeTask={setControlChangeTask} />
       <Pagination setNowPage={setNowPage} nowPage={nowPage} pageNumbers={pageNumbers} tasks={displayTasks} />
