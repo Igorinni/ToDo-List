@@ -11,7 +11,6 @@ function AddTaskInput({tasks, setTasks, addTask}) {
     if (value.trim() == '') return;
     const id = Math.random();
     const date = new Date();
-    // const id = tasks.length == 0 ? 1 : tasks[tasks.length - 1].id + 1
     const task = {
       name: value,
       done: false,
@@ -19,8 +18,6 @@ function AddTaskInput({tasks, setTasks, addTask}) {
       updatedAt: date.getTime(),
     }
     addTask(task)
-    // const newTasks = [...tasks, task];
-    // setTasks(newTasks);
     setValue('');
 
   }
