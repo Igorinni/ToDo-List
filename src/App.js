@@ -152,19 +152,14 @@ function App() {
 
   useEffect( () => {
     getTasks()
-  }, [])
-
-  useEffect( () => {
-    getTasks()
   }, [filter, sort])
 
-  function addTask(newTask){
-    axios.post('https://todo-api-learning.herokuapp.com/v1/task/3', newTask)
+  async function addTask(newTask){
+    await axios.post('https://todo-api-learning.herokuapp.com/v1/task/3', newTask)
     .then(res => console.log(res))
     .catch(error => console.log(error))
+    getTasks()
   }
-
-
 
   function filterTasks(value) {
     setValueFilter(value);
@@ -174,9 +169,9 @@ function App() {
     setSort(condition);
   }
 
-  function deleteTask(id) {
-    /* const newTasks = [...tasks].filter(elem => elem.id != id);
-    setTasks(newTasks); */
+  async function deleteTask(id) {
+    await axios.delete(`https://todo-api-learning.herokuapp.com/v1/task/3/${id}`)
+    getTasks()
   }
 
   function checkTask(id) {
