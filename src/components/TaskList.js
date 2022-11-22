@@ -7,18 +7,18 @@ function TaskList({displayTasks, deleteTask, checkTask, totalTasks, controlChang
   const handleValueChange = (e) => setValueTask(e.target.value);
 
   const changeTitleTask = (id) => {
-    let editTask = totalTasks.find(item => item.uuid === id);
+    /* let editTask = totalTasks.find(item => item.uuid === id);
     editTask.edit ? editTask.edit = !editTask.edit : editTask.edit = true;
     setValueTask(editTask.title)
-    setControlChangeTask(!controlChangeTask)
+    setControlChangeTask(!controlChangeTask) */
   }
 
   const saveСhangedTitle = (id) => { 
-    let editTask = totalTasks.find(item => item.uuid === id);
+   /*  let editTask = totalTasks.find(item => item.uuid === id);
     editTask.name = valueTask;
     editTask.edit = !editTask.edit;
     setValueTask('');
-    setControlChangeTask(!controlChangeTask)
+    setControlChangeTask(!controlChangeTask) */
   }
 
     return (
