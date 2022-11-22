@@ -7,7 +7,7 @@ function Task({task, deleteTask, checkTask, changeTitleTask, saveСhangedTitle, 
 
   return (
     <div className={task.done ? "task taskCompleted" : "task" }>
-      <input checked={task.done ? true : false} onChange={() => checkTask(task.uuid)} className="checkbox" type='checkbox'></input>
+      <input checked={task.done ? true : false} onChange={() => checkTask(task)} className="checkbox" type='checkbox'></input>
       <p className="titleTask" onDoubleClick={() => changeTitleTask(task.uuid)}>
         {task.edit ? 
           <input className="inputEditTask" autoFocus value={valueTask} onChange={handleValueChange} onBlur={() => changeTitleTask(task.uuid)}

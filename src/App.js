@@ -156,8 +156,6 @@ function App() {
 
   async function addTask(newTask){
     await axios.post('https://todo-api-learning.herokuapp.com/v1/task/3', newTask)
-    .then(res => console.log(res))
-    .catch(error => console.log(error))
     getTasks()
   }
 
@@ -174,16 +172,15 @@ function App() {
     getTasks()
   }
 
-  function checkTask(id) {
-   /*  const newTasks = [...tasks]
-    newTasks.forEach(elem => elem.id === id && (elem.completed = !elem.completed))
-    setTasks(newTasks) */
+  async function checkTask(task) {
+   await axios.patch(`https://todo-api-learning.herokuapp.com/v1/task/3/${task.uuid}`, {
+      name: task.name,
+      done: !task.done,
+      createdAt: task.createdAt,
+      updatedAt: task.updatedAt,
+   })
+   getTasks()
   }
-
-
-  /* if (displayTasks == 0 && nowPage > 1) {
-    setNowPage(nowPage - 1)
-  } */
 
 
   let pageNumbers = [];
