@@ -124,8 +124,8 @@ function App() {
   const handleTaskChange = (value) => { setDisplayTasks(value) }
   const [amountTask, setAmountTask] = useState(0)
 
-  const [nowPage, setNowPage] = useState(2);
-  const limit = 20;
+  const [nowPage, setNowPage] = useState(1);
+  const limit = 5;
   const [filter, setValueFilter] = useState('');
   const [sort, setSort] = useState('asc');
 
@@ -150,7 +150,7 @@ function App() {
 
   useEffect( () => {
     getTasks()
-  }, [filter, sort])
+  }, [filter, sort, nowPage])
 
   async function addTask(newTask){
     await axios.post('https://todo-api-learning.herokuapp.com/v1/task/3', newTask)
@@ -159,6 +159,7 @@ function App() {
 
   function filterTasks(value) {
     setValueFilter(value);
+    setNowPage(1)
   }
 
   function sortTasks(condition) {
@@ -182,6 +183,14 @@ function App() {
 
 
   let pageNumbers = [];
+
+  for (let i = 1; i < Math.ceil(amountTask / limit); i++) {
+    pageNumbers.push(i)
+  }
+
+  if (displayTasks === 0 && nowPage !== 1) {
+    setNowPage(nowPage - 1)
+  }
 
   return (
     <div className="App">
