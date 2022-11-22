@@ -124,16 +124,18 @@ function App() {
   const handleTaskChange = (value) => { setDisplayTasks(value) }
   const [amountTask, setAmountTask] = useState(0)
 
-  const [nowPage, setNowPage] = useState(1);
-  const limit = 7;
+  const [nowPage, setNowPage] = useState(2);
+  const limit = 20;
   const [filter, setValueFilter] = useState('');
   const [sort, setSort] = useState('asc');
 
   const [controlChangeTask, setControlChangeTask] = useState(false);
 
+  const baseUrl = `https://todo-api-learning.herokuapp.com/v1/tasks/3`;
+
   const getTasks = async () => {
     try{
-      const response = await axios.get(`https://todo-api-learning.herokuapp.com/v1/tasks/3`, {
+      const response = await axios.get(baseUrl, {
         params: {
           filterBy: filter,
           order: sort,
@@ -155,6 +157,14 @@ function App() {
   useEffect( () => {
     getTasks()
   }, [filter, sort])
+
+  function addTask(newTask){
+    axios.post('https://todo-api-learning.herokuapp.com/v1/task/3', newTask)
+    .then(res => console.log(res))
+    .catch(error => console.log(error))
+  }
+
+
 
   function filterTasks(value) {
     setValueFilter(value);
@@ -186,7 +196,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <AddTaskInput tasks={displayTasks} setTasks={handleTaskChange} />
+      <AddTaskInput tasks={displayTasks} addTask={addTask} />
       <ButtonFilterAndSort filterTasks={filterTasks} sort={sort} sortTasks={sortTasks} valueFilter={filter} />
       <TaskList displayTasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask} totalTasks={displayTasks} 
       controlChangeTask={controlChangeTask} setControlChangeTask={setControlChangeTask} />

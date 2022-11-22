@@ -1,23 +1,26 @@
 import { useState } from "react";
 
-function AddTaskInput({tasks, setTasks}) {
+function AddTaskInput({tasks, setTasks, addTask}) {
 
   const [value, setValue] = useState('')
 
   const handleValueChange = (e) => setValue(e.target.value)
 
+
   function saveTask(){
     if (value.trim() == '') return;
+    const id = Math.random();
     const date = new Date();
-    const id = tasks.length == 0 ? 1 : tasks[tasks.length - 1].id + 1
+    // const id = tasks.length == 0 ? 1 : tasks[tasks.length - 1].id + 1
     const task = {
-      uuid: id,
       name: value,
       done: false,
-      createdAt: date.getTime(),        
+      createdAt: date.getTime(),
+      updatedAt: date.getTime(),
     }
-    const newTasks = [...tasks, task];
-    setTasks(newTasks);
+    addTask(task)
+    // const newTasks = [...tasks, task];
+    // setTasks(newTasks);
     setValue('');
 
   }
