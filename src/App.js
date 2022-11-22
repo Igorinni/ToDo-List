@@ -129,8 +129,6 @@ function App() {
   const [filter, setValueFilter] = useState('');
   const [sort, setSort] = useState('asc');
 
-  const [controlChangeTask, setControlChangeTask] = useState(false);
-
   const baseUrl = `https://todo-api-learning.herokuapp.com/v1/tasks/3`;
 
   const getTasks = async () => {
@@ -190,8 +188,7 @@ function App() {
       <Header />
       <AddTaskInput tasks={displayTasks} addTask={addTask} />
       <ButtonFilterAndSort filterTasks={filterTasks} sort={sort} sortTasks={sortTasks} valueFilter={filter} />
-      <TaskList displayTasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask} totalTasks={displayTasks} 
-      controlChangeTask={controlChangeTask} setControlChangeTask={setControlChangeTask} />
+      <TaskList displayTasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask} getTasks={getTasks} />
       <Pagination setNowPage={setNowPage} nowPage={nowPage} pageNumbers={pageNumbers} tasks={displayTasks} />
     </div>
   );
