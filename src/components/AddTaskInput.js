@@ -8,8 +8,7 @@ function AddTaskInput({tasks, setTasks, addTask}) {
 
 
   function saveTask(){
-    if (value.trim() == '') return;
-    const id = Math.random();
+    if (value.trim() === '') return;
     const date = new Date();
     const task = {
       name: value,

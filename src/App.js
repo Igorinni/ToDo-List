@@ -1,7 +1,7 @@
 import Header from "./components/Header";
 import AddTaskInput from "./components/AddTaskInput";
 import TaskList from "./components/TaskList";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonFilterAndSort from "./components/ButtonFilterAndSort";
 import Pagination from "./components/Pagination";
 import axios from 'axios';
@@ -9,7 +9,6 @@ import axios from 'axios';
 function App() {
   
   const [displayTasks, setDisplayTasks] = useState([])
-  const handleTaskChange = (value) => { setDisplayTasks(value) }
   const [amountTask, setAmountTask] = useState(0)
 
   const [nowPage, setNowPage] = useState(1);
@@ -76,7 +75,7 @@ function App() {
     pageNumbers.push(i)
   }
 
-  if (displayTasks == 0 && nowPage > 1) {
+  if (displayTasks === 0 && nowPage > 1) {
     setNowPage(nowPage - 1)
   }
 
