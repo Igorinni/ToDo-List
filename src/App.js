@@ -25,20 +25,8 @@ function App() {
     let kek = [];
 
     if (valueFilter === 'All') {
-
-      const array = [...tasks].sort((a, b) => {
-        if (sort === 'old') {
-          if (a.date < b.date) return 1;
-          if (a.date === b.date) return 0;
-          if (a.date > b.date) return -1;
-        }
-        if (sort === 'new') {
-          if (a.date > b.date) return 1;
-          if (a.date === b.date) return 0;
-          if (a.date < b.date) return -1;
-        }
-      })
-      kek = array.slice(firstTask, lastTask);
+      
+      kek = sortingArray(tasks).slice(firstTask, lastTask);
 
       for (let i = 1; i <= Math.ceil(tasks.length / limit); i++) {
         pageNumbers.push(i)
@@ -52,19 +40,7 @@ function App() {
         pageNumbers.push(i)
       }
 
-      array.sort((a, b) => {
-        if (sort === 'old') {
-          if (a.date < b.date) return 1;
-          if (a.date === b.date) return 0;
-          if (a.date > b.date) return -1;
-        }
-        if (sort === 'new') {
-          if (a.date > b.date) return 1;
-          if (a.date === b.date) return 0;
-          if (a.date < b.date) return -1;
-        }
-      })
-      kek = array.slice(firstTask, lastTask)
+      kek = sortingArray(array).slice(firstTask, lastTask)
 
     }
 
@@ -90,6 +66,23 @@ function App() {
 
   function sortTasks(condition) {
     setSort(condition);
+  }
+
+  function sortingArray(array) {
+    const newArray = [...array];
+    newArray.sort((a, b) => {
+      if (sort === 'old') {
+        if (a.date < b.date) return 1;
+        if (a.date === b.date) return 0;
+        if (a.date > b.date) return -1;
+      }
+      if (sort === 'new') {
+        if (a.date > b.date) return 1;
+        if (a.date === b.date) return 0;
+        if (a.date < b.date) return -1;
+      }
+    });
+    return newArray;
   }
 
   if (displayTasks === 0 && nowPage > 1) {
