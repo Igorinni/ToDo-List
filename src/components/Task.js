@@ -2,7 +2,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { useState } from "react";
 import axios from 'axios';
 
-function Task({task, deleteTask, checkTask, changeTitleTask, saveСhangedTitle, valueTask, handleValueChange}) {
+function Task({task, deleteTask, checkTask, getTasks}) {
 
   const date = task.createdAt ? new Date(task.createdAt) : '';
 
