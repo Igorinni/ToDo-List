@@ -14,7 +14,6 @@ function App() {
   const limit = 5;
   const [valueFilter, setValueFilter] = useState('All');
   const [sort, setSort] = useState('old');
-  const [controlChangeTask, setControlChangeTask] = useState(false);
   const [paginationArray, setPaginationArray] = useState(tasks)
 
   
@@ -38,7 +37,7 @@ function App() {
     }
 
     return kek;
-  }, [tasks, nowPage, valueFilter, sort, controlChangeTask])
+  }, [tasks, nowPage, valueFilter, sort])
 
 
   function deleteTask(id) {
@@ -87,8 +86,7 @@ function App() {
       <Header />
       <AddTaskInput tasks={tasks} setTasks={handleTaskChange} />
       <ButtonFilterAndSort filterTasks={filterTasks} sort={sort} sortTasks={sortTasks} valueFilter={valueFilter} />
-      <TaskList displayTasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask} totalTasks={tasks} 
-      controlChangeTask={controlChangeTask} setControlChangeTask={setControlChangeTask} />
+      <TaskList displayTasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask} totalTasks={tasks} />
       <Pagination setNowPage={setNowPage} nowPage={nowPage} tasks={displayTasks} paginationArray={paginationArray} limit={limit} />
     </div>
   );

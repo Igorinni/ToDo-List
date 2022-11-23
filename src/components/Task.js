@@ -1,22 +1,31 @@
 import { MdDeleteForever } from "react-icons/md";
+import { useState } from "react";
 
-
-function Task({task, deleteTask, checkTask, changeTitleTask, saveСhangedTitle, valueTask, handleValueChange}) {
-
+function Task({task, deleteTask, checkTask}) {
+  
   const date = task.date ? new Date(task.date) : '';
+
+  const [editStatus, setEditStatus] = useState(false);
+  const handleEditStatus = () => setEditStatus(!editStatus);
+
+  const changeTitleTask = (id) => {
+    const newTitleTask = document.querySelector('.inputEditTask').value;
+    task.title = newTitleTask;
+    handleEditStatus();
+  }
+
 
   return (
     <div className={task.completed ? "task taskCompleted" : "task" }>
       <input checked={task.completed ? true : false} onChange={() => checkTask(task.id)} className="checkbox" type='checkbox'></input>
-      <p className="titleTask" onDoubleClick={() => changeTitleTask(task.id)}>
-        {task.edit ? 
-          <input className="inputEditTask" autoFocus value={valueTask} onChange={handleValueChange} onBlur={() => changeTitleTask(task.id)}
-          onKeyDown={(e) => {
-            if (e.code === 'Enter' || e.key === 13) saveСhangedTitle(task.id)
-            if (e.code === 'Escape') {
-              changeTitleTask(task.id)
-            }}}
-          ></input>
+      <p className="titleTask" onDoubleClick={handleEditStatus}>
+        {editStatus 
+          ? <input className="inputEditTask" autoFocus defaultValue={task.title} onBlur={handleEditStatus}
+              onKeyDown={(e) => {
+                if (e.code === 'Enter' || e.key === 13) changeTitleTask()
+                if (e.code === 'Escape') handleEditStatus()
+              }}
+            ></input>
           : task.title}
         </p>
       {task.date &&
