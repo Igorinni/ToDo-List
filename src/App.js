@@ -4,7 +4,7 @@ import TaskList from "./components/TaskList";
 import { useEffect, useState } from "react";
 import ButtonFilterAndSort from "./components/ButtonFilterAndSort";
 import Pagination from "./components/Pagination";
-import axios from 'axios';
+import { getArrayTasks, createTask, removeTask, saveStateTask } from "./services/api"
 
 function App() {
   
@@ -23,16 +23,9 @@ function App() {
 
   const getTasks = async () => {
     try{
-      const response = await axios.get(process.env.REACT_APP_BASE_URL + process.env.REACT_APP_SECTION_TASKS + process.env.REACT_APP_USER_ID, {
-        params: {
-          filterBy: valueToFilter,
-          order: valueToSort,
-          pp: taskLimitPerPage,
-          page: currentPage,
-        }
-      });
-      setArrayToDisplayTasks(response.data.tasks);
-      setAmountTask(response.data.count);
+      const data = await getArrayTasks(valueToFilter, valueToSort, taskLimitPerPage, currentPage)
+      setArrayToDisplayTasks(data.tasks);
+      setAmountTask(data.count);
     } catch (error){
       console.log("У вас ошибка: " + error);
     }
@@ -42,24 +35,19 @@ function App() {
     getTasks();
   }, [valueToFilter, valueToSort, currentPage])
 
-  async function addTask(newTask){
-    await axios.post(process.env.REACT_APP_BASE_URL + process.env.REACT_APP_SECTION_TASK + process.env.REACT_APP_USER_ID, newTask);
+  const addTask = async (newTask) => {
+    await createTask(newTask);
     getTasks();
   }
 
-  async function deleteTask(id) {
-    await axios.delete(process.env.REACT_APP_BASE_URL + process.env.REACT_APP_SECTION_TASK + process.env.REACT_APP_USER_ID + id);
+  const deleteTask = async (id) => {
+    await removeTask(id);
     getTasks();
   }
 
-  async function checkTask(task) {
-   await axios.patch(process.env.REACT_APP_BASE_URL + process.env.REACT_APP_SECTION_TASK + process.env.REACT_APP_USER_ID + task.uuid, {
-      name: task.name,
-      done: !task.done,
-      createdAt: task.createdAt,
-      updatedAt: task.updatedAt,
-   });
-   getTasks();
+  const checkTask = async (task) => {
+    await saveStateTask(task);
+    getTasks();
   }
 
   if (arrayToDisplayTasks == 0 && currentPage > 1) {

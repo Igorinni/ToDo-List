@@ -1,6 +1,6 @@
 import { MdDeleteForever } from "react-icons/md";
 import { useState } from "react";
-import axios from 'axios';
+import { saveСhangedTitleTask } from "/home/oem/Desktop/todo/src/services/api.js"
 
 function Task({task, deleteTask, checkTask, getTasks}) {
 
@@ -12,15 +12,9 @@ function Task({task, deleteTask, checkTask, getTasks}) {
 
   const saveСhangedTitle = async () => { 
     const newTitleTask = document.querySelector('.inputEditTask').value;
-    // task.name = newTitleTask;
-
-    await axios.patch(`https://todo-api-learning.herokuapp.com/v1/task/3/${task.uuid}`, {
-      name: newTitleTask,
-      done: task.done,
-      createdAt: task.createdAt,
-      updatedAt: task.updatedAt,
-    });
+    await saveСhangedTitleTask(newTitleTask, task);
     getTasks();
+    handleEditStatus();
   }
 
 
