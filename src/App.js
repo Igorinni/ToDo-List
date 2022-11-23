@@ -15,32 +15,25 @@ function App() {
   const [valueFilter, setValueFilter] = useState('All');
   const [sort, setSort] = useState('old');
   const [controlChangeTask, setControlChangeTask] = useState(false);
+  const [paginationArray, setPaginationArray] = useState(tasks)
 
-  let pageNumbers = [];
+  
 
   const displayTasks = useMemo(() => {
     const lastTask = limit * nowPage
     const firstTask = lastTask - limit;
-
     let kek = [];
 
     if (valueFilter === 'All') {
       
       kek = sortingArray(tasks).slice(firstTask, lastTask);
-
-      for (let i = 1; i <= Math.ceil(tasks.length / limit); i++) {
-        pageNumbers.push(i)
-      }
+      setPaginationArray(tasks)
 
     } else {
 
       const array = [...tasks].filter(elem => elem.completed === valueFilter)
-
-      for (let i = 1; i <= Math.ceil(array.length / limit); i++) {
-        pageNumbers.push(i)
-      }
-
       kek = sortingArray(array).slice(firstTask, lastTask)
+      setPaginationArray(array)
 
     }
 
@@ -85,7 +78,7 @@ function App() {
     return newArray;
   }
 
-  if (displayTasks === 0 && nowPage > 1) {
+  if (displayTasks == 0 && nowPage > 1) {
     setNowPage(nowPage - 1)
   }
 
@@ -96,7 +89,7 @@ function App() {
       <ButtonFilterAndSort filterTasks={filterTasks} sort={sort} sortTasks={sortTasks} valueFilter={valueFilter} />
       <TaskList displayTasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask} totalTasks={tasks} 
       controlChangeTask={controlChangeTask} setControlChangeTask={setControlChangeTask} />
-      <Pagination setNowPage={setNowPage} nowPage={nowPage} pageNumbers={pageNumbers} tasks={displayTasks} />
+      <Pagination setNowPage={setNowPage} nowPage={nowPage} tasks={displayTasks} paginationArray={paginationArray} limit={limit} />
     </div>
   );
 }

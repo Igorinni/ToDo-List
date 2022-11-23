@@ -1,6 +1,12 @@
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
-function Pagination({setNowPage, nowPage, pageNumbers, tasks}) {
+function Pagination({setNowPage, nowPage, tasks, paginationArray, limit}) {
+
+  let pageNumbers = [];
+
+  for (let i = 1; i <= Math.ceil(paginationArray.length / limit); i++) {
+    pageNumbers.push(i)
+  }
 
   function goToPage(result){
   
