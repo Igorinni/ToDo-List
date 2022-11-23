@@ -4,17 +4,22 @@ import TaskList from "./components/TaskList";
 import { useEffect, useState } from "react";
 import ButtonFilterAndSort from "./components/ButtonFilterAndSort";
 import Pagination from "./components/Pagination";
-import axios from 'axios';
 
 function App() {
   
-  const [displayTasks, setDisplayTasks] = useState([]);
+
+  const [arrayToDisplayTasks, setArrayToDisplayTasks] = useState([]);
   const [amountTask, setAmountTask] = useState(0);
 
-  const [nowPage, setNowPage] = useState(1);
-  const limit = 5;
-  const [filter, setValueFilter] = useState('');
-  const [sort, setSort] = useState('asc');
+  const [currentPage, setСurrentPage] = useState(1);
+  const taskLimitPerPage = 5;
+  const [valueToFilter, setValueToFilter] = useState('');
+  const handleValueToFilter = (value) => {
+    setValueToFilter(value);
+    setСurrentPage(1);
+  }
+  const [valueToSort, setValueToSort] = useState('asc');
+  const handleValueToSort = (value) => setValueToSort(value)
 
   const baseUrl = `https://todo-api-learning.herokuapp.com/v1/tasks/3`;
 
@@ -22,13 +27,13 @@ function App() {
     try{
       const response = await axios.get(baseUrl, {
         params: {
-          filterBy: filter,
-          order: sort,
-          pp: limit,
-          page: nowPage,
+          filterBy: valueToFilter,
+          order: valueToSort,
+          pp: taskLimitPerPage,
+          page: currentPage,
         }
       });
-      setDisplayTasks(response.data.tasks);
+      setArrayToDisplayTasks(response.data.tasks);
       setAmountTask(response.data.count);
     } catch (error){
       console.log("У вас ошибка: " + error);
@@ -37,20 +42,11 @@ function App() {
 
   useEffect( () => {
     getTasks();
-  }, [filter, sort, nowPage])
+  }, [valueToFilter, valueToSort, currentPage])
 
   async function addTask(newTask){
     await axios.post('https://todo-api-learning.herokuapp.com/v1/task/3', newTask);
     getTasks();
-  }
-
-  function filterTasks(value) {
-    setValueFilter(value);
-    setNowPage(1);
-  }
-
-  function sortTasks(condition) {
-    setSort(condition);
   }
 
   async function deleteTask(id) {
@@ -68,24 +64,17 @@ function App() {
    getTasks();
   }
 
-
-  let pageNumbers = [];
-
-  for (let i = 1; i <= Math.ceil(amountTask / limit); i++) {
-    pageNumbers.push(i);
-  }
-
-  if (displayTasks === 0 && nowPage > 1) {
-    setNowPage(nowPage - 1);
+  if (arrayToDisplayTasks == 0 && currentPage > 1) {
+    setСurrentPage(currentPage - 1);
   }
 
   return (
     <div className="App">
       <Header />
-      <AddTaskInput tasks={displayTasks} addTask={addTask} />
-      <ButtonFilterAndSort filterTasks={filterTasks} sort={sort} sortTasks={sortTasks} valueFilter={filter} />
-      <TaskList displayTasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask} getTasks={getTasks} />
-      <Pagination setNowPage={setNowPage} nowPage={nowPage} pageNumbers={pageNumbers} tasks={displayTasks} />
+      <AddTaskInput addTask={addTask} />
+      <ButtonFilterAndSort valueToFilter={valueToFilter} handleValueToFilter={handleValueToFilter} valueToSort={valueToSort} handleValueToSort={handleValueToSort} />
+      <TaskList arrayToDisplayTasks={arrayToDisplayTasks} deleteTask={deleteTask} checkTask={checkTask} getTasks={getTasks} />
+      <Pagination  currentPage={currentPage} setСurrentPage={setСurrentPage} taskLimitPerPage={taskLimitPerPage} arrayToDisplayTasks={arrayToDisplayTasks} />
     </div>
   );
 }

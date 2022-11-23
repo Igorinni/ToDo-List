@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-function AddTaskInput({tasks, setTasks, addTask}) {
 
-  const [value, setValue] = useState('')
+function AddTaskInput({addTask}) {
 
-  const handleValueChange = (e) => setValue(e.target.value)
+  const [value, setValue] = useState('');
+  const handleValueChange = (e) => setValue(e.target.value);
 
 
   function saveTask(){
@@ -18,7 +18,6 @@ function AddTaskInput({tasks, setTasks, addTask}) {
     }
     addTask(task)
     setValue('');
-
   }
 
   return (

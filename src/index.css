@@ -135,7 +135,7 @@ h1{
     transform: scale(1.2);
     opacity: 1.0;
 }
-.taskZero{
+.noTasks{
     margin: 50px;
     font-size: 26px;
     font-style: italic;
