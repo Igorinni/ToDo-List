@@ -1,10 +1,10 @@
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
-function Pagination({setСurrentPage, currentPage, arrayToDisplayTasks, paginationArray, taskLimitPerPage}) {
+function Pagination({setСurrentPage, currentPage, amountTask, taskLimitPerPage, arrayToDisplayTasks}) {
 
   const pageNumbers = [];
 
-  for (let i = 1; i <= Math.ceil(paginationArray.length / taskLimitPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(amountTask / taskLimitPerPage); i++) {
     pageNumbers.push(i)
   }
 
