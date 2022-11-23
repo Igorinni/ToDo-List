@@ -21,11 +21,9 @@ function App() {
   const [valueToSort, setValueToSort] = useState('asc');
   const handleValueToSort = (value) => setValueToSort(value)
 
-  const baseUrl = `https://todo-api-learning.herokuapp.com/v1/tasks/3`;
-
   const getTasks = async () => {
     try{
-      const response = await axios.get(baseUrl, {
+      const response = await axios.get(process.env.REACT_APP_BASE_URL + process.env.REACT_APP_SECTION_TASKS + process.env.REACT_APP_USER_ID, {
         params: {
           filterBy: valueToFilter,
           order: valueToSort,
@@ -45,17 +43,17 @@ function App() {
   }, [valueToFilter, valueToSort, currentPage])
 
   async function addTask(newTask){
-    await axios.post('https://todo-api-learning.herokuapp.com/v1/task/3', newTask);
+    await axios.post(process.env.REACT_APP_BASE_URL + process.env.REACT_APP_SECTION_TASK + process.env.REACT_APP_USER_ID, newTask);
     getTasks();
   }
 
   async function deleteTask(id) {
-    await axios.delete(`https://todo-api-learning.herokuapp.com/v1/task/3/${id}`);
+    await axios.delete(process.env.REACT_APP_BASE_URL + process.env.REACT_APP_SECTION_TASK + process.env.REACT_APP_USER_ID + id);
     getTasks();
   }
 
   async function checkTask(task) {
-   await axios.patch(`https://todo-api-learning.herokuapp.com/v1/task/3/${task.uuid}`, {
+   await axios.patch(process.env.REACT_APP_BASE_URL + process.env.REACT_APP_SECTION_TASK + process.env.REACT_APP_USER_ID + task.uuid, {
       name: task.name,
       done: !task.done,
       createdAt: task.createdAt,
