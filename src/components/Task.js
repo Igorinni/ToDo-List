@@ -1,6 +1,6 @@
 import { MdDeleteForever } from "react-icons/md";
 import { useState } from "react";
-import { saveСhangedTitleTask } from "/home/oem/Desktop/todo/src/services/api.js"
+import { saveСhangedTitleTask } from "../services/RequestApi.js"
 
 function Task({task, deleteTask, checkTask, getTasks}) {
 
