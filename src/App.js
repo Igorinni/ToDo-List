@@ -8,8 +8,8 @@ import axios from 'axios';
 
 function App() {
   
-  const [displayTasks, setDisplayTasks] = useState([])
-  const [amountTask, setAmountTask] = useState(0)
+  const [displayTasks, setDisplayTasks] = useState([]);
+  const [amountTask, setAmountTask] = useState(0);
 
   const [nowPage, setNowPage] = useState(1);
   const limit = 5;
@@ -27,26 +27,26 @@ function App() {
           pp: limit,
           page: nowPage,
         }
-      }) 
-      setDisplayTasks(response.data.tasks)
-      setAmountTask(response.data.count)
+      });
+      setDisplayTasks(response.data.tasks);
+      setAmountTask(response.data.count);
     } catch (error){
-      console.log("У вас ошибка: " + error)
+      console.log("У вас ошибка: " + error);
     }
   }
 
   useEffect( () => {
-    getTasks()
+    getTasks();
   }, [filter, sort, nowPage])
 
   async function addTask(newTask){
-    await axios.post('https://todo-api-learning.herokuapp.com/v1/task/3', newTask) 
-    getTasks()
+    await axios.post('https://todo-api-learning.herokuapp.com/v1/task/3', newTask);
+    getTasks();
   }
 
   function filterTasks(value) {
     setValueFilter(value);
-    setNowPage(1)
+    setNowPage(1);
   }
 
   function sortTasks(condition) {
@@ -54,8 +54,8 @@ function App() {
   }
 
   async function deleteTask(id) {
-    await axios.delete(`https://todo-api-learning.herokuapp.com/v1/task/3/${id}`)
-    getTasks()
+    await axios.delete(`https://todo-api-learning.herokuapp.com/v1/task/3/${id}`);
+    getTasks();
   }
 
   async function checkTask(task) {
@@ -64,19 +64,19 @@ function App() {
       done: !task.done,
       createdAt: task.createdAt,
       updatedAt: task.updatedAt,
-   })
-   getTasks()
+   });
+   getTasks();
   }
 
 
   let pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(amountTask / limit); i++) {
-    pageNumbers.push(i)
+    pageNumbers.push(i);
   }
 
   if (displayTasks === 0 && nowPage > 1) {
-    setNowPage(nowPage - 1)
+    setNowPage(nowPage - 1);
   }
 
   return (

@@ -10,11 +10,11 @@ function TaskList({displayTasks, deleteTask, checkTask, getTasks}) {
   const changeTitleTask = (id) => {
     let editTask = displayTasks.find(item => item.uuid === id);
     if (editTask.edit) {
-      delete editTask.edit
-      setValueTask('')
+      delete editTask.edit;
+      setValueTask('');
     } else {
       editTask.edit = true;
-      setValueTask(editTask.name)
+      setValueTask(editTask.name);
     }
   }
 
@@ -29,8 +29,8 @@ function TaskList({displayTasks, deleteTask, checkTask, getTasks}) {
       done: editTask.done,
       createdAt: editTask.createdAt,
       updatedAt: editTask.updatedAt,
-    })
-   getTasks()
+    });
+    getTasks();
   }
 
     return (
