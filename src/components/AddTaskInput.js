@@ -1,25 +1,23 @@
 import { useState } from "react";
 
-function AddTaskInput({tasks, setTasks}) {
+function AddTaskInput({tasks, handleTaskChange}) {
 
-  const [value, setValue] = useState('')
-
-  const handleValueChange = (e) => setValue(e.target.value)
+  const [value, setValue] = useState('');
+  const handleValueChange = (e) => setValue(e.target.value);
 
   function saveTask(){
     if (value.trim() === '') return;
     const date = new Date();
-    const id = tasks.length === 0 ? 1 : tasks[tasks.length - 1].id + 1
+    const id = tasks.length === 0 ? 1 : tasks[tasks.length - 1].id + 1;
     const task = {
       id: id,
       title: value,
       completed: false,
       date: date.getTime(),        
-    }
+    };
     const newTasks = [...tasks, task];
-    setTasks(newTasks);
+    handleTaskChange(newTasks);
     setValue('');
-
   }
 
   return (

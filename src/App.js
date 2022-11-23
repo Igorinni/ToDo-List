@@ -7,68 +7,63 @@ import Pagination from "./components/Pagination";
 
 function App() {
   
-  const [tasks, setTasks] = useState([])
-  const handleTaskChange = (value) => { setTasks(value) }
+  const [tasks, setTasks] = useState([]);
+  const handleTaskChange = (value) => { setTasks(value) };
 
-  const [nowPage, setNowPage] = useState(1);
-  const limit = 5;
-  const [valueFilter, setValueFilter] = useState('All');
-  const [sort, setSort] = useState('old');
-  const [paginationArray, setPaginationArray] = useState(tasks)
+  const [currentPage, setСurrentPage] = useState(1);
+  const taskLimitPerPage = 5;
+  const [paginationArray, setPaginationArray] = useState(tasks);
+  const [valueToFilter, setValueToFilter] = useState('All');
+  const handleValueToFilter = (value) => {
+    setValueToFilter(value);
+    setСurrentPage(1);
+  }
+  const [valueToSort, setValueToSort] = useState('old');
+  const handleValueToSort = (value) => setValueToSort(value)
 
   
+  const arrayToDisplayTasks = useMemo(() => {
+    const lastTask = taskLimitPerPage * currentPage;
+    const firstTask = lastTask - taskLimitPerPage;
+    let displayTasks = [];
 
-  const displayTasks = useMemo(() => {
-    const lastTask = limit * nowPage
-    const firstTask = lastTask - limit;
-    let kek = [];
-
-    if (valueFilter === 'All') {
+    if (valueToFilter === 'All') {
       
-      kek = sortingArray(tasks).slice(firstTask, lastTask);
-      setPaginationArray(tasks)
+      displayTasks = sortingArray(tasks).slice(firstTask, lastTask);
+      setPaginationArray(tasks);
 
     } else {
 
-      const array = [...tasks].filter(elem => elem.completed === valueFilter)
-      kek = sortingArray(array).slice(firstTask, lastTask)
-      setPaginationArray(array)
+      const array = [...tasks].filter(elem => elem.completed === valueToFilter);
+      displayTasks = sortingArray(array).slice(firstTask, lastTask);
+      setPaginationArray(array);
 
     }
 
-    return kek;
-  }, [tasks, nowPage, valueFilter, sort])
+    return displayTasks;
+  }, [tasks, currentPage, valueToFilter, valueToSort])
 
 
-  function deleteTask(id) {
+  const deleteTask = (id) => {
     const newTasks = [...tasks].filter(elem => elem.id !== id);
     setTasks(newTasks);
   }
 
-  function checkTask(id) {
-    const newTasks = [...tasks]
-    newTasks.forEach(elem => elem.id === id && (elem.completed = !elem.completed))
-    setTasks(newTasks)
-  }
-
-  function filterTasks(value) {
-    setValueFilter(value)
-    setNowPage(1)
-  }
-
-  function sortTasks(condition) {
-    setSort(condition);
+  const checkTask = (id) => {
+    const newTasks = [...tasks];
+    newTasks.forEach(elem => elem.id === id && (elem.completed = !elem.completed));
+    setTasks(newTasks);
   }
 
   function sortingArray(array) {
     const newArray = [...array];
     newArray.sort((a, b) => {
-      if (sort === 'old') {
+      if (valueToSort === 'old') {
         if (a.date < b.date) return 1;
         if (a.date === b.date) return 0;
         if (a.date > b.date) return -1;
       }
-      if (sort === 'new') {
+      if (valueToSort === 'new') {
         if (a.date > b.date) return 1;
         if (a.date === b.date) return 0;
         if (a.date < b.date) return -1;
@@ -77,17 +72,17 @@ function App() {
     return newArray;
   }
 
-  if (displayTasks == 0 && nowPage > 1) {
-    setNowPage(nowPage - 1)
+  if (arrayToDisplayTasks == 0 && currentPage > 1) {
+    setСurrentPage(currentPage - 1);
   }
 
   return (
     <div className="App">
       <Header />
-      <AddTaskInput tasks={tasks} setTasks={handleTaskChange} />
-      <ButtonFilterAndSort filterTasks={filterTasks} sort={sort} sortTasks={sortTasks} valueFilter={valueFilter} />
-      <TaskList displayTasks={displayTasks} deleteTask={deleteTask} checkTask={checkTask} totalTasks={tasks} />
-      <Pagination setNowPage={setNowPage} nowPage={nowPage} tasks={displayTasks} paginationArray={paginationArray} limit={limit} />
+      <AddTaskInput tasks={tasks} handleTaskChange={handleTaskChange} />
+      <ButtonFilterAndSort handleValueToFilter={handleValueToFilter} valueToSort={valueToSort} handleValueToSort={handleValueToSort} valueToFilter={valueToFilter} />
+      <TaskList arrayToDisplayTasks={arrayToDisplayTasks} deleteTask={deleteTask} checkTask={checkTask} />
+      <Pagination setСurrentPage={setСurrentPage} currentPage={currentPage} arrayToDisplayTasks={arrayToDisplayTasks} paginationArray={paginationArray} taskLimitPerPage={taskLimitPerPage} />
     </div>
   );
 }
