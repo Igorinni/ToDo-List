@@ -4,10 +4,10 @@ import TaskList from "./components/TaskList";
 import { useEffect, useState } from "react";
 import ButtonFilterAndSort from "./components/ButtonFilterAndSort";
 import Pagination from "./components/Pagination";
+import axios from 'axios';
 
 function App() {
   
-
   const [arrayToDisplayTasks, setArrayToDisplayTasks] = useState([]);
   const [amountTask, setAmountTask] = useState(0);
 
