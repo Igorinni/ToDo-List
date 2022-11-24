@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 
-function AddTaskInput({addTask}) {
+function AddTaskInput({addTask, loadingPage}) {
 
   const [value, setValue] = useState('');
   const handleValueChange = (e) => setValue(e.target.value);
@@ -26,7 +26,9 @@ function AddTaskInput({addTask}) {
         onChange={handleValueChange} className="addInput" 
         placeholder="Enter a task..." 
       ></input>
+      {!loadingPage &&
       <button className="addButton" onClick={saveTask}>Add</button>
+      }
     </div>
   );
 }

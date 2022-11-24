@@ -2,7 +2,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { useState } from "react";
 import { saveСhangedTitleTask } from "../services/RequestApi.js"
 
-function Task({task, deleteTask, checkTask, getTasks}) {
+function Task({task, deleteTask, checkTask, getTasks, loadingPage}) {
 
   const date = task.createdAt ? new Date(task.createdAt) : '';
 
@@ -15,7 +15,6 @@ function Task({task, deleteTask, checkTask, getTasks}) {
     getTasks();
     handleEditStatus();
   }
-
 
   return (
     <div className={task.done ? "task taskCompleted" : "task" }>
@@ -36,7 +35,9 @@ function Task({task, deleteTask, checkTask, getTasks}) {
           <span>{[date.getHours(), date.getMinutes(), date.getSeconds()].map( x => x <  10 ? '0' + x : x ).join(':')}</span>
         </p>
       }
-      <button  className="deleteButton" onClick={() => deleteTask(task.uuid)}><MdDeleteForever /></button>
+      {!loadingPage &&
+      <button className="deleteButton" onClick={() => deleteTask(task.uuid)}><MdDeleteForever /></button>
+      }
     </div>
   )
 }

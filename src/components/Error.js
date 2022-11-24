@@ -1,8 +1,10 @@
 
-function Error({errorText}) {
+function Error({errorText, handleErrorText }) {
+
+    setTimeout( () => handleErrorText(''), 3000);
+
     return (
         <div className="errorAdd">
-            <button className="errorBbutton">X</button>
             <p>{errorText}</p>
         </div>
     )
