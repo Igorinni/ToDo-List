@@ -264,3 +264,18 @@ h1{
 .activePage{
     background-color: rgba(0, 84, 153, 0.192);
 }
+
+.errorAdd{
+    position: absolute;
+    background-color: rgb(252, 227, 9);
+    color: rgb(190, 7, 7);
+    padding: 10px;
+    margin: -70px auto;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    max-width: 590px;
+}
+.errorBbutton{
+    float: right;
+}

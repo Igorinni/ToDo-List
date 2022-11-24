@@ -1,6 +1,7 @@
 import Header from "./components/Header";
 import AddTaskInput from "./components/AddTaskInput";
 import TaskList from "./components/TaskList";
+import Error from "./components/Error";
 import { useEffect, useState } from "react";
 import ButtonFilterAndSort from "./components/ButtonFilterAndSort";
 import Pagination from "./components/Pagination";
@@ -19,7 +20,12 @@ function App() {
     setСurrentPage(1);
   }
   const [valueToSort, setValueToSort] = useState('asc');
-  const handleValueToSort = (value) => setValueToSort(value)
+  const handleValueToSort = (value) => setValueToSort(value);
+  const [errorText, setErrorText] = useState('');
+  const handleErrorText = (text) => {
+    setErrorText(text);
+    // setTimeout(() => handleErrorText(''), 10000);
+  }
 
   const getTasks = async () => {
     try{
@@ -27,7 +33,7 @@ function App() {
       setArrayToDisplayTasks(data.tasks);
       setAmountTask(data.count);
     } catch (error){
-      console.log("У вас ошибка: " + error);
+      handleErrorText(`Что-то пошло не так. ${error}`);
     }
   }
 
@@ -35,27 +41,45 @@ function App() {
     getTasks();
   }, [valueToFilter, valueToSort, currentPage])
 
+
   const addTask = async (newTask) => {
-    await createTask(newTask);
-    getTasks();
+    try {
+      await createTask(newTask);
+      getTasks();
+    } catch (error) {
+      handleErrorText(`Такое задание уже существует. ${error}`);
+    }
+    
   }
 
   const deleteTask = async (id) => {
-    await removeTask(id);
-    getTasks();
+    try {
+      await removeTask(id);
+      getTasks();
+    } catch (error) {
+      handleErrorText(`Слишком быстро удаляете. ${error}`);
+    }
+    
   }
 
   const checkTask = async (task) => {
-    await saveStateTask(task);
-    getTasks();
+    try {
+      await saveStateTask(task);
+      getTasks();
+    } catch (error) {
+      handleErrorText(`Что-то пошло не так при измении статуса задачи. ${error}`);
+    }
+    
   }
 
   if (arrayToDisplayTasks == 0 && currentPage > 1) {
     setСurrentPage(currentPage - 1);
   }
 
+
   return (
     <div className="App">
+      {errorText && <Error errorText={errorText} />}
       <Header />
       <AddTaskInput addTask={addTask} />
       <ButtonFilterAndSort valueToFilter={valueToFilter} handleValueToFilter={handleValueToFilter} valueToSort={valueToSort} handleValueToSort={handleValueToSort} />

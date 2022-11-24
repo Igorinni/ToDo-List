@@ -10,9 +10,8 @@ function Task({task, deleteTask, checkTask, getTasks}) {
   const [editStatus, setEditStatus] = useState(false);
   const handleEditStatus = () => setEditStatus(!editStatus);
 
-  const saveСhangedTitle = async () => { 
-    const newTitleTask = document.querySelector('.inputEditTask').value;
-    await saveСhangedTitleTask(newTitleTask, task);
+  const saveСhangedTitle = async (e) => { 
+    await saveСhangedTitleTask(e.target.value, task);
     getTasks();
     handleEditStatus();
   }
@@ -25,7 +24,7 @@ function Task({task, deleteTask, checkTask, getTasks}) {
         {editStatus 
           ? <input className="inputEditTask" autoFocus defaultValue={task.name} onBlur={handleEditStatus}
               onKeyDown={(e) => {
-                if (e.code === 'Enter' || e.key === 13) saveСhangedTitle()
+                if (e.code === 'Enter' || e.key === 13) saveСhangedTitle(e)
                 if (e.code === 'Escape') handleEditStatus()
               }}
             ></input>
