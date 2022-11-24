@@ -4,6 +4,10 @@ const axiosGetTasks = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL + process.env.REACT_APP_SECTION_TASKS,
 })
 
+const axiosActionOnTask = axios.create({
+    baseURL: process.env.REACT_APP_BASE_URL + process.env.REACT_APP_SECTION_TASK,
+})
+
 export const getArrayTasks = (valueToFilter, valueToSort, taskLimitPerPage, currentPage,) => {
     return axiosGetTasks.get(process.env.REACT_APP_USER_ID, {
         params: {
@@ -19,15 +23,15 @@ export const getArrayTasks = (valueToFilter, valueToSort, taskLimitPerPage, curr
 }
 
 export const createTask = (newTask) => {
-    return axios.post(process.env.REACT_APP_BASE_URL + process.env.REACT_APP_SECTION_TASK + process.env.REACT_APP_USER_ID, newTask);
+    return axiosActionOnTask.post(process.env.REACT_APP_USER_ID, newTask);
 }
 
 export const removeTask = (id) => {
-    return axios.delete(process.env.REACT_APP_BASE_URL + process.env.REACT_APP_SECTION_TASK + process.env.REACT_APP_USER_ID_SLASH + id);
+    return axiosActionOnTask.delete(process.env.REACT_APP_USER_ID_SLASH + id);
 }
 
 export const saveStateTask = (task) => {
-    return axios.patch(process.env.REACT_APP_BASE_URL + process.env.REACT_APP_SECTION_TASK + process.env.REACT_APP_USER_ID_SLASH + task.uuid, {
+    return axiosActionOnTask.patch(process.env.REACT_APP_USER_ID_SLASH + task.uuid, {
         name: task.name,
         done: !task.done,
         createdAt: task.createdAt,
@@ -36,7 +40,7 @@ export const saveStateTask = (task) => {
 }
 
 export const saveСhangedTitleTask = (newTitleTask, task) => {
-    return axios.patch(process.env.REACT_APP_BASE_URL + process.env.REACT_APP_SECTION_TASK + process.env.REACT_APP_USER_ID_SLASH + task.uuid, {
+    return axiosActionOnTask.patch(process.env.REACT_APP_USER_ID_SLASH + task.uuid, {
       name: newTitleTask,
       done: task.done,
       createdAt: task.createdAt,
