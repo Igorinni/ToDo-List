@@ -108,7 +108,9 @@ h1{
 }
 .dateTask{
     font-size: 18px;
-    flex-basis: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 .deleteButton{
     display: flex;
@@ -144,6 +146,9 @@ h1{
 }
 .inputEditTask{
     width: 80%;
+    border-radius: 4px;
+    font-size: 18px;
+    color: rgb(47, 22, 87);
 }
 .iconSaveEditTask{
     margin-left: 20px;
