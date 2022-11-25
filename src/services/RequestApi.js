@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
 })
 
 
-export const getArrayTasks = ({valueToFilter, valueToSort, taskLimitPerPage, currentPage}) => {
+export const getArrayTasks = (valueToFilter, valueToSort, taskLimitPerPage, currentPage,) => {
     return axiosInstance.get(`tasks/${process.env.REACT_APP_USER_ID}`, {
         params: {
             filterBy: valueToFilter,

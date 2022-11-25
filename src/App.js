@@ -9,22 +9,22 @@ import { getArrayTasks, createTask, removeTask, saveStateTask } from "./services
 
 function App() {
 
-  const [arrayToDisplayTasks, setArrayToDisplayTasks] = useState([]);
-  const [amountTask, setAmountTask] = useState(0);
+  const [tasksList, setTasksList] = useState([]);
+  const [taskAmount, setTaskAmount] = useState(0);
 
   const [currentPage, setСurrentPage] = useState(1);
   const taskLimitPerPage = 5;
 
-  const [filteringValue, setFilteringValue] = useState('');
-  const handleFilteringValue = (value) => {
-      setFilteringValue(value);
+  const [filteringBy, setFilteringBy] = useState(''); //
+  const handleFilteringBy = (value) => {
+      setFilteringBy(value);
       setСurrentPage(1);
   }
 
-  const [sortingValue, setSortingValue] = useState('asc');
-  const handleSortingValue = (value) => setSortingValue(value);
+  const [sortingBy, setSortingBy] = useState('asc'); //
+  const handleSortingBy = (value) => setSortingBy(value);
 
-  const [loadingPage, setLoadingPage] = useState(false);
+  const [loadingPage, setLoadingPage] = useState(false); //
 
   const [errorText, setErrorText] = useState('');
   const handleErrorText = (text) => {
@@ -43,10 +43,10 @@ function App() {
 
 
   function getTasks () {
-    requestProcessing(getArrayTasks({filteringValue, sortingValue, taskLimitPerPage, currentPage}))
+    requestProcessing(getArrayTasks({filteringBy, sortingBy, taskLimitPerPage, currentPage}))
       .then( response => {
-        setArrayToDisplayTasks(response.tasks);
-        setAmountTask(response.count)})
+        setTasksList(response.tasks);
+        setTaskAmount(response.count)})
   }
 
   function addTask (newTask) {
@@ -67,7 +67,7 @@ function App() {
 
   useEffect( () => {
     getTasks();
-  }, [filteringValue, sortingValue, currentPage])
+  }, [filteringBy, sortingBy, currentPage])
 
   useEffect( () => {
     errorText != '' && setTimeout( () => handleErrorText(''), 3000);
@@ -75,7 +75,7 @@ function App() {
   
 
 
-  if (arrayToDisplayTasks == 0 && currentPage > 1) {
+  if (tasksList.length == 0 && currentPage > 1) {
     setСurrentPage(currentPage - 1);
   }
 
@@ -85,9 +85,9 @@ function App() {
       {errorText && <Error errorText={errorText} handleErrorText={handleErrorText}  />}
       <Header />
       <AddTaskInput addTask={addTask} loadingPage={loadingPage} />
-      <ButtonFilterAndSort filteringValue={filteringValue} handleFilteringValue={handleFilteringValue} sortingValue={sortingValue} handleSortingValue={handleSortingValue} /> 
-      <TaskList arrayToDisplayTasks={arrayToDisplayTasks} deleteTask={deleteTask} checkTask={checkTask} getTasks={getTasks} loadingPage={loadingPage} />
-      <Pagination  currentPage={currentPage} setСurrentPage={setСurrentPage} taskLimitPerPage={taskLimitPerPage} amountTask={amountTask} arrayToDisplayTasks={arrayToDisplayTasks} />
+      <ButtonFilterAndSort filteringBy={filteringBy} handleFilteringBy={handleFilteringBy} sortingBy={sortingBy} handleSortingBy={handleSortingBy} /> 
+      <TaskList tasksList={tasksList} deleteTask={deleteTask} checkTask={checkTask} getTasks={getTasks} loadingPage={loadingPage} />
+      <Pagination  currentPage={currentPage} setСurrentPage={setСurrentPage} taskLimitPerPage={taskLimitPerPage} taskAmount={taskAmount} tasksList={tasksList} />
     </div>
   );
 }

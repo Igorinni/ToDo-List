@@ -1,10 +1,10 @@
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
-function Pagination({setСurrentPage, currentPage, amountTask, taskLimitPerPage, arrayToDisplayTasks}) {
+function Pagination({setСurrentPage, currentPage, taskAmount, taskLimitPerPage, tasksList}) {
 
   const pageNumbers = [];
 
-  for (let i = 1; i <= Math.ceil(amountTask / taskLimitPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(taskAmount / taskLimitPerPage); i++) {
     pageNumbers.push(i)
   }
 
@@ -21,7 +21,7 @@ function Pagination({setСurrentPage, currentPage, amountTask, taskLimitPerPage,
   }  
  
   return (
-    arrayToDisplayTasks.length == 0 || pageNumbers.length === 1 ? ' ' :
+    tasksList.length == 0 || pageNumbers.length === 1 ? ' ' :
     <div className="paginationButtons">
       {currentPage >= 2 && <button className="buttonPaginationArrow" onClick={() => goToPage("Left")}><IoIosArrowBack /></button>}
       {currentPage > 2 && <button className={1 === currentPage ? "buttonPagination activePage" : "buttonPagination"} key={1}
