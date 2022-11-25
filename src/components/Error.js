@@ -1,10 +1,8 @@
 
-function Error({errorText, handleErrorText }) {
-
-    setTimeout( () => handleErrorText(''), 3000);
+function Error({errorText}) {
 
     return (
-        <div className="errorAdd">
+        <div className="errorModal">
             <p>{errorText}</p>
         </div>
     )

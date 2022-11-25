@@ -26,9 +26,7 @@ function AddTaskInput({addTask, loadingPage}) {
         onChange={handleValueChange} className="addInput" 
         placeholder="Enter a task..." 
       ></input>
-      {!loadingPage &&
-      <button className="addButton" onClick={saveTask}>Add</button>
-      }
+      <button disabled={loadingPage} style={{opacity: loadingPage && 0.5}} className="addButton" onClick={saveTask}>Add</button>
     </div>
   );
 }

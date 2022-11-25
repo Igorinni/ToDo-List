@@ -35,9 +35,7 @@ function Task({task, deleteTask, checkTask, getTasks, loadingPage}) {
           <span>{[date.getHours(), date.getMinutes(), date.getSeconds()].map( x => x <  10 ? '0' + x : x ).join(':')}</span>
         </p>
       }
-      {!loadingPage &&
-      <button className="deleteButton" onClick={() => deleteTask(task.uuid)}><MdDeleteForever /></button>
-      }
+      <button disabled={loadingPage} style={{opacity: loadingPage && 0.5}} className="deleteButton" onClick={() => deleteTask(task.uuid)}><MdDeleteForever /></button>
     </div>
   )
 }

@@ -21,7 +21,7 @@ function Pagination({setСurrentPage, currentPage, amountTask, taskLimitPerPage,
   }  
  
   return (
-    arrayToDisplayTasks.length == 0 ? ' ' :
+    arrayToDisplayTasks.length == 0 || pageNumbers.length === 1 ? ' ' :
     <div className="paginationButtons">
       {currentPage >= 2 && <button className="buttonPaginationArrow" onClick={() => goToPage("Left")}><IoIosArrowBack /></button>}
       {currentPage > 2 && <button className={1 === currentPage ? "buttonPagination activePage" : "buttonPagination"} key={1}
@@ -29,7 +29,6 @@ function Pagination({setСurrentPage, currentPage, amountTask, taskLimitPerPage,
       {currentPage > 3 && <button className="buttonPaginationPoints">...</button>}
 
       {pageNumbers.map((item) => {
-        
         if (item === currentPage || item === currentPage - 1 || item === currentPage + 1) {
           return (
           <button className={item === currentPage ? "buttonPagination activePage" : "buttonPagination"} key={item}

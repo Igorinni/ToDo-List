@@ -15,14 +15,14 @@ function App() {
   const [currentPage, setСurrentPage] = useState(1);
   const taskLimitPerPage = 5;
 
-  const [valueToFilter, setValueToFilter] = useState('');
-  const handleValueToFilter = (value) => {
-      setValueToFilter(value);
+  const [filteringValue, setFilteringValue] = useState('');
+  const handleFilteringValue = (value) => {
+      setFilteringValue(value);
       setСurrentPage(1);
   }
 
-  const [valueToSort, setValueToSort] = useState('asc');
-  const handleValueToSort = (value) => setValueToSort(value);
+  const [sortingValue, setSortingValue] = useState('asc');
+  const handleSortingValue = (value) => setSortingValue(value);
 
   const [loadingPage, setLoadingPage] = useState(false);
 
@@ -32,45 +32,47 @@ function App() {
   }
 
 
-  function requestProcessing(promise, status = null) {
+  function requestProcessing(promise) {
     setLoadingPage(true);
     return promise
       .catch(error => {
-        status === 'get' && setErrorText(`Что-то пошло не так. ${error}`);
-        status === 'add' && setErrorText(`Такое задание уже существует. ${error}`);
-        status === 'del' && setErrorText(`Слишком быстро удаляете. ${error}`);
-        status === 'check' && setErrorText(`Что-то пошло не так при измении статуса задачи. ${error}`);
+        setErrorText(error.response.data.message);
       })
       .finally( () => setLoadingPage(false) )
   }
 
 
   function getTasks () {
-    requestProcessing(getArrayTasks(valueToFilter, valueToSort, taskLimitPerPage, currentPage), 'get')
+    requestProcessing(getArrayTasks({filteringValue, sortingValue, taskLimitPerPage, currentPage}))
       .then( response => {
         setArrayToDisplayTasks(response.tasks);
         setAmountTask(response.count)})
   }
 
   function addTask (newTask) {
-    requestProcessing(createTask(newTask), 'add')
+    requestProcessing(createTask(newTask))
       .then( () => getTasks())
   }
  
   const deleteTask = (id) => {
-    requestProcessing(removeTask(id), 'del')
+    requestProcessing(removeTask(id))
       .then( () => getTasks())
   }
 
   const checkTask = (task) => {
-    requestProcessing(saveStateTask(task), 'check')
+    requestProcessing(saveStateTask(task))
       .then( () => getTasks())
   }
 
 
   useEffect( () => {
     getTasks();
-  }, [valueToFilter, valueToSort, currentPage])
+  }, [filteringValue, sortingValue, currentPage])
+
+  useEffect( () => {
+    errorText != '' && setTimeout( () => handleErrorText(''), 3000);
+  },  [errorText] )
+  
 
 
   if (arrayToDisplayTasks == 0 && currentPage > 1) {
@@ -83,7 +85,7 @@ function App() {
       {errorText && <Error errorText={errorText} handleErrorText={handleErrorText}  />}
       <Header />
       <AddTaskInput addTask={addTask} loadingPage={loadingPage} />
-      <ButtonFilterAndSort valueToFilter={valueToFilter} handleValueToFilter={handleValueToFilter} valueToSort={valueToSort} handleValueToSort={handleValueToSort} />
+      <ButtonFilterAndSort filteringValue={filteringValue} handleFilteringValue={handleFilteringValue} sortingValue={sortingValue} handleSortingValue={handleSortingValue} /> 
       <TaskList arrayToDisplayTasks={arrayToDisplayTasks} deleteTask={deleteTask} checkTask={checkTask} getTasks={getTasks} loadingPage={loadingPage} />
       <Pagination  currentPage={currentPage} setСurrentPage={setСurrentPage} taskLimitPerPage={taskLimitPerPage} amountTask={amountTask} arrayToDisplayTasks={arrayToDisplayTasks} />
     </div>

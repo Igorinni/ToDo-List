@@ -265,21 +265,17 @@ h1{
     background-color: rgba(0, 84, 153, 0.192);
 }
 
-.errorAdd{
+.errorModal{
     position: absolute;
     background-color: rgb(252, 227, 9);
     color: rgb(190, 7, 7);
-    padding: 10px;
-    margin: -70px auto;
+    padding: 10px 50px;
+    margin: -50px 0px 0px 100px;
     border-radius: 5px;
     font-size: 16px;
     text-align: center;
     max-width: 590px;
 }
-.errorBbutton{
-    float: right;
-}
-
 .errorBoundary{
     font-size: 18px;
     background: rgba(250, 192, 3, 0.418);

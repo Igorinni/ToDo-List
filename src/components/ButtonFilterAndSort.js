@@ -1,17 +1,17 @@
 import { FaArrowCircleUp, FaArrowCircleDown } from "react-icons/fa";
 
-function ButtonFilterAndSort({valueToFilter, handleValueToFilter, valueToSort, handleValueToSort}) {
+function ButtonFilterAndSort({filteringValue, handleFilteringValue, sortingValue, handleSortingValue}) {
   return (
     <div className="filterAndSort">
         <ul className="boxFilterButtons">
-          <li><button className={valueToFilter === '' ? "buttonFilter activeButtonFilter" : "buttonFilter"} onClick={() => handleValueToFilter('')}>All</button></li>
-          <li><button className={valueToFilter === 'done' ? "buttonFilter activeButtonFilter" : "buttonFilter"} onClick={() => handleValueToFilter('done')}>Done</button></li>
-          <li><button className={valueToFilter === 'undone' ? "buttonFilter activeButtonFilter" : "buttonFilter"} onClick={() => handleValueToFilter('undone')}>Undone</button></li>
+          <li><button className={filteringValue === '' ? "buttonFilter activeButtonFilter" : "buttonFilter"} onClick={() => handleFilteringValue('')}>All</button></li>
+          <li><button className={filteringValue === 'done' ? "buttonFilter activeButtonFilter" : "buttonFilter"} onClick={() => handleFilteringValue('done')}>Done</button></li>
+          <li><button className={filteringValue === 'undone' ? "buttonFilter activeButtonFilter" : "buttonFilter"} onClick={() => handleFilteringValue('undone')}>Undone</button></li>
         </ul>
         <ul className="sortTask">
           <li>Sort by Date</li>
-          <li><button className={valueToSort === 'asc' ? "sortUp sortActive" : "sortUp"} onClick={() => handleValueToSort('asc')}><FaArrowCircleUp /></button></li>
-          <li><button className={valueToSort === 'desc' ? "sortDown sortActive" : "sortDown"} onClick={() => handleValueToSort('desc')}><FaArrowCircleDown /></button></li>
+          <li><button className={sortingValue === 'asc' ? "sortUp sortActive" : "sortUp"} onClick={() => handleSortingValue('asc')}><FaArrowCircleUp /></button></li>
+          <li><button className={sortingValue === 'desc' ? "sortDown sortActive" : "sortDown"} onClick={() => handleSortingValue('desc')}><FaArrowCircleDown /></button></li>
         </ul>
       </div>
   );
