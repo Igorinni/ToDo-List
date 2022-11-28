@@ -1,9 +1,12 @@
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, useMediaQuery } from "@chakra-ui/react";
 import { FaArrowCircleUp, FaArrowCircleDown } from "react-icons/fa";
 
 function ButtonFilterAndSort({filteringBy, handleFilteringBy, sortingBy, handleSortingBy}) {
+  
+  const [isLessThan512] = useMediaQuery('(max-width: 512px)')
+
   return (
-    <Box display='flex' justifyContent='space-between' flexWrap='wrap' alignItems='center'>
+    <Box display='flex' justifyContent={isLessThan512 ? 'center' : 'space-between'} flexWrap='wrap' alignItems='center'>
 
         <ButtonGroup m='2'>
         
@@ -16,6 +19,7 @@ function ButtonFilterAndSort({filteringBy, handleFilteringBy, sortingBy, handleS
         <Button onClick={() => sortingBy === 'desc' ? handleSortingBy('asc') : handleSortingBy('desc')}
         bg='#8ec4dd3a' color='rgba(91, 32, 139, 0.719)' fontSize='18'
         px='8'py='6' transitionDuration='300ms' fontStyle='italic' 
+        mt={isLessThan512 && 1}
         rightIcon={<>
           <FaArrowCircleUp transform="scale(1.2)" color={sortingBy === 'asc' ? 'rgba(82, 11, 196, 0.918)' : 'rgba(91, 32, 139, 0.719)'}  />
           <FaArrowCircleDown transform="scale(1.2)" color={sortingBy === 'desc' ? 'rgba(82, 11, 196, 0.918)' : 'rgba(91, 32, 139, 0.719)'}  />

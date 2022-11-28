@@ -6,7 +6,11 @@ const theme = extendTheme({
         
         body: {
             bgGradient: 'linear-gradient(45deg, #c3c4fa, #c6f3d9)',
+            backgroundRepeat: 'initial',
+            height: '100%',
             color: 'white',
+            overflowY: 'scroll',
+            backgroundAttachment: 'fixed',
         },
         
         a: {
@@ -25,6 +29,7 @@ const theme = extendTheme({
         },
       },
     },
+
 })
 
 export default theme;

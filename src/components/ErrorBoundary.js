@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Heading, Accordion, AccordionItem, AccordionButton, AccordionIcon } from '@chakra-ui/react';
+import { Box, Heading, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel } from '@chakra-ui/react';
 
 class ErrorBoundary extends React.Component {
     constructor(props) {

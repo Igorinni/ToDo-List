@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Input, transform } from "@chakra-ui/react";
+import { Box, Button, Flex, Input, transform, useMediaQuery } from "@chakra-ui/react";
 import { useState } from "react";
 
 function AddTaskInput({addTask, loadingPage}) {
@@ -20,6 +20,8 @@ function AddTaskInput({addTask, loadingPage}) {
     setValue('');
   }
 
+  const [isLessThan550] = useMediaQuery('(max-width: 596px)')
+
   return (
     <Box w='100%' bg='white' borderRadius='7' m='1' p='1.5'>
       <Flex justifyContent='space-between' alignItems='center' flexWrap='wrap'>
@@ -33,6 +35,7 @@ function AddTaskInput({addTask, loadingPage}) {
         <Button disabled={loadingPage} onClick={saveTask}
         fontSize='20' bg='rgb(113, 199, 192)' px='35' transitionDuration='300ms'
         isLoading={loadingPage && true} _hover={{transform: 'scale(1.1)'}}
+        width={isLessThan550 && '100%'}
         >Add</Button>
 
       </Flex>
