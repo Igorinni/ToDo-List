@@ -17,11 +17,11 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
 /*--------------------*/
 
 body {
-    background: linear-gradient(45deg, #a88eca, #8ec4dd);
+    background: linear-gradient(45deg, #c3c4fa, #c6f3d9);
 
 }
 
-.App{
+/* .App{
     margin: 80px auto;
     max-width: 600px;
     padding: 5px 5px;
@@ -29,28 +29,25 @@ body {
     background-color: #ffffffb0;
     border-radius: 6px;
     font-family: 'Playfair Display', serif;
-}
+} */
 
 
-.header{
+/* .header{
     display: flex;
     align-items: center;
     justify-content: center;
     font-style: italic;
     padding: 20px 0px;
-}
-h1{
-    font-size: 50px;
-    color: rgb(33, 53, 58);
-}
-.iconHeader{
+} */
+
+/* .iconHeader{
     margin: 0px 20px;
     font-size: 25px;
-    color: rgb(55, 100, 110);
-}
+    color: #9728ca;
+} */
 
 
-
+/* 
 .addTask{
     display: flex;
     justify-content: space-between;
@@ -61,22 +58,22 @@ h1{
     margin: 10px 10px;
     padding: 6px;
     
-}
+} */
 
-.addInput{
+/* .addInput{
     width: 80%;
     font-size: 22px;
-}
-.addButton{
+} */
+/* .addButton{
     font-size: 18px;
     padding: 3.5px 30px;
     background-color: rgb(113, 199, 192);
     border-radius: 5px;
     transition-duration: 300ms;
-}
-.addButton:hover{
+} */
+/* .addButton:hover{
     transform: scale(1.1);
-}
+} */
 
 
 

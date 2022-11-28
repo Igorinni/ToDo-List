@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import ButtonFilterAndSort from "./components/ButtonFilterAndSort";
 import Pagination from "./components/Pagination";
 import { getArrayTasks, createTask, removeTask, saveStateTask } from "./services/RequestApi";
+import { ChakraProvider, Box } from '@chakra-ui/react';
+import theme from "./styles/theme";
+
 
 function App() {
 
@@ -81,15 +84,19 @@ function App() {
 
 
   return (
-    <div className="App">
-      {errorText && <Error errorText={errorText} handleErrorText={handleErrorText}  />}
-      <Header />
-      <AddTaskInput addTask={addTask} loadingPage={loadingPage} />
-      <ButtonFilterAndSort filteringBy={filteringBy} handleFilteringBy={handleFilteringBy} sortingBy={sortingBy} handleSortingBy={handleSortingBy} /> 
-      <TaskList tasksList={tasksList} deleteTask={deleteTask} checkTask={checkTask} getTasks={getTasks} loadingPage={loadingPage} />
-      <Pagination  currentPage={currentPage} setСurrentPage={setСurrentPage} taskLimitPerPage={taskLimitPerPage} taskAmount={taskAmount} tasksList={tasksList} />
-    </div>
-  );
+    <ChakraProvider theme={theme}>
+      
+      <Box w='100%' h='100%' bg='#ffffffb0' p='5' my='20' mx='auto' maxW='600'
+      textAlign='center' borderRadius='10' fontFamily='Playfair Display' >
+          {errorText && <Error errorText={errorText} handleErrorText={handleErrorText}  />}
+          <Header />
+          <AddTaskInput addTask={addTask} loadingPage={loadingPage} />
+          <ButtonFilterAndSort filteringBy={filteringBy} handleFilteringBy={handleFilteringBy} sortingBy={sortingBy} handleSortingBy={handleSortingBy} /> 
+          <TaskList tasksList={tasksList} deleteTask={deleteTask} checkTask={checkTask} getTasks={getTasks} loadingPage={loadingPage} />
+          <Pagination  currentPage={currentPage} setСurrentPage={setСurrentPage} taskLimitPerPage={taskLimitPerPage} taskAmount={taskAmount} tasksList={tasksList} />
+      </Box>
+    </ChakraProvider>
+  )
 }
 
 export default App;

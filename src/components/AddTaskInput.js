@@ -1,5 +1,5 @@
+import { Box, Button, Flex, Input, transform } from "@chakra-ui/react";
 import { useState } from "react";
-
 
 function AddTaskInput({addTask, loadingPage}) {
 
@@ -21,13 +21,24 @@ function AddTaskInput({addTask, loadingPage}) {
   }
 
   return (
-    <div className="addTask">
-      <input autoFocus value={value} onKeyUp={(e) => e.code === 'Enter' || e.key === 13 ? saveTask() : '' } 
-        onChange={handleValueChange} className="addInput" 
-        placeholder="Enter a task..." 
-      ></input>
-      <button disabled={loadingPage} style={{opacity: loadingPage && 0.5}} className="addButton" onClick={saveTask}>Add</button>
-    </div>
+    <Box w='100%' bg='white' borderRadius='7' m='1' p='1.5'>
+      <Flex justifyContent='space-between' alignItems='center' flexWrap='wrap'>
+        
+        <Input autoFocus value={value} onKeyUp={(e) => e.code === 'Enter' || e.key === 13 ? saveTask() : '' } 
+          onChange={handleValueChange} 
+          placeholder="Enter a task..."
+          color="black" w='80%' fontSize='22' variant='unstyled' px='1'
+        ></Input>
+        
+        <Button disabled={loadingPage} /* style={{opacity: loadingPage && 0.5}} */ onClick={saveTask}
+        fontSize='20' bg='rgb(113, 199, 192)' px='35' transitionDuration='300ms'
+        isLoading={loadingPage && true}
+        _hover={{transform: 'scale(1.1)'}}
+        >Add</Button>
+
+      </Flex>
+    </Box>
+    
   );
 }
 
