@@ -16,10 +16,10 @@ img{vertical-align: top;}
 h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
 /*--------------------*/
 
-body {
+/* body {
     background: linear-gradient(45deg, #c3c4fa, #c6f3d9);
 
-}
+} */
 
 /* .App{
     margin: 80px auto;
@@ -76,7 +76,7 @@ body {
 } */
 
 
-
+/* 
 .task{
     display: flex;
     align-items: center;
@@ -86,30 +86,30 @@ body {
     font-size: 22px;
     font-style: italic;
     color: rgb(56, 27, 102);
-}
-.taskCompleted{
+} */
+/* .taskCompleted{
     background-color: rgba(54, 197, 54, 0.527);
     border-radius: 6px;
     text-decoration: line-through;
-}
-.task p{
+} */
+/* .task p{
     padding: 0px 10px;
     width: min-content;
-}
-.titleTask{
+} */
+/* .titleTask{
     display: flex;
     flex-grow: 1;
     text-align: left;
     flex-basis: auto;
     word-break: break-all;
-}
-.dateTask{
+} */
+/* .dateTask{
     font-size: 18px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-}
-.deleteButton{
+} */
+/* .deleteButton{
     display: flex;
     justify-content: center;
     color: rgb(236, 48, 48);
@@ -122,8 +122,8 @@ body {
 .deleteButton:hover{
     transform: scale(2.0);
     opacity: 1.0;
-}
-.checkbox{
+} */
+/* .checkbox{
     flex-basis: 25px;
     transform: scale(1.1);
     opacity: 0.8;
@@ -133,35 +133,31 @@ body {
 .checkbox:hover{
     transform: scale(1.2);
     opacity: 1.0;
-}
-.noTasks{
+} */
+/* .noTasks{
     margin: 50px;
     font-size: 26px;
     font-style: italic;
     color: rgb(56, 27, 102);
     text-decoration: underline;
-}
-.inputEditTask{
+} */
+/* .inputEditTask{
     width: 80%;
     border-radius: 4px;
     font-size: 18px;
     color: rgb(47, 22, 87);
-}
-.iconSaveEditTask{
-    margin-left: 20px;
-    color: rgb(1, 138, 1);
-}
+} */
 
-.filterAndSort{
+/* .filterAndSort{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-}
-.boxFilterButtons{
+} */
+/* .boxFilterButtons{
     display: flex;
     flex-wrap: wrap;
-}
-.buttonFilter{
+} */
+/* .buttonFilter{
     margin: 4px 11px;
     padding: 5px 14px;
     background-color: rgba(147, 33, 240, 0.37);
@@ -171,14 +167,14 @@ body {
     border-radius: 7px;
     font-size: 18px;
     transition-duration: 300ms;
-}
-.buttonFilter:hover{
+} */
+/* .buttonFilter:hover{
     transform: scale(1.1);
 }
 .activeButtonFilter{
     background-color: rgba(97, 10, 236, 0.747);
-}
-.sortTask{
+} */
+/* .sortTask{
     margin: 0px 9px;
     display: flex;
     align-items: center;
@@ -199,13 +195,13 @@ body {
     background-color:  rgba(91, 32, 139, 0);
     transform: scale(1.1);
     margin: 0px 5px;
-}
-.sortTask:hover{
+} */
+/* .sortTask:hover{
     transform: scale(1.1);
 }
 .sortActive{
     color: rgba(82, 11, 196, 0.918);
-}
+} */
 
 @media (width < 520px) {
     .addButton{
