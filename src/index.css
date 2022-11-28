@@ -165,8 +165,8 @@ h1{
     flex-wrap: wrap;
 }
 .buttonFilter{
-    margin: 4px 7px;
-    padding: 5px 12px;
+    margin: 4px 11px;
+    padding: 5px 14px;
     background-color: rgba(147, 33, 240, 0.37);
     color: rgb(255, 250, 250);
     font-weight: 700;
@@ -189,25 +189,22 @@ h1{
     background-color: #8ec4dd3a;
     border-radius: 9px;
     font-style: italic;
-}
-.sortTask li{
-    padding: 5px;
-    
-}
-.sortTask li:first-child{
-    margin: 0px 5px;
+    font-weight: 700;
+    padding: 6px;
     font-size: 18px;
+    transition-duration: 300ms;
+}
+.sortTask p{
+    padding: 0px 5px;
 }
 .sortUp, .sortDown{
     color: rgba(91, 32, 139, 0.719);
     background-color:  rgba(91, 32, 139, 0);
-    display: flex;
-    margin: 0px 3px;
-    transform: scale(1.6);
-    transition-duration: 300ms;
+    transform: scale(1.1);
+    margin: 0px 5px;
 }
-.sortUp:hover, .sortDown:hover{
-    transform: scale(1.8);
+.sortTask:hover{
+    transform: scale(1.1);
 }
 .sortActive{
     color: rgba(82, 11, 196, 0.918);
@@ -219,6 +216,9 @@ h1{
     }
     .filterAndSort{
         justify-content: center;
+    }
+    .sortTask{
+        margin-top: 7px;
     }
 }
 

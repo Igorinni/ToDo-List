@@ -8,11 +8,11 @@ function ButtonFilterAndSort({filteringBy, handleFilteringBy, sortingBy, handleS
           <li><button className={filteringBy === 'done' ? "buttonFilter activeButtonFilter" : "buttonFilter"} onClick={() => handleFilteringBy('done')}>Done</button></li>
           <li><button className={filteringBy === 'undone' ? "buttonFilter activeButtonFilter" : "buttonFilter"} onClick={() => handleFilteringBy('undone')}>Undone</button></li>
         </ul>
-        <ul className="sortTask">
-          <li>Sort by Date</li>
-          <li><button className={sortingBy === 'asc' ? "sortUp sortActive" : "sortUp"} onClick={() => handleSortingBy('asc')}><FaArrowCircleUp /></button></li>
-          <li><button className={sortingBy === 'desc' ? "sortDown sortActive" : "sortDown"} onClick={() => handleSortingBy('desc')}><FaArrowCircleDown /></button></li>
-        </ul>
+        <button className="sortTask" onClick={() => sortingBy === 'desc' ? handleSortingBy('asc') : handleSortingBy('desc')}>
+          <p>Sort by Date</p>
+          <FaArrowCircleUp className={sortingBy === 'asc' ? "sortUp sortActive" : "sortUp"} />
+          <FaArrowCircleDown className={sortingBy === 'desc' ? "sortDown sortActive" : "sortDown"} />
+        </button>
       </div>
   );
 }

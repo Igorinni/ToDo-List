@@ -15,16 +15,16 @@ function App() {
   const [currentPage, setСurrentPage] = useState(1);
   const taskLimitPerPage = 5;
 
-  const [filteringBy, setFilteringBy] = useState(''); //
+  const [filteringBy, setFilteringBy] = useState('');
   const handleFilteringBy = (value) => {
       setFilteringBy(value);
       setСurrentPage(1);
   }
 
-  const [sortingBy, setSortingBy] = useState('asc'); //
+  const [sortingBy, setSortingBy] = useState('asc');
   const handleSortingBy = (value) => setSortingBy(value);
 
-  const [loadingPage, setLoadingPage] = useState(false); //
+  const [loadingPage, setLoadingPage] = useState(false);
 
   const [errorText, setErrorText] = useState('');
   const handleErrorText = (text) => {
