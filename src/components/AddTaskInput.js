@@ -30,10 +30,9 @@ function AddTaskInput({addTask, loadingPage}) {
           color="black" w='80%' fontSize='22' variant='unstyled' px='1'
         ></Input>
         
-        <Button disabled={loadingPage} /* style={{opacity: loadingPage && 0.5}} */ onClick={saveTask}
+        <Button disabled={loadingPage} onClick={saveTask}
         fontSize='20' bg='rgb(113, 199, 192)' px='35' transitionDuration='300ms'
-        isLoading={loadingPage && true}
-        _hover={{transform: 'scale(1.1)'}}
+        isLoading={loadingPage && true} _hover={{transform: 'scale(1.1)'}}
         >Add</Button>
 
       </Flex>

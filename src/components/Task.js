@@ -28,7 +28,7 @@ function Task({task, deleteTask, checkTask, getTasks, loadingPage}) {
         onChange={() => checkTask(task)}
         size='lg' opacity='0.8' transitionDuration='300ms'
         _hover={{transform: 'scale(1.2)', opacity: 1.0}}
-        isDisabled={loadingPage} bg='rgba(138, 242, 173, 0.5);' borderRadius='20' 
+        isDisabled={loadingPage} bg='rgba(101, 181, 128, 0.6)' borderRadius='20' 
       />
 
       <Text  onDoubleClick={handleEditStatus}
