@@ -18,7 +18,7 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
 
 body {
     background: linear-gradient(45deg, #a88eca, #8ec4dd);
-
+    background-attachment: fixed;
 }
 
 .App{
