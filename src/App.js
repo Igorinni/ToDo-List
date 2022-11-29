@@ -85,10 +85,9 @@ function App() {
 
   return (
     <ChakraProvider theme={theme}>
-      
       <Box w='100%' h='100%' bg='#ffffffb0' p='5' my='20' mx='auto' maxW='600'
       textAlign='center' borderRadius='10' fontFamily='Playfair Display' >
-          {errorText && <Error errorText={errorText} handleErrorText={handleErrorText}  />}
+          {errorText && <Error errorText={errorText} handleErrorText={handleErrorText} />}
           <Header />
           <AddTaskInput addTask={addTask} loadingPage={loadingPage} />
           <ButtonFilterAndSort filteringBy={filteringBy} handleFilteringBy={handleFilteringBy} sortingBy={sortingBy} handleSortingBy={handleSortingBy} /> 

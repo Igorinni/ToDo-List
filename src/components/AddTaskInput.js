@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Input, transform, useMediaQuery } from "@chakra-ui/react";
+import { Box, Button, Flex, Input, useMediaQuery } from "@chakra-ui/react";
 import { useState } from "react";
 
 function AddTaskInput({addTask, loadingPage}) {
