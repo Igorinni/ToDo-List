@@ -26,7 +26,7 @@ function AddTaskInput({addTask, loadingPage}) {
     <Box w='100%' bg='white' borderRadius='7' m='1' p='1.5'>
       <Flex justifyContent='space-between' alignItems='center' flexWrap='wrap'>
         
-        <Input autoFocus value={value} onKeyUp={(e) => e.code === 'Enter' || e.key === 13 ? saveTask() : '' } 
+        <Input autoFocus value={value} onKeyDown={(e) => e.code === 'Enter' || e.key === 13 && saveTask()} 
           onChange={handleValueChange} 
           placeholder="Enter a task..."
           color="black" w='80%' fontSize='22' variant='unstyled' px='1'
