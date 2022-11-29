@@ -1,4 +1,4 @@
-import {FaGg} from "react-icons/fa";
+import { FaGg } from "react-icons/fa";
 
 function Header() {
   return (
