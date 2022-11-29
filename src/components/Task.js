@@ -10,6 +10,7 @@ function Task({task, deleteTask, checkTask}) {
 
   const changeTitleTask = (id) => {
     const newTitleTask = document.querySelector('.inputEditTask').value;
+    if (newTitleTask.trim() === '') return;
     task.title = newTitleTask;
     handleEditStatus();
   }

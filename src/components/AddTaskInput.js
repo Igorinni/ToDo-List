@@ -7,6 +7,7 @@ function AddTaskInput({tasks, handleTaskChange}) {
 
   function saveTask(){
     if (value.trim() === '') return;
+    if (tasks.find(item => item.title === value)) return;
     const date = new Date();
     const id = tasks.length === 0 ? 1 : tasks[tasks.length - 1].id + 1;
     const task = {
