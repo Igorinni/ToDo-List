@@ -18,7 +18,7 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
 
 body {
     background: linear-gradient(45deg, #a88eca, #8ec4dd);
-
+    background-attachment: fixed;
 }
 
 .App{
@@ -266,11 +266,12 @@ h1{
 }
 
 .errorModal{
-    position: absolute;
+    position: fixed;
+    top: 4%;
+    left: 35%;
     background-color: rgb(252, 227, 9);
     color: rgb(190, 7, 7);
     padding: 10px 50px;
-    margin: -50px 0px 0px 100px;
     border-radius: 5px;
     font-size: 16px;
     text-align: center;
