@@ -6,42 +6,35 @@ const axiosInstance = axios.create({
 })
 
 
-export const getArrayTasks = ({filteringBy, sortingBy, taskLimitPerPage, currentPage}) => {
-    return axiosInstance.get(`tasks/${process.env.REACT_APP_USER_ID}`, {
+export const getArrayTasks = async ({filteringBy, sortingBy, taskLimitPerPage, currentPage}) => {
+    const response = await axiosInstance.get(`tasks/${process.env.REACT_APP_USER_ID}`, {
         params: {
             filterBy: filteringBy,
             order: sortingBy,
             pp: taskLimitPerPage,
             page: currentPage,
         }
-    }).then(response => {
-        return response.data
     })
-    
+    return response.data
 }
 
-export const createTask = (newTask) => {
-    return axiosInstance.post(`task/${process.env.REACT_APP_USER_ID}`, newTask);
-}
+export const createTask = (newTask) => axiosInstance.post(`task/${process.env.REACT_APP_USER_ID}`, newTask);
 
-export const removeTask = (id) => {
-    return axiosInstance.delete(`task/${process.env.REACT_APP_USER_ID}/${id}`);
-}
 
-export const saveStateTask = (task) => {
-    return axiosInstance.patch(`task/${process.env.REACT_APP_USER_ID}/${task.uuid}`, {
+export const removeTask = (id) => axiosInstance.delete(`task/${process.env.REACT_APP_USER_ID}/${id}`);
+
+
+export const saveStateTask = (task) => axiosInstance.patch(`task/${process.env.REACT_APP_USER_ID}/${task.uuid}`, {
         name: task.name,
         done: !task.done,
         createdAt: task.createdAt,
         updatedAt: task.updatedAt,
      });
-}
 
-export const saveСhangedTitleTask = (newTitleTask, task) => {
-    return axiosInstance.patch(`task/${process.env.REACT_APP_USER_ID}/${task.uuid}`, {
+
+export const saveСhangedTitleTask = (newTitleTask, task) => axiosInstance.patch(`task/${process.env.REACT_APP_USER_ID}/${task.uuid}`, {
       name: newTitleTask,
       done: task.done,
       createdAt: task.createdAt,
       updatedAt: task.updatedAt,
     });
-}

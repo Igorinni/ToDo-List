@@ -17,8 +17,8 @@ function App() {
 
   const [filteringBy, setFilteringBy] = useState('');
   const handleFilteringBy = (value) => {
-      setFilteringBy(value);
-      setСurrentPage(1);
+    setFilteringBy(value);
+    setСurrentPage(1);
   }
 
   const [sortingBy, setSortingBy] = useState('asc');
@@ -28,51 +28,52 @@ function App() {
 
   const [errorText, setErrorText] = useState('');
   const handleErrorText = (text) => {
-      setErrorText(text);
+    setErrorText(text);
   }
 
 
-  function requestProcessing(promise) {
-    setLoadingPage(true);
-    return promise
-      .catch(error => {
-        setErrorText(error.response.data.message);
-      })
-      .finally( () => setLoadingPage(false) )
+  const requestProcessing = async (promise) => {
+    try {
+      setLoadingPage(true);
+      const response = await promise;
+      return response;
+    } catch (error) {
+      setErrorText(error.response.data.message);
+    } finally {
+      setLoadingPage(false);
+    }
   }
 
-
-  function getTasks () {
-    requestProcessing(getArrayTasks({filteringBy, sortingBy, taskLimitPerPage, currentPage}))
-      .then( response => {
-        setTasksList(response.tasks);
-        setTaskAmount(response.count)})
+  const getTasks = async () => {
+  const data = await requestProcessing( getArrayTasks({filteringBy, sortingBy, taskLimitPerPage, currentPage}) );
+  setTasksList(data.tasks);
+  setTaskAmount(data.count);
   }
 
-  function addTask (newTask) {
-    requestProcessing(createTask(newTask))
-      .then( () => getTasks())
+  const addTask = async (newTask) => {
+  await requestProcessing( createTask(newTask) );
+  getTasks();
+  }
+
+  const deleteTask = async (id) => {
+  await requestProcessing( removeTask(id) );
+  getTasks();
+  }
+
+  const checkTask = async (task) => {
+  await requestProcessing( saveStateTask(task) );
+  getTasks();
   }
  
-  const deleteTask = (id) => {
-    requestProcessing(removeTask(id))
-      .then( () => getTasks())
-  }
-
-  const checkTask = (task) => {
-    requestProcessing(saveStateTask(task))
-      .then( () => getTasks())
-  }
-
-
-  useEffect( () => {
+  
+  useEffect(() => {
     getTasks();
   }, [filteringBy, sortingBy, currentPage])
 
-  useEffect( () => {
-    errorText != '' && setTimeout( () => handleErrorText(''), 3000);
-  },  [errorText] )
-  
+  useEffect(() => {
+    errorText != '' && setTimeout(() => handleErrorText(''), 3000);
+  }, [errorText])
+
 
 
   if (tasksList.length == 0 && currentPage > 1) {
@@ -82,12 +83,12 @@ function App() {
 
   return (
     <div className="App">
-      {errorText && <Error errorText={errorText} handleErrorText={handleErrorText}  />}
+      {errorText && <Error errorText={errorText} handleErrorText={handleErrorText} />}
       <Header />
       <AddTaskInput addTask={addTask} loadingPage={loadingPage} />
-      <ButtonFilterAndSort filteringBy={filteringBy} handleFilteringBy={handleFilteringBy} sortingBy={sortingBy} handleSortingBy={handleSortingBy} /> 
+      <ButtonFilterAndSort filteringBy={filteringBy} handleFilteringBy={handleFilteringBy} sortingBy={sortingBy} handleSortingBy={handleSortingBy} />
       <TaskList tasksList={tasksList} deleteTask={deleteTask} checkTask={checkTask} getTasks={getTasks} loadingPage={loadingPage} />
-      <Pagination  currentPage={currentPage} setСurrentPage={setСurrentPage} taskLimitPerPage={taskLimitPerPage} taskAmount={taskAmount} tasksList={tasksList} />
+      <Pagination currentPage={currentPage} setСurrentPage={setСurrentPage} taskLimitPerPage={taskLimitPerPage} taskAmount={taskAmount} tasksList={tasksList} />
     </div>
   );
 }
