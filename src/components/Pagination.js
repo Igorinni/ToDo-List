@@ -1,4 +1,4 @@
-import { Box, Button, IconButton } from "@chakra-ui/react";
+import { Box, Button, Container, IconButton } from "@chakra-ui/react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 function Pagination({setСurrentPage, currentPage, taskAmount, taskLimitPerPage, tasksList}) {
@@ -25,30 +25,31 @@ function Pagination({setСurrentPage, currentPage, taskAmount, taskLimitPerPage,
     tasksList.length == 0 || pageNumbers.length === 1 ? ' ' :
 
     <Box 
-    display='inline-flex' p='1' my='3' 
-    color='rgb(56, 27, 102)' borderRadius='5' border='1px solid rgb(139, 140, 141)'>
+    display='inline-flex' p='1' my='3' transform='scale(0.7)' alignItems='center'
+    color='rgb(56, 27, 102)' borderRadius='5' border='1px solid rgba(139, 140, 141, 0.7)'>
 
       {currentPage >= 2 && 
       <IconButton onClick={() => goToPage("Left")}
-        fontSize='12' transitionDuration='300ms' bg='rgba(0, 0, 0, 0)'
+        fontSize='18' transitionDuration='300ms' bg='rgba(0, 0, 0, 0)'
         _hover={{bg: 'rgba(108, 0, 248, 0.274)', transform: 'scale(1.1)'}}
         icon={<IoIosArrowBack />} />
       }
       
       {currentPage > 2 && <Button onClick={() => goToPage(1)} key={1}
-        transitionDuration='300ms' fontSize='14'
+        transitionDuration='300ms' fontSize='18'
         _hover={{bg: 'rgba(108, 0, 248, 0.274)', transform: 'scale(1.2)'}}
         bg={1 === currentPage ? 'rgba(0, 84, 153, 0.192)' : 'rgba(0, 0, 0, 0)'} 
         >{1}</Button>}
 
-      {currentPage > 3 && <Button bg='rgba(108, 0, 248, 0)' _hover={{bg: 'none'}} cursor='default' >...</Button>}
+      {currentPage > 3 && <Container p='0' fontSize='16' bg='rgba(108, 0, 248, 0)' _hover={{bg: 'none'}} cursor='default' >. . .</Container>}
 
       {pageNumbers.map((item) => {
         if (item === currentPage || item === currentPage - 1 || item === currentPage + 1) {
           return (      
             <Button
               key={item} onClick={() => goToPage(item)}
-              transitionDuration='300ms' fontSize='14'
+              
+              transitionDuration='300ms' fontSize='18'
               _hover={{bg: 'rgba(108, 0, 248, 0.274)', transform: 'scale(1.2)'}}
               bg={item === currentPage ? 'rgba(0, 84, 153, 0.192)' : 'rgba(0, 0, 0, 0)'}
             >{item}
@@ -58,17 +59,17 @@ function Pagination({setСurrentPage, currentPage, taskAmount, taskLimitPerPage,
 
       })}
 
-      {currentPage < pageNumbers.length - 2 && <Button bg='rgba(108, 0, 248, 0)' _hover={{bg: 'none'}} cursor='default' >...</Button>}
+      {currentPage < pageNumbers.length - 2 && <Container p='0' fontSize='16' bg='rgba(108, 0, 248, 0)' _hover={{bg: 'none'}} cursor='default' >. . .</Container>}
 
       {currentPage < pageNumbers.length - 1 && <Button onClick={() => goToPage(pageNumbers.length)} key={pageNumbers.length}
-        transitionDuration='300ms' 
+        transitionDuration='300ms' fontSize='18'
         _hover={{bg: 'rgba(108, 0, 248, 0.274)', transform: 'scale(1.2)'}}
         bg={pageNumbers.length === currentPage ? 'rgba(0, 84, 153, 0.192)' : 'rgba(0, 0, 0, 0)'} 
       >{pageNumbers.length}</Button>}
 
       
       {currentPage < pageNumbers.length && <IconButton onClick={() => goToPage("Right")}
-        fontSize='14' transitionDuration='300ms' bg='rgba(0, 0, 0, 0)'
+        fontSize='18' transitionDuration='300ms' bg='rgba(0, 0, 0, 0)'
         _hover={{bg: 'rgba(108, 0, 248, 0.274)', transform: 'scale(1.1)'}}
         icon={<IoIosArrowForward />} />
       }
