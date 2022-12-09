@@ -54,7 +54,7 @@ function App() {
       const data = await requestProcessing(
         getArrayTasks({ filteringBy, sortingBy, taskLimitPerPage, currentPage })
       );
-      setTasksList(data.tasks);
+      setTasksList(data.rows);
       setTaskAmount(data.count);
     } catch (error) {
       setErrorText(error.response.data.message);
