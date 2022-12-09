@@ -31,6 +31,9 @@ function App() {
   const handleSortingBy = (value) => setSortingBy(value);
 
   const [loadingPage, setLoadingPage] = useState(false);
+  const handleLoadingPage = (status) => {
+    setLoadingPage(status);
+  };
 
   const [errorText, setErrorText] = useState("");
   const handleErrorText = (text) => {
@@ -39,13 +42,13 @@ function App() {
 
   const requestProcessing = async (promise) => {
     try {
-      setLoadingPage(true);
+      handleLoadingPage(true);
       const response = await promise;
       return response;
     } catch (error) {
       setErrorText(error.response.data.message);
     } finally {
-      setLoadingPage(false);
+      handleLoadingPage(false);
     }
   };
 
@@ -102,6 +105,9 @@ function App() {
 
   return (
     <ChakraProvider theme={theme}>
+      {errorText && (
+        <Error errorText={errorText} handleErrorText={handleErrorText} />
+      )}
       {loadingPage && (
         <Spinner
           position="absolute"
@@ -130,9 +136,6 @@ function App() {
         borderRadius="10"
         fontFamily="Playfair Display"
       >
-        {errorText && (
-          <Error errorText={errorText} handleErrorText={handleErrorText} />
-        )}
         <Header />
         <AddTaskInput addTask={addTask} loadingPage={loadingPage} />
         <ButtonFilterAndSort
@@ -148,6 +151,8 @@ function App() {
           checkTask={checkTask}
           getTasks={getTasks}
           loadingPage={loadingPage}
+          setErrorText={setErrorText}
+          handleLoadingPage={handleLoadingPage}
         />
         <Pagination
           currentPage={currentPage}

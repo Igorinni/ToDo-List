@@ -1,6 +1,5 @@
 import { MdDeleteForever } from "react-icons/md";
 import { useState } from "react";
-import { saveСhangedTitleTask } from "../services/RequestApi.js";
 import {
   Box,
   IconButton,
@@ -10,17 +9,11 @@ import {
   Container,
 } from "@chakra-ui/react";
 
-function Task({ task, deleteTask, checkTask, getTasks, loadingPage }) {
+function Task({ task, deleteTask, checkTask, loadingPage, saveСhangedTitle }) {
   const date = task.createdAt ? new Date(task.createdAt) : "";
 
   const [editStatus, setEditStatus] = useState(false);
   const handleEditStatus = () => setEditStatus(!editStatus);
-
-  const saveСhangedTitle = async (e) => {
-    await saveСhangedTitleTask(e.target.value, task);
-    getTasks();
-    handleEditStatus();
-  };
 
   return (
     <Box
@@ -63,9 +56,11 @@ function Task({ task, deleteTask, checkTask, getTasks, loadingPage }) {
             defaultValue={task.name}
             onBlur={handleEditStatus}
             onKeyDown={(e) => {
-              if (e.code === "Enter" || e.key === 13) saveСhangedTitle(e);
+              if (e.code === "Enter" || e.key === 13)
+                saveСhangedTitle(e, task) && handleEditStatus();
               if (e.code === "Escape") handleEditStatus();
             }}
+            isDisabled={loadingPage}
             width="85%"
             fontSize="20"
             color="rgb(47, 22, 87)"
@@ -77,7 +72,12 @@ function Task({ task, deleteTask, checkTask, getTasks, loadingPage }) {
         )}
       </Text>
 
-      <Container display="flex" flexDirection="column" fontSize="18" flexBasis="30">
+      <Container
+        display="flex"
+        flexDirection="column"
+        fontSize="18"
+        flexBasis="30"
+      >
         <Text>
           {[date.getDate(), date.getMonth() + 1, date.getFullYear()].join("/")}
         </Text>

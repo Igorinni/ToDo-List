@@ -28,6 +28,7 @@ function AddTaskInput({ addTask, loadingPage }) {
           value={value}
           onKeyDown={(e) => (e.code === "Enter" || e.key === 13) && saveTask()}
           onChange={handleValueChange}
+          isDisabled={loadingPage}
           placeholder="Enter a task..."
           color="black"
           w="80%"

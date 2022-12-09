@@ -1,7 +1,29 @@
 import { Text } from "@chakra-ui/react";
 import Task from "./Task";
+import { saveСhangedTitleTask } from "../services/RequestApi.js";
 
-function TaskList({ tasksList, deleteTask, checkTask, getTasks, loadingPage }) {
+function TaskList({
+  tasksList,
+  deleteTask,
+  checkTask,
+  getTasks,
+  loadingPage,
+  handleLoadingPage,
+  setErrorText,
+}) {
+  
+  const saveСhangedTitle = async (e, task) => {
+    try {
+      handleLoadingPage(true);
+      await saveСhangedTitleTask(e.target.value, task);
+      getTasks();
+    } catch (error) {
+      setErrorText(error.response.data.message);
+    } finally {
+      handleLoadingPage(false);
+    }
+  };
+
   return (
     <>
       {tasksList.length <= 0 && (
@@ -24,6 +46,8 @@ function TaskList({ tasksList, deleteTask, checkTask, getTasks, loadingPage }) {
           checkTask={checkTask}
           getTasks={getTasks}
           loadingPage={loadingPage}
+          setErrorText={setErrorText}
+          saveСhangedTitle={saveСhangedTitle}
         />
       ))}
     </>
