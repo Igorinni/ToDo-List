@@ -11,7 +11,7 @@ export const getArrayTasks = async ({
   currentPage,
 }) => {
   const response = await axiosInstance.get(
-    `tasks/${process.env.REACT_APP_USER_ID}`,
+    `tasks`,
     {
       params: {
         filterBy: filteringBy,
@@ -25,13 +25,13 @@ export const getArrayTasks = async ({
 };
 
 export const createTask = (newTask) =>
-  axiosInstance.post(`task/${process.env.REACT_APP_USER_ID}`, newTask);
+  axiosInstance.post(`task`, newTask);
 
 export const removeTask = (id) =>
-  axiosInstance.delete(`task/${process.env.REACT_APP_USER_ID}/${id}`);
+  axiosInstance.delete(`task/${id}`);
 
 export const saveStateTask = (task) =>
-  axiosInstance.patch(`task/${process.env.REACT_APP_USER_ID}/${task.uuid}`, {
+  axiosInstance.patch(`task/${task.uuid}`, {
     name: task.name,
     done: !task.done,
     createdAt: task.createdAt,
@@ -39,7 +39,7 @@ export const saveStateTask = (task) =>
   });
 
 export const saveСhangedTitleTask = (newTitleTask, task) =>
-  axiosInstance.patch(`task/${process.env.REACT_APP_USER_ID}/${task.uuid}`, {
+  axiosInstance.patch(`task/${task.uuid}`, {
     name: newTitleTask,
     done: task.done,
     createdAt: task.createdAt,
