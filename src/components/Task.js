@@ -76,7 +76,8 @@ function Task({ task, deleteTask, checkTask, loadingPage, saveСhangedTitle }) {
         display="flex"
         flexDirection="column"
         fontSize="18"
-        flexBasis="30"
+        flexBasis="5"
+        m='0' p='0'
       >
         <Text>
           {[date.getDate(), date.getMonth() + 1, date.getFullYear()].join("/")}

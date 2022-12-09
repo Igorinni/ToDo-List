@@ -127,7 +127,7 @@ function App() {
       <Box
         w="100%"
         h="100%"
-        bg="#ffffffb0"
+        bg="rgba(255, 255, 255, 0.8)"
         p="5"
         my="20"
         mx="auto"

@@ -1,9 +1,15 @@
 import { Box, Button, Flex, Input, useMediaQuery } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 function AddTaskInput({ addTask, loadingPage }) {
   const [value, setValue] = useState("");
   const handleValueChange = (e) => setValue(e.target.value);
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [loadingPage]);
 
   function saveTask() {
     if (value.trim() === "") return;
@@ -24,7 +30,7 @@ function AddTaskInput({ addTask, loadingPage }) {
     <Box w="100%" bg="white" borderRadius="7" m="1" p="1.5">
       <Flex justifyContent="space-between" alignItems="center" flexWrap="wrap">
         <Input
-          autoFocus
+          ref={inputRef}
           value={value}
           onKeyDown={(e) => (e.code === "Enter" || e.key === 13) && saveTask()}
           onChange={handleValueChange}

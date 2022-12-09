@@ -6,7 +6,7 @@ function Error({ errorText }) {
       bg="rgb(252, 227, 9)"
       color="rgb(190, 7, 7)"
       position="absolute"
-      bottom="98%"
+      top="5%"
       right="35%"
       left="35%"
       px="5%"
@@ -14,6 +14,7 @@ function Error({ errorText }) {
       borderRadius="7"
       fontSize="16"
       maxW="590px"
+      textAlign="center"
     >
       {errorText}
     </Box>

@@ -95,25 +95,20 @@ function ButtonFilterAndSort({
         rightIcon={
           <>
             <Container w="5">
-              <FaArrowCircleUp
-                px={10}
-                transform="scale(1.2)"
-                color={
-                  sortingBy === "asc"
-                    ? "rgba(82, 11, 196, 0.918)"
-                    : "rgba(91, 32, 139, 0.719)"
-                }
-              />
-            </Container>
-            <Container w="5">
-              <FaArrowCircleDown
-                transform="scale(1.2)"
-                color={
-                  sortingBy === "desc"
-                    ? "rgba(82, 11, 196, 0.918)"
-                    : "rgba(91, 32, 139, 0.719)"
-                }
-              />
+              {sortingBy === "asc" && (
+                <FaArrowCircleUp
+                  px={10}
+                  transform="scale(1.2)"
+                  color="rgba(82, 11, 196, 0.918)"
+                />
+              )}
+              {sortingBy === "desc" && (
+                <FaArrowCircleDown
+                  px={10}
+                  transform="scale(1.2)"
+                  color="rgba(82, 11, 196, 0.918)"
+                />
+              )}
             </Container>
           </>
         }
