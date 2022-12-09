@@ -26,7 +26,7 @@ function AddTaskInput({ addTask, loadingPage }) {
         <Input
           autoFocus
           value={value}
-          onKeyDown={(e) => e.code === "Enter" || (e.key === 13 && saveTask())}
+          onKeyDown={(e) => (e.code === "Enter" || e.key === 13) && saveTask()}
           onChange={handleValueChange}
           placeholder="Enter a task..."
           color="black"
@@ -43,7 +43,6 @@ function AddTaskInput({ addTask, loadingPage }) {
           bg="rgb(113, 199, 192)"
           px="35"
           transitionDuration="300ms"
-          isLoading={loadingPage && true}
           _hover={{ transform: "scale(1.1)" }}
           width={isLessThan550 && "100%"}
         >

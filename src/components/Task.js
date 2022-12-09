@@ -77,9 +77,9 @@ function Task({ task, deleteTask, checkTask, getTasks, loadingPage }) {
         )}
       </Text>
 
-      <Container display="flex" flexDirection="column" fontSize="18" px="1">
+      <Container display="flex" flexDirection="column" fontSize="18" flexBasis="30">
         <Text>
-          {[date.getDate(), date.getMonth(), date.getFullYear()].join("/")}
+          {[date.getDate(), date.getMonth() + 1, date.getFullYear()].join("/")}
         </Text>
         <Text>
           {[date.getHours(), date.getMinutes(), date.getSeconds()]

@@ -11,7 +11,7 @@ import {
   removeTask,
   saveStateTask,
 } from "./services/RequestApi";
-import { ChakraProvider, Box } from "@chakra-ui/react";
+import { ChakraProvider, Box, Spinner } from "@chakra-ui/react";
 import theme from "./styles/theme";
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
     setСurrentPage(1);
   };
 
-  const [sortingBy, setSortingBy] = useState("asc");
+  const [sortingBy, setSortingBy] = useState("desc");
   const handleSortingBy = (value) => setSortingBy(value);
 
   const [loadingPage, setLoadingPage] = useState(false);
@@ -37,34 +37,55 @@ function App() {
     setErrorText(text);
   };
 
-  function requestProcessing(promise) {
-    setLoadingPage(true);
-    return promise
-      .catch((error) => {
-        setErrorText(error.response.data.message);
-      })
-      .finally(() => setLoadingPage(false));
-  }
-
-  function getTasks() {
-    requestProcessing(
-      getArrayTasks({ filteringBy, sortingBy, taskLimitPerPage, currentPage })
-    ).then((response) => {
-      setTasksList(response.tasks);
-      setTaskAmount(response.count);
-    });
-  }
-
-  function addTask(newTask) {
-    requestProcessing(createTask(newTask)).then(() => getTasks());
-  }
-
-  const deleteTask = (id) => {
-    requestProcessing(removeTask(id)).then(() => getTasks());
+  const requestProcessing = async (promise) => {
+    try {
+      setLoadingPage(true);
+      const response = await promise;
+      return response;
+    } catch (error) {
+      setErrorText(error.response.data.message);
+    } finally {
+      setLoadingPage(false);
+    }
   };
 
-  const checkTask = (task) => {
-    requestProcessing(saveStateTask(task)).then(() => getTasks());
+  const getTasks = async () => {
+    try {
+      const data = await requestProcessing(
+        getArrayTasks({ filteringBy, sortingBy, taskLimitPerPage, currentPage })
+      );
+      setTasksList(data.tasks);
+      setTaskAmount(data.count);
+    } catch (error) {
+      setErrorText(error.response.data.message);
+    }
+  };
+
+  const addTask = async (newTask) => {
+    try {
+      await requestProcessing(createTask(newTask));
+      getTasks();
+    } catch (error) {
+      setErrorText(error.response.data.message);
+    }
+  };
+
+  const deleteTask = async (id) => {
+    try {
+      await requestProcessing(removeTask(id));
+      getTasks();
+    } catch (error) {
+      setErrorText(error.response.data.message);
+    }
+  };
+
+  const checkTask = async (task) => {
+    try {
+      await requestProcessing(saveStateTask(task));
+      getTasks();
+    } catch (error) {
+      setErrorText(error.response.data.message);
+    }
   };
 
   useEffect(() => {
@@ -81,6 +102,22 @@ function App() {
 
   return (
     <ChakraProvider theme={theme}>
+      {loadingPage && (
+        <Spinner
+          position="absolute"
+          top="0"
+          right="0"
+          bottom="0"
+          left="0"
+          margin="auto"
+          height="70px"
+          width="70px"
+          speed="0.9s"
+          emptyColor="gray.200"
+          color="blue.500"
+          label="string"
+        ></Spinner>
+      )}
       <Box
         w="100%"
         h="100%"
@@ -103,6 +140,7 @@ function App() {
           handleFilteringBy={handleFilteringBy}
           sortingBy={sortingBy}
           handleSortingBy={handleSortingBy}
+          loadingPage={loadingPage}
         />
         <TaskList
           tasksList={tasksList}
@@ -117,6 +155,7 @@ function App() {
           taskLimitPerPage={taskLimitPerPage}
           taskAmount={taskAmount}
           tasksList={tasksList}
+          loadingPage={loadingPage}
         />
       </Box>
     </ChakraProvider>

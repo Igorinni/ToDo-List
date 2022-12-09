@@ -12,6 +12,7 @@ function ButtonFilterAndSort({
   handleFilteringBy,
   sortingBy,
   handleSortingBy,
+  loadingPage,
 }) {
   const [isLessThan539] = useMediaQuery("(max-width: 539px)");
 
@@ -24,6 +25,7 @@ function ButtonFilterAndSort({
     >
       <ButtonGroup m="2">
         <Button
+          isDisabled={loadingPage}
           _hover={{ transform: "scale(1.1)" }}
           transitionDuration="300ms"
           fontWeight="700"
@@ -40,6 +42,7 @@ function ButtonFilterAndSort({
           All
         </Button>
         <Button
+          isDisabled={loadingPage}
           _hover={{ transform: "scale(1.1)" }}
           transitionDuration="300ms"
           fontWeight="700"
@@ -56,6 +59,7 @@ function ButtonFilterAndSort({
           Done
         </Button>
         <Button
+          isDisabled={loadingPage}
           _hover={{ transform: "scale(1.1)" }}
           transitionDuration="300ms"
           fontWeight="700"
@@ -79,6 +83,7 @@ function ButtonFilterAndSort({
             ? handleSortingBy("asc")
             : handleSortingBy("desc")
         }
+        isDisabled={loadingPage}
         bg="#8ec4dd3a"
         color="rgba(91, 32, 139, 0.719)"
         fontSize="18"

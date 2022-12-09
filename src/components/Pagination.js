@@ -7,6 +7,7 @@ function Pagination({
   taskAmount,
   taskLimitPerPage,
   tasksList,
+  loadingPage
 }) {
   const pageNumbers = [];
 
@@ -44,6 +45,7 @@ function Pagination({
       {currentPage >= 2 && (
         <IconButton
           onClick={() => goToPage("Left")}
+          isDisabled={loadingPage}
           fontSize="18"
           transitionDuration="300ms"
           bg="rgba(0, 0, 0, 0)"
@@ -55,6 +57,7 @@ function Pagination({
       {currentPage > 2 && (
         <Button
           onClick={() => goToPage(1)}
+          isDisabled={loadingPage}
           key={1}
           transitionDuration="300ms"
           fontSize="18"
@@ -89,6 +92,7 @@ function Pagination({
             <Button
               key={item}
               onClick={() => goToPage(item)}
+              isDisabled={loadingPage}
               transitionDuration="300ms"
               fontSize="18"
               _hover={{
@@ -123,6 +127,7 @@ function Pagination({
       {currentPage < pageNumbers.length - 1 && (
         <Button
           onClick={() => goToPage(pageNumbers.length)}
+          isDisabled={loadingPage}
           key={pageNumbers.length}
           transitionDuration="300ms"
           fontSize="18"
@@ -140,6 +145,7 @@ function Pagination({
       {currentPage < pageNumbers.length && (
         <IconButton
           onClick={() => goToPage("Right")}
+          isDisabled={loadingPage}
           fontSize="18"
           transitionDuration="300ms"
           bg="rgba(0, 0, 0, 0)"
