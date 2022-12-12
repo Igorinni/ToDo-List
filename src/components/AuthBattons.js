@@ -55,15 +55,15 @@ function AuthBattons() {
   };
 
   const saveLocalStorage = (token) => {
-    localStorage.setItem('token', JSON.stringify(token));
-  }
+    localStorage.setItem("token", JSON.stringify(token));
+  };
 
   const updateLocalStorage = () => {
-    localStorage.removeItem('token');
-  }
+    localStorage.removeItem("token");
+  };
 
   return (
-    <Box /* position="absolute" float="right"  */ /* right="190px" */>
+    <Box /* position="fixed" */ /* float="right"  */ /* right="190px" */>
       <Button
         bg="#8ec4dd9a"
         color="rgba(91, 32, 159, 0.919)"
