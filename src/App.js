@@ -13,6 +13,7 @@ import {
 } from "./services/RequestApi";
 import { ChakraProvider, Box, Spinner } from "@chakra-ui/react";
 import theme from "./styles/theme";
+import AuthBattons from "./components/AuthBattons";
 
 function App() {
   const [tasksList, setTasksList] = useState([]);
@@ -136,6 +137,7 @@ function App() {
         borderRadius="10"
         fontFamily="Playfair Display"
       >
+        <AuthBattons />
         <Header />
         <AddTaskInput addTask={addTask} loadingPage={loadingPage} />
         <ButtonFilterAndSort
