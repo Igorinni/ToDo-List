@@ -51,7 +51,7 @@ function AuthBattons({ logining, register, updateLocalStorage, usernameAuth }) {
     setUsername("");
     setPassword("");
     handleWindowRegistration(false);
-    handleWindowLogin(true);
+    // handleWindowLogin(true);
   };
 
   return (
@@ -92,10 +92,10 @@ function AuthBattons({ logining, register, updateLocalStorage, usernameAuth }) {
           p="2px"
           boxShadow="xs"
         >
-          <Text display="flex" px="10px"  borderRight="1px solid grey">
+          <Box display="flex" px="10px"  borderRight="1px solid grey">
             <Text color="rgba(0, 128, 0, 0.7)" mr="5px">Login:</Text>
             <Text fontWeight="700" color="green">{usernameAuth}</Text>
-          </Text>
+          </Box>
           <Button
             onClick={updateLocalStorage}
             bg="none"
@@ -128,7 +128,6 @@ function AuthBattons({ logining, register, updateLocalStorage, usernameAuth }) {
             h="300px"
             w="370px"
             onClick={(e) => e.stopPropagation()}
-            onSubmit
           >
             <IconButton
               onClick={clouseWindow}

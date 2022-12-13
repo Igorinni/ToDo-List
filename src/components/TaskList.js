@@ -10,6 +10,7 @@ function TaskList({
   loadingPage,
   handleLoadingPage,
   setErrorText,
+  usernameAuth
 }) {
   
   const saveСhangedTitle = async (e, task) => {
@@ -26,7 +27,7 @@ function TaskList({
 
   return (
     <>
-      {tasksList.length <= 0 && (
+      {(!usernameAuth || tasksList.length <= 0) && (
         <Text
           m="50"
           color="rgb(56, 27, 102)"
@@ -38,7 +39,7 @@ function TaskList({
         </Text>
       )}
 
-      {tasksList.map((elem) => (
+      {usernameAuth && tasksList.map((elem) => (
         <Task
           task={elem}
           key={elem.uuid}

@@ -43,7 +43,6 @@ function App() {
   };
 
   const [usernameAuth, setUsernameAuth] = useState("");
-  const [changeLocalStorage, setChangeLocalStorage] = useState(false)
 
   const requestProcessing = async (promise) => {
     try {
@@ -51,7 +50,6 @@ function App() {
       const response = await promise;
       return response;
     } catch (error) {
-      console.log("errorssssssssssssss: ", error);
       setErrorText(error.response.data.message);
     } finally {
       handleLoadingPage(false);
@@ -60,6 +58,7 @@ function App() {
 
   const getTasks = async () => {
     try {
+      if ( !localStorage.getItem("token") ) return null;
       const data = await requestProcessing(
         getArrayTasks({ filteringBy, sortingBy, taskLimitPerPage, currentPage })
       );
@@ -100,7 +99,7 @@ function App() {
 
   useEffect(() => {
     getTasks();
-  }, [filteringBy, sortingBy, currentPage]);
+  }, [filteringBy, sortingBy, currentPage, usernameAuth]);
 
   useEffect(() => {
     errorText != "" && setTimeout(() => handleErrorText(""), 3000);
@@ -114,27 +113,31 @@ function App() {
     try {
       const response = await login(candidate);
       saveLocalStorage(response.token);
+      setUsernameAuth(response.username);
     } catch (error) {
-      setErrorText(error.response.data.message);
+      // const textError = error.response.data.errors[0].msg
+      // setErrorText(textError || error.response.data.message);
     }
   };
 
   const register = async (candidate) => {
     try {
-      await registration(candidate);
+      const response = await registration(candidate);
+      saveLocalStorage(response.token);
+      setUsernameAuth(response.username);
     } catch (error) {
-      setErrorText(error.response.data.message);
+      // const textError = error.response.data.errors[0].msg
+      // setErrorText(textError || error.response.data.message);
     }
   };
 
   const saveLocalStorage = (token) => {
-    localStorage.setItem("token", JSON.stringify(token));
-    window.location.reload();
+    localStorage.setItem("token", token);
   };
 
   const updateLocalStorage = () => {
     localStorage.removeItem("token");
-    window.location.reload();
+    setUsernameAuth('');
   };
 
   return (
@@ -194,6 +197,7 @@ function App() {
           loadingPage={loadingPage}
           setErrorText={setErrorText}
           handleLoadingPage={handleLoadingPage}
+          usernameAuth={usernameAuth}
         />
         <Pagination
           currentPage={currentPage}
