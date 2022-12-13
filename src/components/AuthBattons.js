@@ -57,24 +57,31 @@ function AuthBattons({ logining, register, updateLocalStorage, usernameAuth }) {
   return (
     <Box display="flex" flexDirection="row-reverse" alignItems="center">
       {!usernameAuth && (
-        <>
-          <Button
-            onClick={() => handleWindowLogin(true)}
-            bg="#8ec4dd9a"
-            color="rgba(91, 32, 159, 0.919)"
-            size="sm"
-          >
-            Login
-          </Button>
+        <Box bg="#8ec4dd4a" borderRadius="10px">
           <Button
             onClick={() => handleWindowRegistration(true)}
-            bg="#8ec4dd9a"
-            color="rgba(91, 32, 139, 0.819)"
+            color="rgba(91, 32, 139, 0.75)"
             size="sm"
+            borderTopRightRadius="0"
+            borderBottomRightRadius="0"
+            borderRight="1px solid grey"
+            bg="none"
+            p="10px"
           >
             Registration
           </Button>
-        </>
+          <Button
+            onClick={() => handleWindowLogin(true)}
+            color="rgba(91, 32, 139, 0.75)"
+            borderTopLeftRadius="0"
+            borderBottomLeftRadius="0"
+            bg="none"
+            size="sm"
+            p="10px"
+          >
+            Login
+          </Button>
+        </Box>
       )}
       {usernameAuth && (
         <Box
