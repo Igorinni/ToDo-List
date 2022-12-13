@@ -8,7 +8,8 @@ function Header() {
       bgClip="text"
       fontWeight="extrabold"
       fontStyle="italic"
-      py="5"
+      mt="5px"
+      mb="15px"
     >
       <Flex alignItems="center" justifyContent="center">
         <Box color="#9728ca" fontSize="2xl">

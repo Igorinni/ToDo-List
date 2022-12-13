@@ -15,6 +15,7 @@ function Error({ errorText }) {
       fontSize="16"
       maxW="590px"
       textAlign="center"
+      zIndex="99"
     >
       {errorText}
     </Box>

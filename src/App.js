@@ -14,6 +14,7 @@ import {
 import { ChakraProvider, Box, Spinner } from "@chakra-ui/react";
 import theme from "./styles/theme";
 import AuthBattons from "./components/AuthBattons";
+import { registration, login, deleteUser, allUsers } from "./services/Auth";
 
 function App() {
   const [tasksList, setTasksList] = useState([]);
@@ -41,12 +42,16 @@ function App() {
     setErrorText(text);
   };
 
+  const [usernameAuth, setUsernameAuth] = useState("");
+  const [changeLocalStorage, setChangeLocalStorage] = useState(false)
+
   const requestProcessing = async (promise) => {
     try {
       handleLoadingPage(true);
       const response = await promise;
       return response;
     } catch (error) {
+      console.log("errorssssssssssssss: ", error);
       setErrorText(error.response.data.message);
     } finally {
       handleLoadingPage(false);
@@ -60,6 +65,7 @@ function App() {
       );
       setTasksList(data.rows);
       setTaskAmount(data.count);
+      setUsernameAuth(data.username);
     } catch (error) {
       setErrorText(error.response.data.message);
     }
@@ -104,6 +110,33 @@ function App() {
     setСurrentPage(currentPage - 1);
   }
 
+  const logining = async (candidate) => {
+    try {
+      const response = await login(candidate);
+      saveLocalStorage(response.token);
+    } catch (error) {
+      setErrorText(error.response.data.message);
+    }
+  };
+
+  const register = async (candidate) => {
+    try {
+      await registration(candidate);
+    } catch (error) {
+      setErrorText(error.response.data.message);
+    }
+  };
+
+  const saveLocalStorage = (token) => {
+    localStorage.setItem("token", JSON.stringify(token));
+    window.location.reload();
+  };
+
+  const updateLocalStorage = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
+
   return (
     <ChakraProvider theme={theme}>
       {errorText && (
@@ -130,6 +163,7 @@ function App() {
         h="100%"
         bg="rgba(255, 255, 255, 0.8)"
         p="5"
+        py="7px"
         my="20"
         mx="auto"
         maxW="600"
@@ -137,7 +171,12 @@ function App() {
         borderRadius="10"
         fontFamily="Playfair Display"
       >
-        <AuthBattons />
+        <AuthBattons
+          logining={logining}
+          register={register}
+          updateLocalStorage={updateLocalStorage}
+          usernameAuth={usernameAuth}
+        />
         <Header />
         <AddTaskInput addTask={addTask} loadingPage={loadingPage} />
         <ButtonFilterAndSort

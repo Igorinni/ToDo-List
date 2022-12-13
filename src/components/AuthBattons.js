@@ -1,14 +1,22 @@
-import { Box, Button, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Input,
+  FormControl,
+  Text,
+  IconButton,
+  FormLabel,
+} from "@chakra-ui/react";
 import { useState } from "react";
-import { registration, login, deleteUser, allUsers } from "../services/Auth";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 
-function AuthBattons() {
-  const [displayLogin, setDisplayLogin] = useState(false);
-  const handleDisplayLogin = (condition) => setDisplayLogin(condition);
+function AuthBattons({ logining, register, updateLocalStorage, usernameAuth }) {
+  const [windowLogin, setWindowLogin] = useState(false);
+  const handleWindowLogin = (condition) => setWindowLogin(condition);
 
-  const [displayRegistration, setDisplayRegistration] = useState(false);
-  const handleDisplayRegistration = (condition) =>
-    setDisplayRegistration(condition);
+  const [windowRegistration, setWindowRegistration] = useState(false);
+  const handleWindowRegistration = (condition) =>
+    setWindowRegistration(condition);
 
   const [username, setUsername] = useState("");
   const handleUsernameChange = (e) => setUsername(e.target.value);
@@ -19,118 +27,80 @@ function AuthBattons() {
   const clouseWindow = () => {
     setUsername("");
     setPassword("");
-    handleDisplayLogin(false);
-    handleDisplayRegistration(false);
+    handleWindowLogin(false);
+    handleWindowRegistration(false);
   };
 
-  const logining = async () => {
-    try {
-      const candidate = {
-        username,
-        password,
-      };
-      const response = await login(candidate);
-      setUsername("");
-      setPassword("");
-      saveLocalStorage(response.token);
-      clouseWindow();
-    } catch (error) {
-      console.log("Ошибка при входе");
-    }
+  const login = () => {
+    const candidate = {
+      username,
+      password,
+    };
+    logining(candidate);
+    setUsername("");
+    setPassword("");
+    clouseWindow();
   };
 
-  const registrate = async () => {
-    try {
-      const candidate = {
-        username: `${username}`,
-        password: `${password}`,
-      };
-      const response = await registration(candidate);
-      setUsername("");
-      setPassword("");
-      clouseWindow();
-    } catch (error) {
-      console.log("Ошибка при регистрации");
-    }
-  };
-
-  const saveLocalStorage = (token) => {
-    localStorage.setItem("token", JSON.stringify(token));
-  };
-
-  const updateLocalStorage = () => {
-    localStorage.removeItem("token");
+  const registrate = () => {
+    const candidate = {
+      username: `${username}`,
+      password: `${password}`,
+    };
+    register(candidate);
+    setUsername("");
+    setPassword("");
+    handleWindowRegistration(false);
+    handleWindowLogin(true);
   };
 
   return (
-    <Box /* position="fixed" */ /* float="right"  */ /* right="190px" */>
-      <Button
-        bg="#8ec4dd9a"
-        color="rgba(91, 32, 159, 0.919)"
-        onClick={() => handleDisplayLogin(true)}
-      >
-        Login
-      </Button>
-      <Button
-        bg="#8ec4dd9a"
-        color="rgba(91, 32, 139, 0.819)"
-        onClick={() => handleDisplayRegistration(true)}
-      >
-        Registration
-      </Button>
-      <Button
-        bg="#8ec4dd9a"
-        color="rgba(91, 32, 139, 0.819)"
-        onClick={updateLocalStorage}
-      >
-        Sign out
-      </Button>
-
-      {displayLogin && (
+    <Box display="flex" flexDirection="row-reverse" alignItems="center">
+      {!usernameAuth && (
+        <>
+          <Button
+            onClick={() => handleWindowLogin(true)}
+            bg="#8ec4dd9a"
+            color="rgba(91, 32, 159, 0.919)"
+            size="sm"
+          >
+            Login
+          </Button>
+          <Button
+            onClick={() => handleWindowRegistration(true)}
+            bg="#8ec4dd9a"
+            color="rgba(91, 32, 139, 0.819)"
+            size="sm"
+          >
+            Registration
+          </Button>
+        </>
+      )}
+      {usernameAuth && (
         <Box
-          w="100%"
-          h="100%"
-          bg="rgba(0, 0, 0, 0.4)"
-          position="fixed"
-          top="0"
-          left="0"
+          bg="rgba(188, 209, 190, 0.5)"
+          borderRadius="5px"
           display="flex"
           alignItems="center"
-          justifyContent="center"
-          zIndex="99"
+          p="2px"
+          boxShadow="xs"
         >
-          <Box
-            padding="20px"
-            borderRadius="12px"
-            backgroundColor="rgba(255, 255, 255, 1)"
-            h="250px"
-            w="300px"
+          <Text display="flex" px="10px"  borderRight="1px solid grey">
+            <Text color="rgba(0, 128, 0, 0.7)" mr="5px">Login:</Text>
+            <Text fontWeight="700" color="green">{usernameAuth}</Text>
+          </Text>
+          <Button
+            onClick={updateLocalStorage}
+            bg="none"
+            color="rgba(91, 32, 139, 0.819)"
+            size="sm"
           >
-            <Button bg="black" float="right" onClick={() => clouseWindow()}>
-              X
-            </Button>
-            <Input
-              value={username}
-              onChange={handleUsernameChange}
-              my="10px"
-              placeholder="Enter login"
-              color="black"
-            ></Input>
-            <Input
-              value={password}
-              onChange={handlePasswordChange}
-              my="10px"
-              placeholder="Enter password"
-              color="black"
-            ></Input>
-            <Button bg="green" onClick={logining}>
-              Log in
-            </Button>
-          </Box>
+            Sign out
+          </Button>
         </Box>
       )}
 
-      {displayRegistration && (
+      {(windowLogin || windowRegistration) && (
         <Box
           w="100%"
           h="100%"
@@ -142,35 +112,74 @@ function AuthBattons() {
           alignItems="center"
           justifyContent="center"
           zIndex="99"
+          onClick={() => clouseWindow()}
         >
-          <Box
+          <FormControl
             padding="20px"
             borderRadius="12px"
             backgroundColor="rgba(255, 255, 255, 1)"
-            h="250px"
-            w="300px"
+            h="300px"
+            w="370px"
+            onClick={(e) => e.stopPropagation()}
+            onSubmit
           >
-            <Button bg="black" float="right" onClick={clouseWindow}>
-              X
-            </Button>
+            <IconButton
+              onClick={clouseWindow}
+              bg="none"
+              _hover={{ bg: "none" }}
+              color="red"
+              position="absolute"
+              right="7px"
+              top="7px"
+              icon={<AiOutlineCloseCircle />}
+              h="32px"
+              fontSize="30"
+            ></IconButton>
+            <Text color="black" fontSize="25px" mb="10px">
+              {windowLogin && "Log in please"}
+              {windowRegistration && "Registration"}
+            </Text>
+            <FormLabel fontSize="16px" color="black" mt="15px" mb="3px">
+              Username:
+            </FormLabel>
             <Input
+              type="text"
               value={username}
               onChange={handleUsernameChange}
-              my="10px"
               placeholder="Enter login"
               color="black"
             ></Input>
+            <FormLabel fontSize="16px" color="black" mt="15px" mb="3px">
+              Password:
+            </FormLabel>
             <Input
+              type="password"
               value={password}
               onChange={handlePasswordChange}
-              my="10px"
               placeholder="Enter password"
               color="black"
+              onKeyDown={(e) => {
+                if (e.code === "Enter" || e.key === 13) {
+                  windowLogin && login();
+                  windowRegistration && registrate();
+                }
+              }}
             ></Input>
-            <Button bg="green" onClick={registrate}>
-              Registration
+            <Button
+              onClick={() => {
+                windowLogin && login();
+                windowRegistration && registrate();
+              }}
+              type="submit"
+              bg="green"
+              mt="25px"
+              w="150px"
+              fontSize="20px"
+            >
+              {windowLogin && "Log in"}
+              {windowRegistration && "Registration"}
             </Button>
-          </Box>
+          </FormControl>
         </Box>
       )}
     </Box>
