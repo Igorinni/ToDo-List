@@ -65,8 +65,9 @@ function AuthBattons({
       flexDirection="row-reverse"
       justifyContent="space-between"
       alignItems="center"
+      flexWrap="wrap"
     >
-      <Box display="flex" flexDirection="row-reverse" alignItems="center">
+      <Box display="flex" flexDirection="row-reverse" alignItems="center" >
         {!usernameAuth && (
           <Box bg="#8ec4dd4a" borderRadius="10px">
             <Button
@@ -103,12 +104,13 @@ function AuthBattons({
             alignItems="center"
             p="2px"
             boxShadow="xs"
+            flexWrap="wrap"
           >
             <Box display="flex" px="10px" borderRight="1px solid grey">
               <Text color="rgba(0, 128, 0, 0.7)" mr="5px">
                 Login:
               </Text>
-              <Text fontWeight="700" color="green">
+              <Text wordBreak="break-all" fontWeight="700" color="green">
                 {usernameAuth}
               </Text>
             </Box>
