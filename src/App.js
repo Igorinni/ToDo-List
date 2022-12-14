@@ -14,7 +14,7 @@ import {
 import { ChakraProvider, Box, Spinner } from "@chakra-ui/react";
 import theme from "./styles/theme";
 import AuthBattons from "./components/AuthBattons";
-import { registration, login, deleteUser, allUsers } from "./services/Auth";
+import { registration, login, deleteUser } from "./services/RequestAuth";
 
 function App() {
   const [tasksList, setTasksList] = useState([]);
@@ -58,14 +58,15 @@ function App() {
 
   const getTasks = async () => {
     try {
-      if ( !localStorage.getItem("token") ) return null;
+      if (!localStorage.getItem("token")) return null;
       const data = await requestProcessing(
         getArrayTasks({ filteringBy, sortingBy, taskLimitPerPage, currentPage })
       );
-      setTasksList(data.rows);
+      setTasksList(data.tasks);
       setTaskAmount(data.count);
-      setUsernameAuth(data.username);
+      setUsernameAuth(localStorage.getItem("username"));
     } catch (error) {
+      updateLocalStorage();
       setErrorText(error.response.data.message);
     }
   };
@@ -111,33 +112,48 @@ function App() {
 
   const logining = async (candidate) => {
     try {
-      const response = await login(candidate);
-      saveLocalStorage(response.token);
-      setUsernameAuth(response.username);
+      const res = await login(candidate);
+      saveLocalStorage(res.token, res.username, res.userId);
     } catch (error) {
-      // const textError = error.response.data.errors[0].msg
-      // setErrorText(textError || error.response.data.message);
+      console.log(error);
+      error.response.data["errors"]
+        ? setErrorText(error.response.data.errors[0].msg)
+        : setErrorText(error.response.data.message);
     }
   };
 
   const register = async (candidate) => {
     try {
-      const response = await registration(candidate);
-      saveLocalStorage(response.token);
-      setUsernameAuth(response.username);
+      const res = await registration(candidate);
+      saveLocalStorage(res.token, res.username, res.userId);
     } catch (error) {
-      // const textError = error.response.data.errors[0].msg
-      // setErrorText(textError || error.response.data.message);
+      error.response.data["errors"]
+        ? setErrorText(error.response.data.errors[0].msg)
+        : setErrorText(error.response.data.message);
     }
   };
 
-  const saveLocalStorage = (token) => {
+  const deleteAccount = async () => {
+    try {
+      await deleteUser(localStorage.getItem("userId"));
+      updateLocalStorage();
+    } catch (error) {
+      setErrorText(error.response.data.message);
+    }
+  };
+
+  const saveLocalStorage = (token, username, userId) => {
     localStorage.setItem("token", token);
+    localStorage.setItem("username", username);
+    localStorage.setItem("userId", userId);
+    setUsernameAuth(username);
   };
 
   const updateLocalStorage = () => {
     localStorage.removeItem("token");
-    setUsernameAuth('');
+    localStorage.removeItem("username");
+    localStorage.removeItem("userId");
+    setUsernameAuth("");
   };
 
   return (
@@ -179,6 +195,7 @@ function App() {
           register={register}
           updateLocalStorage={updateLocalStorage}
           usernameAuth={usernameAuth}
+          deleteAccount={deleteAccount}
         />
         <Header />
         <AddTaskInput addTask={addTask} loadingPage={loadingPage} />
