@@ -67,9 +67,13 @@ function AuthBattons({
       alignItems="center"
       flexWrap="wrap"
     >
-      <Box display="flex" flexDirection="row-reverse" alignItems="center" >
+      <Box display="flex" flexDirection="row-reverse" alignItems="center">
         {!usernameAuth && (
-          <Box bg="#8ec4dd4a" borderRadius="10px">
+          <Box
+            bg="rgba(167, 159, 207, 0.2)"
+            borderRadius="10px"
+            border="1px solid rgba(150, 150, 150, 0.2)"
+          >
             <Button
               onClick={() => handleWindowRegistration(true)}
               color="rgba(91, 32, 139, 0.75)"
@@ -79,6 +83,7 @@ function AuthBattons({
               borderRight="1px solid grey"
               bg="none"
               p="10px"
+              _hover={{ bg: "rgba(171, 156, 247, 0.4)" }}
             >
               Registration
             </Button>
@@ -90,6 +95,7 @@ function AuthBattons({
               bg="none"
               size="sm"
               p="10px"
+              _hover={{ bg: "rgba(171, 156, 247, 0.4)" }}
             >
               Login
             </Button>
