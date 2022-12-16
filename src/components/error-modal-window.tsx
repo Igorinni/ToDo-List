@@ -1,6 +1,11 @@
 import { Box } from "@chakra-ui/react";
+import React from "react";
 
-function Error({ errorText }) {
+interface ErrorModalProps {
+    errorText: any
+}
+
+const ErrorModal = ({ errorText }: ErrorModalProps ) => {
   return (
     <Box
       bg="rgb(252, 227, 9)"
@@ -22,4 +27,4 @@ function Error({ errorText }) {
   );
 }
 
-export default Error;
+export default ErrorModal;

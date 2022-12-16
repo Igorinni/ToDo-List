@@ -1,10 +1,10 @@
-import Header from "./components/Header";
-import AddTaskInput from "./components/AddTaskInput";
-import TaskList from "./components/TaskList";
-import Error from "./components/Error";
+import Header from "./components/header.tsx";
+import AddTaskInput from "./components/add-task.tsx";
+import TaskList from "./components/task-list.tsx";
+import ErrorModal from "./components/error-modal-window.tsx";
 import { useEffect, useState } from "react";
-import ButtonFilterAndSort from "./components/ButtonFilterAndSort";
-import Pagination from "./components/Pagination";
+import ButtonFilterAndSort from "./components/button-filter-sort.tsx";
+import Pagination from "./components/pagination.tsx";
 import {
   getArrayTasks,
   createTask,
@@ -13,7 +13,7 @@ import {
 } from "./services/RequestApi";
 import { ChakraProvider, Box, Spinner } from "@chakra-ui/react";
 import theme from "./styles/theme";
-import AuthBattons from "./components/AuthBattons";
+import AuthBattons from "./components/auth-buttons.tsx";
 import { registration, login, deleteUser } from "./services/RequestAuth";
 
 function App() {
@@ -159,7 +159,7 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
       {errorText && (
-        <Error errorText={errorText} handleErrorText={handleErrorText} />
+        <ErrorModal errorText={errorText} handleErrorText={handleErrorText} />
       )}
       {loadingPage && (
         <Spinner

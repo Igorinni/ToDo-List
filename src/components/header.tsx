@@ -1,7 +1,8 @@
 import { FaGg } from "react-icons/fa";
 import { Box, Flex, Text } from "@chakra-ui/react";
+import React from "react";
 
-function Header() {
+const Header = () => {
   return (
     <Box
       bgGradient="linear(to-l, #7928CA, #FF0080)"

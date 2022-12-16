@@ -1,11 +1,24 @@
 import { Box, Button, Flex, Input, useMediaQuery } from "@chakra-ui/react";
 import { useState, useRef, useEffect } from "react";
+import React from "react";
 
-function AddTaskInput({ addTask, loadingPage }) {
-  const [value, setValue] = useState("");
+type Task = {
+    name: string,
+    done: boolean,
+    createdAt?: number,
+    updatedAt?: number,
+}
+
+interface AddTaskProps {
+    addTask: (task: Task) => void;
+    loadingPage: boolean;
+}
+
+const AddTaskInput = ({ addTask, loadingPage }: AddTaskProps) => {
+  const [value, setValue] = useState<string>("");
   const handleValueChange = (e) => setValue(e.target.value);
 
-  const inputRef = useRef(null);
+  const inputRef = useRef<any>(null);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -14,7 +27,7 @@ function AddTaskInput({ addTask, loadingPage }) {
   function saveTask() {
     if (value.trim() === "") return;
     const date = new Date();
-    const task = {
+    const task: Task = {
       name: value,
       done: false,
       createdAt: date.getTime(),
@@ -32,7 +45,7 @@ function AddTaskInput({ addTask, loadingPage }) {
         <Input
           ref={inputRef}
           value={value}
-          onKeyDown={(e) => (e.code === "Enter" || e.key === 13) && saveTask()}
+          onKeyDown={(e) => (e.code === "Enter" || e.key === "13") && saveTask()}
           onChange={handleValueChange}
           isDisabled={loadingPage}
           placeholder="Enter a task..."
@@ -51,7 +64,7 @@ function AddTaskInput({ addTask, loadingPage }) {
           px="35"
           transitionDuration="300ms"
           _hover={{ transform: "scale(1.1)" }}
-          width={isLessThan550 && "100%"}
+          width={isLessThan550 ? "100%" : ""}
         >
           Add
         </Button>
