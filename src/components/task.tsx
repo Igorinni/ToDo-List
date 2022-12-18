@@ -15,7 +15,7 @@ interface TaskProps {
   task: TaskObj
   deleteTask: (task: TaskObj) => void
   checkTask: (task: TaskObj) => void
-  saveСhangedTitle: (value: string, task: TaskObj) => void 
+  saveChangedTitle: (value: string, task: TaskObj) => void 
   loadingPage: boolean
 }
 
@@ -24,7 +24,7 @@ const Task = ({
   deleteTask,
   checkTask,
   loadingPage,
-  saveСhangedTitle,
+  saveChangedTitle,
 }: TaskProps) => {
   const date: Date = new Date(task.createdAt)
 
@@ -73,7 +73,7 @@ const Task = ({
             onBlur={handleEditStatus}
             onKeyDown={(e) => {
               if (e.code === 'Enter' || e.key === '13') {
-                saveСhangedTitle(e.currentTarget.value, task)
+                saveChangedTitle(e.currentTarget.value, task)
                 handleEditStatus()
               }
               if (e.code === 'Escape') handleEditStatus()

@@ -1,8 +1,8 @@
 import { Text } from '@chakra-ui/react'
 import Task from './task.tsx'
-import { saveСhangedTitleTask } from '../services/RequestApi.js'
+import { saveChangedTitleTask } from '../services/request-api.tsx'
 import { TaskObj } from '../task.types'
-import React, { FC } from 'react'
+import React from 'react'
 
 interface TaskListProps {
   tasksList: Array<object>,
@@ -15,7 +15,7 @@ interface TaskListProps {
   usernameAuth: string,
 }
 
-const TaskList: FC<TaskListProps> = ({
+const TaskList = ({
   tasksList,
   deleteTask,
   checkTask,
@@ -24,11 +24,11 @@ const TaskList: FC<TaskListProps> = ({
   handleLoadingPage,
   setErrorText,
   usernameAuth,
-}) => {
-  const saveСhangedTitle = async (value: string, task: TaskObj) => {
+}: TaskListProps) => {
+  const saveChangedTitle = async (value: string, task: TaskObj) => {
     try {
       handleLoadingPage(true)
-      await saveСhangedTitleTask(value, task)
+      await saveChangedTitleTask(value, task)
       getTasks()
     } catch (error) {
       setErrorText(error.response.data.message)
@@ -53,16 +53,14 @@ const TaskList: FC<TaskListProps> = ({
 
       {usernameAuth &&
         tasksList.map(
-          (
-            elem: any // any ???????????????????
-          ) => (
+          ( elem: any ) => (
             <Task
               task={elem}
               key={elem.uuid}
               deleteTask={deleteTask}
               checkTask={checkTask}
               loadingPage={loadingPage}
-              saveСhangedTitle={saveСhangedTitle}
+              saveChangedTitle={saveChangedTitle}
             />
           )
         )}

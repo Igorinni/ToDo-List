@@ -3,7 +3,7 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import React from 'react'
 
 interface PaginationProps {
-  setСurrentPage: (newNumber: number | string) => void
+  setCurrentPage: (newNumber: number | string) => void
   currentPage: number
   taskAmount: number
   taskLimitPerPage: number
@@ -12,7 +12,7 @@ interface PaginationProps {
 }
 
 function Pagination({
-  setСurrentPage,
+  setCurrentPage,
   currentPage,
   taskAmount,
   taskLimitPerPage,
@@ -28,14 +28,14 @@ function Pagination({
   function goToPage(result: string | number) {
     if (result === 'Left') {
       currentPage === 1
-        ? setСurrentPage(currentPage)
-        : setСurrentPage(currentPage - 1)
+        ? setCurrentPage(currentPage)
+        : setCurrentPage(currentPage - 1)
     } else if (result === 'Right') {
       currentPage === pageNumbers.length
-        ? setСurrentPage(currentPage)
-        : setСurrentPage(currentPage + 1)
+        ? setCurrentPage(currentPage)
+        : setCurrentPage(currentPage + 1)
     } else {
-      setСurrentPage(result)
+      setCurrentPage(result)
     }
   }
 

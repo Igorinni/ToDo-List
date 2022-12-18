@@ -1,19 +1,24 @@
 import axios from "axios";
+import { newTask, TaskObj } from "../task.types"
+import { getTasksArguments } from "./request.types"
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+  config.headers!.Authorization = `Bearer ${localStorage.getItem('token')}`;
   return config
 })
 
-interface getTasksArguments {
-    filteringBy: string
-  sortingBy: string
-  taskLimitPerPage: number
-  currentPage: number
+
+type ResponseGet = {
+  config: object,
+  data: object,
+  headers: any,
+  request: any,
+  status: number,
+  statusText: string,
 }
 
 export const getArrayTasks = async ({
@@ -21,8 +26,8 @@ export const getArrayTasks = async ({
   sortingBy,
   taskLimitPerPage,
   currentPage,
-}: getTasksArguments) => {
-  const response = await axiosInstance.get(
+}: getTasksArguments): Promise<{data: object}> => {
+  const response = await axiosInstance.get<ResponseGet>(
     `tasks`,
     {
       params: {
@@ -36,13 +41,13 @@ export const getArrayTasks = async ({
   return response.data;
 };
 
-export const createTask = (newTask) =>
+export const createTask = (newTask: newTask) =>
   axiosInstance.post(`task`, newTask);
 
-export const removeTask = (id) =>
+export const removeTask = (id: string) =>
   axiosInstance.delete(`task/${id}`);
 
-export const saveStateTask = (task) =>
+export const saveStateTask = (task: TaskObj) =>
   axiosInstance.patch(`task/${task.uuid}`, {
     name: task.name,
     done: !task.done,
@@ -50,7 +55,7 @@ export const saveStateTask = (task) =>
     updatedAt: task.updatedAt,
   });
 
-export const saveСhangedTitleTask = (newTitleTask, task) =>
+export const saveChangedTitleTask = (newTitleTask: string, task: TaskObj) =>
   axiosInstance.patch(`task/${task.uuid}`, {
     name: newTitleTask,
     done: task.done,

@@ -1,22 +1,16 @@
 import { Box, Button, Flex, Input, useMediaQuery } from "@chakra-ui/react";
 import { useState, useRef, useEffect } from "react";
 import React from "react";
-
-type Task = {
-    name: string,
-    done: boolean,
-    createdAt?: number,
-    updatedAt?: number,
-}
+import { newTask } from "../task.types"
 
 interface AddTaskProps {
-    addTask: (task: Task) => void;
+    addTask: (task: newTask) => void;
     loadingPage: boolean;
 }
 
 const AddTaskInput = ({ addTask, loadingPage }: AddTaskProps) => {
   const [value, setValue] = useState<string>("");
-  const handleValueChange = (e) => setValue(e.target.value);
+  const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => setValue(event.target.value);
 
   const inputRef = useRef<any>(null);
 
@@ -27,7 +21,7 @@ const AddTaskInput = ({ addTask, loadingPage }: AddTaskProps) => {
   function saveTask() {
     if (value.trim() === "") return;
     const date = new Date();
-    const task: Task = {
+    const task: newTask = {
       name: value,
       done: false,
       createdAt: date.getTime(),

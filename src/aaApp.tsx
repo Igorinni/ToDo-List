@@ -1,53 +1,56 @@
-import Header from "./components/header.tsx";
-import AddTaskInput from "./components/add-task.tsx";
-import TaskList from "./components/task-list.tsx";
-import ErrorModal from "./components/error-modal-window.tsx";
+import React from "react";
+import Header from "./components/header";
+import AddTaskInput from "./components/add-task";
+import TaskList from "./components/task-list";
+import ErrorModal from "./components/error-modal-window";
 import { useEffect, useState } from "react";
-import ButtonFilterAndSort from "./components/button-filter-sort.tsx";
-import Pagination from "./components/pagination.tsx";
+import ButtonFilterAndSort from "./components/button-filter-sort";
+import Pagination from "./components/pagination";
 import {
   getArrayTasks,
   createTask,
   removeTask,
   saveStateTask,
-} from "./services/request-api.tsx";
+} from "./services/request-api";
 import { ChakraProvider, Box, Spinner } from "@chakra-ui/react";
 import theme from "./styles/theme";
-import AuthBattons from "./components/auth-buttons.tsx";
+import AuthBattons from "./components/auth-buttons";
 import { registration, login, deleteUser } from "./services/RequestAuth";
+import { getTasksArguments } from "./services/request.types"
 
 function App() {
   const [tasksList, setTasksList] = useState([]);
   const [taskAmount, setTaskAmount] = useState(0);
 
-  const [currentPage, setСurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const taskLimitPerPage = 5;
 
   const [filteringBy, setFilteringBy] = useState("");
-  const handleFilteringBy = (value) => {
+  const handleFilteringBy = (value: string) => {
     setFilteringBy(value);
-    setСurrentPage(1);
+    setCurrentPage(1);
   };
 
   const [sortingBy, setSortingBy] = useState("desc");
-  const handleSortingBy = (value) => setSortingBy(value);
+  const handleSortingBy = (value: string) => setSortingBy(value);
 
   const [loadingPage, setLoadingPage] = useState(false);
-  const handleLoadingPage = (status) => {
+  const handleLoadingPage = (status: boolean) => {
     setLoadingPage(status);
   };
 
   const [errorText, setErrorText] = useState("");
-  const handleErrorText = (text) => {
+  const handleErrorText = (text: string) => {
     setErrorText(text);
   };
 
   const [usernameAuth, setUsernameAuth] = useState("");
 
-  const requestProcessing = async (promise) => {
+  
+  const requestProcessing = async (promise: any) => {
     try {
       handleLoadingPage(true);
-      const response = await promise;
+      const response: any = await promise;
       console.log("response: ", response)
       return response;
     } catch (error) {
@@ -57,12 +60,18 @@ function App() {
     }
   };
 
+  type responseTasks = {
+    count: number,
+    tasks: object[]
+  }
+
   const getTasks = async () => {
     try {
       if (!localStorage.getItem("token")) return null;
-      const data = await requestProcessing(
+      const data: responseTasks = await requestProcessing(
         getArrayTasks({ filteringBy, sortingBy, taskLimitPerPage, currentPage })
-      );
+      ) as responseTasks;
+      console.log("data: ", data)
       setTasksList(data.tasks);
       setTaskAmount(data.count);
       setUsernameAuth(localStorage.getItem("username"));
@@ -108,7 +117,7 @@ function App() {
   }, [errorText]);
 
   if (tasksList.length == 0 && currentPage > 1) {
-    setСurrentPage(currentPage - 1);
+    setCurrentPage(currentPage - 1);
   }
 
   const logining = async (candidate) => {
@@ -219,7 +228,7 @@ function App() {
         />
         <Pagination
           currentPage={currentPage}
-          setСurrentPage={setСurrentPage}
+          setCurrentPage={setCurrentPage}
           taskLimitPerPage={taskLimitPerPage}
           taskAmount={taskAmount}
           tasksList={tasksList}
