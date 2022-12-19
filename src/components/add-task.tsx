@@ -8,10 +8,10 @@ interface AddTaskProps {
 }
 
 const AddTaskInput = ({ addTask, loadingPage }: AddTaskProps) => {
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState("");
   const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => setValue(event.target.value);
 
-  const inputRef = useRef<any>(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     inputRef.current.focus();

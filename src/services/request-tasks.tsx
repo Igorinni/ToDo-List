@@ -1,12 +1,12 @@
-import axios from "axios";
-import { newTask, TaskObj } from "../task-user.types"
+import axios from 'axios'
+import { newTask, TaskObj } from '../task-user.types'
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
-});
+})
 
 axiosInstance.interceptors.request.use((config) => {
-  config.headers!.Authorization = `Bearer ${localStorage.getItem('token')}`;
+  config.headers!.Authorization = `Bearer ${localStorage.getItem('token')}`
   return config
 })
 
@@ -18,12 +18,12 @@ interface getTasksArguments {
 }
 
 type ResponseGet = {
-  config: object,
-  data: object,
-  headers: any,
-  request: any,
-  status: number,
-  statusText: string,
+  config: object
+  data: object
+  headers: any
+  request: any
+  status: number
+  statusText: string
 }
 
 export const getArrayTasks = async ({
@@ -31,26 +31,22 @@ export const getArrayTasks = async ({
   sortingBy,
   taskLimitPerPage,
   currentPage,
-}: getTasksArguments): Promise<{data: object}> => {
-  const response = await axiosInstance.get<ResponseGet>(
-    `tasks`,
-    {
-      params: {
-        filterBy: filteringBy,
-        order: sortingBy,
-        pp: taskLimitPerPage,
-        page: currentPage,
-      },
-    }
-  );
-  return response.data;
-};
+}: getTasksArguments): Promise<{ data: object }> => {
+  const response = await axiosInstance.get<ResponseGet>(`tasks`, {
+    params: {
+      filterBy: filteringBy,
+      order: sortingBy,
+      pp: taskLimitPerPage,
+      page: currentPage,
+    },
+  })
+  return response.data
+}
 
 export const createTask = (newTask: newTask) =>
-  axiosInstance.post(`task`, newTask);
+  axiosInstance.post(`task`, newTask)
 
-export const removeTask = (id: string) =>
-  axiosInstance.delete(`task/${id}`);
+export const removeTask = (id: string) => axiosInstance.delete(`task/${id}`)
 
 export const saveStateTask = (task: TaskObj) =>
   axiosInstance.patch(`task/${task.uuid}`, {
@@ -58,7 +54,7 @@ export const saveStateTask = (task: TaskObj) =>
     done: !task.done,
     createdAt: task.createdAt,
     updatedAt: task.updatedAt,
-  });
+  })
 
 export const saveChangedTitleTask = (newTitleTask: string, task: TaskObj) =>
   axiosInstance.patch(`task/${task.uuid}`, {
@@ -66,4 +62,4 @@ export const saveChangedTitleTask = (newTitleTask: string, task: TaskObj) =>
     done: task.done,
     createdAt: task.createdAt,
     updatedAt: task.updatedAt,
-  });
+  })

@@ -49,7 +49,6 @@ function App() {
     try {
       handleLoadingPage(true)
       const response: any = await promise
-      console.log('response: ', response)
       return response
     } catch (error) {
       setErrorText(error.response.data.message)
@@ -57,7 +56,6 @@ function App() {
       handleLoadingPage(false)
     }
   }
-
 
   type responseTasks = {
     count: number
@@ -70,7 +68,6 @@ function App() {
       const data /* responseTasks */ = await requestProcessing(
         getArrayTasks({ filteringBy, sortingBy, taskLimitPerPage, currentPage })
       )
-      console.log('data: ', data)
       setTasksList(data.tasks)
       setTaskAmount(data.count)
       setUsernameAuth(localStorage.getItem('username')!)
@@ -83,7 +80,7 @@ function App() {
   const addTask = async (newTask: newTask) => {
     try {
       await requestProcessing(createTask(newTask))
-      getTasks()
+      await getTasks()
     } catch (error) {
       setErrorText(error.response.data.message)
     }
@@ -130,7 +127,6 @@ function App() {
       const res: ResponseAuth = await login(candidate)
       saveLocalStorage(res.token, res.username, res.userId)
     } catch (error) {
-      console.log(error)
       error.response.data['errors']
         ? setErrorText(error.response.data.errors[0].msg)
         : setErrorText(error.response.data.message)
@@ -231,14 +227,14 @@ function App() {
           handleLoadingPage={handleLoadingPage}
           usernameAuth={usernameAuth}
         />
-       {/*  <Pagination
+      <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           taskLimitPerPage={taskLimitPerPage}
           taskAmount={taskAmount}
           tasksList={tasksList}
           loadingPage={loadingPage}
-        /> */}
+        />
       </Box>
     </ChakraProvider>
   )

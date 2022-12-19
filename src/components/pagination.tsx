@@ -39,7 +39,7 @@ function Pagination({
   }
 
   return tasksList.length == 0 || pageNumbers.length === 1 ? (
-    ' '
+    null
   ) : (
     <Box
       display='inline-flex'
