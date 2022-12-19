@@ -9,12 +9,7 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
-import React from 'react'
-
-type User = {
-  username: string
-  password: string
-}
+import { User } from '../task-user.types'
 
 interface AuthButtonsProps {
   logining: (candidate: User) => void
@@ -39,10 +34,10 @@ const AuthBattons = ({
     setWindowRegistration(condition)
 
   const [username, setUsername] = useState('')
-  const handleUsernameChange = (e) => setUsername(e.target.value)
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)
 
   const [password, setPassword] = useState('')
-  const handlePasswordChange = (e) => setPassword(e.target.value)
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)
 
   const clouseWindow = () => {
     setUsername('')

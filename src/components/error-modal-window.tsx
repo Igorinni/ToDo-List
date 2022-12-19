@@ -1,8 +1,7 @@
 import { Box } from "@chakra-ui/react";
-import React from "react";
 
 interface ErrorModalProps {
-    errorText: any
+    errorText: string
 }
 
 const ErrorModal = ({ errorText }: ErrorModalProps ) => {

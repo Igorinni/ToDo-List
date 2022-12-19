@@ -1,6 +1,5 @@
 import { FaGg } from "react-icons/fa";
 import { Box, Flex, Text } from "@chakra-ui/react";
-import React from "react";
 
 const Header = () => {
   return (

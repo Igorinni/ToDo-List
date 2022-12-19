@@ -1,9 +1,8 @@
 import { Box, Button, Container, IconButton } from '@chakra-ui/react'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
-import React from 'react'
 
 interface PaginationProps {
-  setCurrentPage: (newNumber: number | string) => void
+  setCurrentPage: (newNumber: number) => void
   currentPage: number
   taskAmount: number
   taskLimitPerPage: number
@@ -25,7 +24,7 @@ function Pagination({
     pageNumbers.push(i)
   }
 
-  function goToPage(result: string | number) {
+  function goToPage(result: any) {
     if (result === 'Left') {
       currentPage === 1
         ? setCurrentPage(currentPage)

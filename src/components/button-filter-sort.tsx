@@ -6,7 +6,6 @@ import {
   useMediaQuery,
 } from '@chakra-ui/react'
 import { FaArrowCircleUp, FaArrowCircleDown } from 'react-icons/fa'
-import React from 'react'
 
 interface ButtonFilterAndSort {
   filteringBy: string

@@ -1,6 +1,5 @@
 import axios from "axios";
-import { newTask, TaskObj } from "../task.types"
-import { getTasksArguments } from "./request.types"
+import { newTask, TaskObj } from "../task-user.types"
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
@@ -11,6 +10,12 @@ axiosInstance.interceptors.request.use((config) => {
   return config
 })
 
+interface getTasksArguments {
+  filteringBy: string
+  sortingBy: string
+  taskLimitPerPage: number
+  currentPage: number
+}
 
 type ResponseGet = {
   config: object,

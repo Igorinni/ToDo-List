@@ -8,12 +8,11 @@ import {
   Text,
   Container,
 } from '@chakra-ui/react'
-import React from 'react'
-import { TaskObj } from '../task.types'
+import { TaskObj } from '../task-user.types'
 
 interface TaskProps {
   task: TaskObj
-  deleteTask: (task: TaskObj) => void
+  deleteTask: (uuid: string) => void
   checkTask: (task: TaskObj) => void
   saveChangedTitle: (value: string, task: TaskObj) => void 
   loadingPage: boolean

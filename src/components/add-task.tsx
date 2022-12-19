@@ -1,7 +1,6 @@
 import { Box, Button, Flex, Input, useMediaQuery } from "@chakra-ui/react";
 import { useState, useRef, useEffect } from "react";
-import React from "react";
-import { newTask } from "../task.types"
+import { newTask } from "../task-user.types"
 
 interface AddTaskProps {
     addTask: (task: newTask) => void;

@@ -1,18 +1,17 @@
 import { Text } from '@chakra-ui/react'
-import Task from './task.tsx'
-import { saveChangedTitleTask } from '../services/request-api.tsx'
-import { TaskObj } from '../task.types'
-import React from 'react'
+import Task from './task'
+import { saveChangedTitleTask } from '../services/request-tasks'
+import { TaskObj } from '../task-user.types'
 
 interface TaskListProps {
-  tasksList: Array<object>,
-  deleteTask: (task: TaskObj) => void,
-  checkTask: (task: TaskObj) => void,
-  getTasks: () => void,
-  loadingPage: boolean,
-  handleLoadingPage: (condition: boolean) => void,
-  setErrorText: any,
-  usernameAuth: string,
+  tasksList: Array<object>
+  deleteTask: (uuid: string) => void
+  checkTask: (task: TaskObj) => void
+  getTasks: () => void
+  loadingPage: boolean
+  handleLoadingPage: (condition: boolean) => void
+  setErrorText: any
+  usernameAuth: string
 }
 
 const TaskList = ({
@@ -52,18 +51,16 @@ const TaskList = ({
       )}
 
       {usernameAuth &&
-        tasksList.map(
-          ( elem: any ) => (
-            <Task
-              task={elem}
-              key={elem.uuid}
-              deleteTask={deleteTask}
-              checkTask={checkTask}
-              loadingPage={loadingPage}
-              saveChangedTitle={saveChangedTitle}
-            />
-          )
-        )}
+        tasksList.map((elem: any) => (
+          <Task
+            task={elem}
+            key={elem.uuid}
+            deleteTask={deleteTask}
+            checkTask={checkTask}
+            loadingPage={loadingPage}
+            saveChangedTitle={saveChangedTitle}
+          />
+        ))}
     </>
   )
 }
