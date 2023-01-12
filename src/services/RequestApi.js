@@ -44,7 +44,7 @@ export const saveStateTask = (task) =>
     updatedAt: task.updatedAt,
   });
 
-export const saveСhangedTitleTask = (newTitleTask, task) =>
+export const saveChangedTitleTask = (newTitleTask, task) =>
   axiosInstance.patch(`task/${task.uuid}`, {
     name: newTitleTask,
     done: task.done,

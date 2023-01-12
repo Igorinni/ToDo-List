@@ -2,100 +2,67 @@ import Header from "./components/Header";
 import AddTaskInput from "./components/AddTaskInput";
 import TaskList from "./components/TaskList";
 import Error from "./components/Error";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import ButtonFilterAndSort from "./components/ButtonFilterAndSort";
 import Pagination from "./components/Pagination";
-import {
-  getArrayTasks,
-  createTask,
-  removeTask,
-  saveStateTask,
-} from "./services/RequestApi";
 import { ChakraProvider, Box, Spinner } from "@chakra-ui/react";
 import theme from "./styles/theme";
 import AuthBattons from "./components/AuthBattons";
 import { registration, login, deleteUser } from "./services/RequestAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { getTodos, addTodo, deleteTodo, checkTodo } from "./store/todoSlice";
+import { registerUser } from "./store/userSlice";
 
 function App() {
-  const [tasksList, setTasksList] = useState([]);
-  const [taskAmount, setTaskAmount] = useState(0);
-
-  const [currentPage, setСurrentPage] = useState(1);
+  const dispatch = useDispatch();
+  const { todos, errorTodo, loadingPage } = useSelector((state) => state.todos);
+  const { errorAuth, loading } = useSelector((state) => state.user);
+  const [currentPage, setCurrentPage] = useState(1);
   const taskLimitPerPage = 5;
 
   const [filteringBy, setFilteringBy] = useState("");
   const handleFilteringBy = (value) => {
     setFilteringBy(value);
-    setСurrentPage(1);
+    setCurrentPage(1);
   };
 
   const [sortingBy, setSortingBy] = useState("desc");
   const handleSortingBy = (value) => setSortingBy(value);
 
-  const [loadingPage, setLoadingPage] = useState(false);
-  const handleLoadingPage = (status) => {
-    setLoadingPage(status);
-  };
-
-  const [errorText, setErrorText] = useState("");
+  const [errorText, setErrorText] = useState(null);
   const handleErrorText = (text) => {
     setErrorText(text);
   };
 
   const [usernameAuth, setUsernameAuth] = useState("");
 
-  const requestProcessing = async (promise) => {
-    try {
-      handleLoadingPage(true);
-      const response = await promise;
-      return response;
-    } catch (error) {
-      setErrorText(error.response.data.message);
-    } finally {
-      handleLoadingPage(false);
-    }
-  };
+  console.log('errorAuth: ', errorAuth);
+  console.log('errorTodo: ', errorTodo);
+
+  const changeErrorText = useMemo(() => {
+    if (errorAuth) setErrorText(String(errorAuth))
+    if (errorTodo) setErrorText(String(errorTodo))
+  }, [errorAuth, errorTodo])
 
   const getTasks = async () => {
-    try {
-      if (!localStorage.getItem("token")) return null;
-      const data = await requestProcessing(
-        getArrayTasks({ filteringBy, sortingBy, taskLimitPerPage, currentPage })
-      );
-      setTasksList(data.tasks);
-      setTaskAmount(data.count);
-      setUsernameAuth(localStorage.getItem("username"));
-    } catch (error) {
-      updateLocalStorage();
-      setErrorText(error.response.data.message);
-    }
+    if (!localStorage.getItem("token")) return null;
+    scanLocalStorage();
+    dispatch(
+      getTodos({ filteringBy, sortingBy, taskLimitPerPage, currentPage })
+    );
+    setUsernameAuth(localStorage.getItem("username"));
   };
 
   const addTask = async (newTask) => {
-    try {
-      await requestProcessing(createTask(newTask));
-      getTasks();
-    } catch (error) {
-      setErrorText(error.response.data.message);
-    }
+    dispatch(addTodo({ newTask })).then(() => getTasks());
   };
 
   const deleteTask = async (id) => {
-    try {
-      await requestProcessing(removeTask(id));
-      getTasks();
-    } catch (error) {
-      setErrorText(error.response.data.message);
-    }
+    dispatch(deleteTodo({ id })).then(() => getTasks());
   };
 
   const checkTask = async (task) => {
-    try {
-      await requestProcessing(saveStateTask(task));
-      getTasks();
-    } catch (error) {
-      setErrorText(error.response.data.message);
-    }
+    dispatch(checkTodo({ task })).then(() => getTasks());
   };
 
   useEffect(() => {
@@ -103,11 +70,12 @@ function App() {
   }, [filteringBy, sortingBy, currentPage, usernameAuth]);
 
   useEffect(() => {
-    errorText != "" && setTimeout(() => handleErrorText(""), 3000);
-  }, [errorText]);
+    errorTodo !== null && handleErrorText(errorTodo);
+    errorTodo === null && setTimeout(() => handleErrorText(null), 4000);
+  }, [errorTodo]);
 
-  if (tasksList.length == 0 && currentPage > 1) {
-    setСurrentPage(currentPage - 1);
+  if (todos.length == 0 && currentPage > 1) {
+    setCurrentPage(currentPage - 1);
   }
 
   const logining = async (candidate) => {
@@ -115,21 +83,24 @@ function App() {
       const res = await login(candidate);
       saveLocalStorage(res.token, res.username, res.userId);
     } catch (error) {
-      console.log(error);
-      error.response.data["errors"]
-        ? setErrorText(error.response.data.errors[0].msg)
-        : setErrorText(error.response.data.message);
+      console.log(`jopa 5`);
+      // error.response.data["errors"]
+      //   ? setErrorText(error.response.data.errors[0].msg)
+      //   : setErrorText(error.response.data.message);
     }
   };
 
   const register = async (candidate) => {
     try {
-      const res = await registration(candidate);
-      saveLocalStorage(res.token, res.username, res.userId);
+      // const res = await registration(candidate);
+      // saveLocalStorage(res.token, res.username, res.userId);
+      dispatch( registerUser({candidate}) )
     } catch (error) {
-      error.response.data["errors"]
-        ? setErrorText(error.response.data.errors[0].msg)
-        : setErrorText(error.response.data.message);
+      console.log(`jopa 6`);
+      // console.log(error);
+      // error.response.data["errors"]
+      //   ? setErrorText(error.response.data.errors[0].msg)
+      //   : setErrorText(error.response.data.message);
     }
   };
 
@@ -138,7 +109,8 @@ function App() {
       await deleteUser(localStorage.getItem("userId"));
       updateLocalStorage();
     } catch (error) {
-      setErrorText(error.response.data.message);
+      // setErrorText(error.response.data.message);
+      console.log(`jopa 7`);
     }
   };
 
@@ -156,9 +128,20 @@ function App() {
     setUsernameAuth("");
   };
 
+  // ?????????? надо ли
+  function scanLocalStorage() {
+    if (
+      !localStorage.getItem("token") ||
+      !localStorage.getItem("username") ||
+      !localStorage.getItem("userId")
+    ) {
+      updateLocalStorage();
+    }
+  }
+
   return (
     <ChakraProvider theme={theme}>
-      {errorText && (
+      {!(errorText === null) && (
         <Error errorText={errorText} handleErrorText={handleErrorText} />
       )}
       {loadingPage && (
@@ -198,31 +181,25 @@ function App() {
           deleteAccount={deleteAccount}
         />
         <Header />
-        <AddTaskInput addTask={addTask} loadingPage={loadingPage} />
+        <AddTaskInput addTask={addTask} />
         <ButtonFilterAndSort
           filteringBy={filteringBy}
           handleFilteringBy={handleFilteringBy}
           sortingBy={sortingBy}
           handleSortingBy={handleSortingBy}
-          loadingPage={loadingPage}
         />
+        {errorTodo && <h2 style={{ color: "red" }}>{errorTodo}</h2>}
         <TaskList
-          tasksList={tasksList}
           deleteTask={deleteTask}
           checkTask={checkTask}
           getTasks={getTasks}
-          loadingPage={loadingPage}
           setErrorText={setErrorText}
-          handleLoadingPage={handleLoadingPage}
           usernameAuth={usernameAuth}
         />
         <Pagination
           currentPage={currentPage}
-          setСurrentPage={setСurrentPage}
+          setCurrentPage={setCurrentPage}
           taskLimitPerPage={taskLimitPerPage}
-          taskAmount={taskAmount}
-          tasksList={tasksList}
-          loadingPage={loadingPage}
         />
       </Box>
     </ChakraProvider>

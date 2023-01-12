@@ -1,28 +1,25 @@
 import { Text } from "@chakra-ui/react";
 import Task from "./Task";
-import { saveСhangedTitleTask } from "../services/RequestApi.js";
+import { saveChangedTitleTask } from "../services/RequestApi.js";
+import { useSelector } from "react-redux";
 
 function TaskList({
-  tasksList,
   deleteTask,
   checkTask,
   getTasks,
-  loadingPage,
-  handleLoadingPage,
   setErrorText,
   usernameAuth
 }) {
   
-  const saveСhangedTitle = async (e, task) => {
+  const tasksList = useSelector(state => state.todos.todos)
+
+  const saveChangedTitle = async (e, task) => {
     try {
-      handleLoadingPage(true);
-      await saveСhangedTitleTask(e.target.value, task);
+      await saveChangedTitleTask(e.target.value, task);
       getTasks();
     } catch (error) {
       setErrorText(error.response.data.message);
-    } finally {
-      handleLoadingPage(false);
-    }
+    } 
   };
 
   return (
@@ -46,9 +43,8 @@ function TaskList({
           deleteTask={deleteTask}
           checkTask={checkTask}
           getTasks={getTasks}
-          loadingPage={loadingPage}
           setErrorText={setErrorText}
-          saveСhangedTitle={saveСhangedTitle}
+          saveChangedTitle={saveChangedTitle}
         />
       ))}
     </>

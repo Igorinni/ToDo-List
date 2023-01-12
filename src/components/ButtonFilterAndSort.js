@@ -6,15 +6,17 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 import { FaArrowCircleUp, FaArrowCircleDown } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 function ButtonFilterAndSort({
   filteringBy,
   handleFilteringBy,
   sortingBy,
   handleSortingBy,
-  loadingPage,
 }) {
   const [isLessThan539] = useMediaQuery("(max-width: 539px)");
+
+  const {loadingPage} = useSelector(state => state.todos)
 
   return (
     <Box

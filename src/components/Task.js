@@ -8,9 +8,11 @@ import {
   Text,
   Container,
 } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 
-function Task({ task, deleteTask, checkTask, loadingPage, saveСhangedTitle }) {
+function Task({ task, deleteTask, checkTask, saveChangedTitle }) {
   const date = task.createdAt ? new Date(task.createdAt) : "";
+  const { loadingPage } = useSelector(state => state.todos);
 
   const [editStatus, setEditStatus] = useState(false);
   const handleEditStatus = () => setEditStatus(!editStatus);
@@ -57,7 +59,7 @@ function Task({ task, deleteTask, checkTask, loadingPage, saveСhangedTitle }) {
             onBlur={handleEditStatus}
             onKeyDown={(e) => {
               if (e.code === "Enter" || e.key === 13)
-                saveСhangedTitle(e, task) && handleEditStatus();
+                saveChangedTitle(e, task) && handleEditStatus();
               if (e.code === "Escape") handleEditStatus();
             }}
             isDisabled={loadingPage}

@@ -1,7 +1,11 @@
 import { Box, Button, Flex, Input, useMediaQuery } from "@chakra-ui/react";
 import { useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 
-function AddTaskInput({ addTask, loadingPage }) {
+function AddTaskInput({ addTask }) {
+
+  const {loadingPage} = useSelector(state => state.todos)
+
   const [value, setValue] = useState("");
   const handleValueChange = (e) => setValue(e.target.value);
 

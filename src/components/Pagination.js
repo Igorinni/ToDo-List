@@ -1,14 +1,16 @@
 import { Box, Button, Container, IconButton } from "@chakra-ui/react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useSelector } from "react-redux";
 
 function Pagination({
-  setСurrentPage,
+  setCurrentPage,
   currentPage,
-  taskAmount,
   taskLimitPerPage,
-  tasksList,
-  loadingPage
 }) {
+  const tasksList = useSelector(state => state.todos.todos)
+  const taskAmount = useSelector(state => state.todos.count)
+  const {loadingPage} = useSelector(state => state.todos)
+
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(taskAmount / taskLimitPerPage); i++) {
@@ -18,14 +20,14 @@ function Pagination({
   function goToPage(result) {
     if (result === "Left") {
       currentPage === 1
-        ? setСurrentPage(currentPage)
-        : setСurrentPage(currentPage - 1);
+        ? setCurrentPage(currentPage)
+        : setCurrentPage(currentPage - 1);
     } else if (result === "Right") {
       currentPage === pageNumbers.length
-        ? setСurrentPage(currentPage)
-        : setСurrentPage(currentPage + 1);
+        ? setCurrentPage(currentPage)
+        : setCurrentPage(currentPage + 1);
     } else {
-      setСurrentPage(result);
+      setCurrentPage(result);
     }
   }
 
