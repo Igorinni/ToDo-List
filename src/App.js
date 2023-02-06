@@ -16,7 +16,9 @@ import { registerUser } from "./store/userSlice";
 function App() {
   const dispatch = useDispatch();
   const { todos, errorTodo, loadingPage } = useSelector((state) => state.todos);
-  const { errorAuth, loading } = useSelector((state) => state.user);
+  const { errorAuth, loadingAuth, token, username, userId } = useSelector(
+    (state) => state.user
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const taskLimitPerPage = 5;
 
@@ -36,8 +38,8 @@ function App() {
 
   const [usernameAuth, setUsernameAuth] = useState("");
 
-  console.log('errorAuth: ', errorAuth);
-  console.log('errorTodo: ', errorTodo);
+  // console.log('errorAuth: ', errorAuth);
+  // console.log('errorTodo: ', errorTodo);
 
   const changeErrorText = useMemo(() => {
     if (errorAuth) setErrorText(String(errorAuth))
@@ -81,7 +83,8 @@ function App() {
   const logining = async (candidate) => {
     try {
       const res = await login(candidate);
-      saveLocalStorage(res.token, res.username, res.userId);
+      // saveLocalStorage(res.token, res.username, res.userId);
+      saveLocalStorage()
     } catch (error) {
       console.log(`jopa 5`);
       // error.response.data["errors"]
@@ -114,7 +117,7 @@ function App() {
     }
   };
 
-  const saveLocalStorage = (token, username, userId) => {
+  const saveLocalStorage = () => {
     localStorage.setItem("token", token);
     localStorage.setItem("username", username);
     localStorage.setItem("userId", userId);
@@ -157,6 +160,22 @@ function App() {
           speed="0.9s"
           emptyColor="gray.200"
           color="blue.500"
+          label="string"
+        ></Spinner>
+      )}
+      {loadingAuth && (
+        <Spinner
+          position="absolute"
+          top="0"
+          right="0"
+          bottom="0"
+          left="0"
+          margin="auto"
+          height="70px"
+          width="70px"
+          speed="0.9s"
+          emptyColor="gray.200"
+          color="red.500"
           label="string"
         ></Spinner>
       )}

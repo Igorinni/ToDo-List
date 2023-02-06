@@ -36,35 +36,41 @@ export const registerUser = createAsyncThunk(
 const userSlice = createSlice({
     name: "user",
     initialState: {
-        loading: false,
+        loadingAuth: false,
         errorAuth: null,
+        token: null,
+        username: null,
+        userId: null,
     },
     reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(loginUser.pending, (state, action) => {
-                state.loading = true;
+                state.loadingAuth = true;
                 state.errorAuth = null;
             })
             .addCase(loginUser.fulfilled, (state, action) => {
-                state.loading = false;
-                console.log('loginUser action ::: ', action);
+                state.loadingAuth = false;
+                // console.log('loginUser action ::: ', action);
             })
             .addCase(loginUser.rejected, (state, action) => {
-                state.loading = false;
+                state.loadingAuth = false;
                 state.errorAuth = action.payload;
             })
 
             .addCase(registerUser.pending, (state, action) => {
-                state.loading = true;
+                state.loadingAuth = true;
                 state.errorAuth = null;
             })
             .addCase(registerUser.fulfilled, (state, action) => {
-                state.loading = false;
-                // console.log('registerUser action ::: ', action);
+                state.loadingAuth = false;
+                console.log(action);
+                state.token = action.payload.token;
+                state.username = action.payload.username;
+                state.userId = action.payload.userId;
             })
             .addCase(registerUser.rejected, (state, action) => {
-                state.loading = false;
+                state.loadingAuth = false;
                 state.errorAuth = action.payload;
             })
     }
