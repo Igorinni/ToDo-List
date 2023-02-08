@@ -11,14 +11,16 @@ import AuthBattons from "./components/AuthBattons";
 import { registration, login, deleteUser } from "./services/RequestAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { getTodos, addTodo, deleteTodo, checkTodo } from "./store/todoSlice";
-import { registerUser } from "./store/userSlice";
+import { registerUser, loginUser, deleteAccount } from "./store/userSlice";
 
 function App() {
   const dispatch = useDispatch();
   const { todos, errorTodo, loadingPage } = useSelector((state) => state.todos);
-  const { errorAuth, loadingAuth, token, username, userId } = useSelector(
-    (state) => state.user
-  );
+  // const { errorAuth, loadingAuth, token, username, userId } = useSelector(
+  //   (state) => state.user
+  // );
+  const { errorAuth, loadingAuth } = useSelector((state) => state.user);
+
   const [currentPage, setCurrentPage] = useState(1);
   const taskLimitPerPage = 5;
 
@@ -36,23 +38,24 @@ function App() {
     setErrorText(text);
   };
 
-  const [usernameAuth, setUsernameAuth] = useState("");
+  const [usernameAuth, setUsernameAuth] = useState(
+    localStorage.getItem("username")
+  );
 
   // console.log('errorAuth: ', errorAuth);
   // console.log('errorTodo: ', errorTodo);
 
   const changeErrorText = useMemo(() => {
-    if (errorAuth) setErrorText(String(errorAuth))
-    if (errorTodo) setErrorText(String(errorTodo))
-  }, [errorAuth, errorTodo])
+    if (errorAuth) setErrorText(String(errorAuth));
+    if (errorTodo) setErrorText(String(errorTodo));
+  }, [errorAuth, errorTodo]);
 
   const getTasks = async () => {
-    if (!localStorage.getItem("token")) return null;
+    if (!localStorage.getItem("token")) return null; // нужно, чтобы ошибка не вылетала, когда незалогинен
     scanLocalStorage();
     dispatch(
       getTodos({ filteringBy, sortingBy, taskLimitPerPage, currentPage })
     );
-    setUsernameAuth(localStorage.getItem("username"));
   };
 
   const addTask = async (newTask) => {
@@ -81,64 +84,47 @@ function App() {
   }
 
   const logining = async (candidate) => {
-    try {
-      const res = await login(candidate);
-      // saveLocalStorage(res.token, res.username, res.userId);
-      saveLocalStorage()
-    } catch (error) {
-      console.log(`jopa 5`);
-      // error.response.data["errors"]
-      //   ? setErrorText(error.response.data.errors[0].msg)
-      //   : setErrorText(error.response.data.message);
-    }
+    dispatch(loginUser({ candidate })).then(() => {
+      setUsernameAuth(localStorage.getItem("username"));
+      getTasks();
+    });
   };
 
   const register = async (candidate) => {
-    try {
-      // const res = await registration(candidate);
-      // saveLocalStorage(res.token, res.username, res.userId);
-      dispatch( registerUser({candidate}) )
-    } catch (error) {
-      console.log(`jopa 6`);
-      // console.log(error);
-      // error.response.data["errors"]
-      //   ? setErrorText(error.response.data.errors[0].msg)
-      //   : setErrorText(error.response.data.message);
-    }
+    dispatch(registerUser({ candidate })).then(() => {
+      setUsernameAuth(localStorage.getItem("username"));
+      getTasks();
+    });
   };
 
-  const deleteAccount = async () => {
+  const deleteAcc = async () => {
     try {
-      await deleteUser(localStorage.getItem("userId"));
-      updateLocalStorage();
+      const str = "@@@";
+      dispatch(deleteAccount({ str })).then(() =>
+        setUsernameAuth(localStorage.getItem("username"))
+      );
+      // await deleteUser(localStorage.getItem("userId"));
+      // cleanLocalStorage();
     } catch (error) {
       // setErrorText(error.response.data.message);
       console.log(`jopa 7`);
     }
   };
 
-  const saveLocalStorage = () => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("username", username);
-    localStorage.setItem("userId", userId);
-    setUsernameAuth(username);
-  };
-
-  const updateLocalStorage = () => {
+  function cleanLocalStorage() {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("userId");
     setUsernameAuth("");
-  };
+  }
 
-  // ?????????? надо ли
   function scanLocalStorage() {
     if (
       !localStorage.getItem("token") ||
       !localStorage.getItem("username") ||
       !localStorage.getItem("userId")
     ) {
-      updateLocalStorage();
+      cleanLocalStorage();
     }
   }
 
@@ -161,6 +147,7 @@ function App() {
           emptyColor="gray.200"
           color="blue.500"
           label="string"
+          zIndex="99"
         ></Spinner>
       )}
       {loadingAuth && (
@@ -177,6 +164,7 @@ function App() {
           emptyColor="gray.200"
           color="red.500"
           label="string"
+          zIndex="99"
         ></Spinner>
       )}
       <Box
@@ -195,9 +183,9 @@ function App() {
         <AuthBattons
           logining={logining}
           register={register}
-          updateLocalStorage={updateLocalStorage}
+          cleanLocalStorage={cleanLocalStorage}
           usernameAuth={usernameAuth}
-          deleteAccount={deleteAccount}
+          deleteAcc={deleteAcc}
         />
         <Header />
         <AddTaskInput addTask={addTask} />

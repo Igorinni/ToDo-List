@@ -13,9 +13,9 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 function AuthBattons({
   logining,
   register,
-  updateLocalStorage,
+  cleanLocalStorage,
   usernameAuth,
-  deleteAccount,
+  deleteAcc,
 }) {
   const [windowLogin, setWindowLogin] = useState(false);
   const handleWindowLogin = (condition) => setWindowLogin(condition);
@@ -121,7 +121,7 @@ function AuthBattons({
               </Text>
             </Box>
             <Button
-              onClick={updateLocalStorage}
+              onClick={cleanLocalStorage}
               bg="none"
               color="rgba(91, 32, 139, 0.819)"
               size="sm"
@@ -173,6 +173,7 @@ function AuthBattons({
                 Username:
               </FormLabel>
               <Input
+                id="input_1"
                 type="text"
                 value={username}
                 onChange={handleUsernameChange}
@@ -183,6 +184,7 @@ function AuthBattons({
                 Password:
               </FormLabel>
               <Input
+                id="input_2"
                 type="password"
                 value={password}
                 onChange={handlePasswordChange}
@@ -216,7 +218,7 @@ function AuthBattons({
       {usernameAuth && (
         <Box>
           <Button
-            onClick={deleteAccount}
+            onClick={deleteAcc}
             color="blackAlpha.500"
             bg="rgba(252, 83, 83, 0.2)"
             size="sm"
