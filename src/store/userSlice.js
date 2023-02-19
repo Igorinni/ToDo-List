@@ -37,9 +37,9 @@ export const registerUser = createAsyncThunk(
 
 export const deleteAccount = createAsyncThunk(
   "user/deleteAccount",
-  async function ({str}, { rejectWithValue }) {
+  async function ({ userIdNow }, { rejectWithValue }) {
     try {
-      const res = await deleteUser(localStorage.getItem("userId"));
+      const res = await deleteUser(userIdNow);
       return res;
     } catch (error) {
       console.log("error из УДАЛЕНИЯ: ", error);
@@ -53,8 +53,19 @@ const userSlice = createSlice({
   initialState: {
     loadingAuth: false,
     errorAuth: null,
+    usernameAuth: localStorage.getItem("username") || null,
   },
-  reducers: {},
+  reducers: {
+    cleanerLocal(state) {
+      state.usernameAuth = null;
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+      localStorage.removeItem("userId");
+    },
+    cleanerErrorUser(state) {
+      state.errorAuth = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state, action) => {
@@ -62,11 +73,11 @@ const userSlice = createSlice({
         state.errorAuth = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.loadingAuth = false;
-        console.log("логин action :::::::::", action);
+        state.usernameAuth = action.payload.username;
         localStorage.setItem("token", action.payload.token);
         localStorage.setItem("username", action.payload.username);
         localStorage.setItem("userId", action.payload.userId);
+        state.loadingAuth = false;
       })
       .addCase(loginUser.rejected, (state, action) => {
         console.log("ошиб лог action ------- ", action);
@@ -79,11 +90,11 @@ const userSlice = createSlice({
         state.errorAuth = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.loadingAuth = false;
-        console.log("регистр action ------- ", action);
+        state.usernameAuth = action.payload.username;
         localStorage.setItem("token", action.payload.token);
         localStorage.setItem("username", action.payload.username);
         localStorage.setItem("userId", action.payload.userId);
+        state.loadingAuth = false;
       })
       .addCase(registerUser.rejected, (state, action) => {
         console.log("ошиб рег action ------- ", action);
@@ -96,11 +107,8 @@ const userSlice = createSlice({
         state.errorAuth = null;
       })
       .addCase(deleteAccount.fulfilled, (state, action) => {
+        userSlice.caseReducers.cleanerLocal();
         state.loadingAuth = false;
-        console.log("удал action ------- ", action);
-        localStorage.removeItem("token");
-        localStorage.removeItem("username");
-        localStorage.removeItem("userId");
       })
       .addCase(deleteAccount.rejected, (state, action) => {
         console.log("ошиб удал action ------- ", action);
@@ -111,3 +119,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+export const { cleanerLocal, cleanerErrorUser } = userSlice.actions;

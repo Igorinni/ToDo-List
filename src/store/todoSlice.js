@@ -4,6 +4,7 @@ import {
   createTask,
   removeTask,
   saveStateTask,
+  saveChangedTitleTask,
 } from "../services/RequestApi";
 
 export const getTodos = createAsyncThunk(
@@ -40,7 +41,7 @@ export const addTodo = createAsyncThunk(
 
 export const deleteTodo = createAsyncThunk(
   "todos/deleteTodo",
-  async function ({ id }, { rejectWithValue, dispatch }) {
+  async function ({ id }, { rejectWithValue }) {
     try {
       await removeTask(id);
     } catch (error) {
@@ -60,6 +61,17 @@ export const checkTodo = createAsyncThunk(
   }
 );
 
+export const saveChangeTaskTitle = createAsyncThunk(
+  "todos/saveChangeTaskTitle",
+  async function ({ newValue, task }, { rejectWithValue }) {
+    try {
+      await saveChangedTitleTask(newValue, task);
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const todoSlice = createSlice({
   name: "todos",
   initialState: {
@@ -68,7 +80,11 @@ const todoSlice = createSlice({
     loadingPage: false,
     errorTodo: null,
   },
-  reducers: {},
+  reducers: {
+    cleanerErrorTodo(state) {
+      state.errorTodo = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getTodos.pending, (state, action) => {
@@ -84,6 +100,7 @@ const todoSlice = createSlice({
         state.loadingPage = false;
         state.errorTodo = action.payload;
       })
+
       .addCase(addTodo.pending, (state, action) => {
         state.loadingPage = true;
       })
@@ -94,6 +111,7 @@ const todoSlice = createSlice({
         state.loadingPage = false;
         state.errorTodo = action.payload;
       })
+
       .addCase(deleteTodo.pending, (state, action) => {
         state.loadingPage = true;
       })
@@ -104,6 +122,7 @@ const todoSlice = createSlice({
         state.loadingPage = false;
         state.errorTodo = action.payload;
       })
+
       .addCase(checkTodo.pending, (state, action) => {
         state.loadingPage = true;
       })
@@ -113,8 +132,20 @@ const todoSlice = createSlice({
       .addCase(checkTodo.rejected, (state, action) => {
         state.loadingPage = false;
         state.errorTodo = action.payload;
+      })
+
+      .addCase(saveChangeTaskTitle.pending, (state, action) => {
+        state.loadingPage = true;
+      })
+      .addCase(saveChangeTaskTitle.fulfilled, (state, action) => {
+        state.loadingPage = false;
+      })
+      .addCase(saveChangeTaskTitle.rejected, (state, action) => {
+        state.loadingPage = false;
+        state.errorTodo = action.payload;
       });
   },
 });
 
 export default todoSlice.reducer;
+export const { cleanerErrorTodo } = todoSlice.actions;

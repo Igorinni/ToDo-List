@@ -9,14 +9,13 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { cleanerLocal } from "../store/userSlice";
 
-function AuthBattons({
-  logining,
-  register,
-  cleanLocalStorage,
-  usernameAuth,
-  deleteAcc,
-}) {
+function AuthBattons({ logining, register, deleteAcc }) {
+  const dispatch = useDispatch();
+  const { usernameAuth } = useSelector((state) => state.user);
+
   const [windowLogin, setWindowLogin] = useState(false);
   const handleWindowLogin = (condition) => setWindowLogin(condition);
 
@@ -57,6 +56,10 @@ function AuthBattons({
     setUsername("");
     setPassword("");
     handleWindowRegistration(false);
+  };
+
+  const clearLocalStorage = () => {
+    dispatch(cleanerLocal());
   };
 
   return (
@@ -121,7 +124,7 @@ function AuthBattons({
               </Text>
             </Box>
             <Button
-              onClick={cleanLocalStorage}
+              onClick={clearLocalStorage}
               bg="none"
               color="rgba(91, 32, 139, 0.819)"
               size="sm"

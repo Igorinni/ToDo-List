@@ -31,6 +31,10 @@ function Pagination({
     }
   }
 
+  if (tasksList.length == 0 && currentPage > 1) {
+    setCurrentPage(currentPage - 1);
+  }
+
   return tasksList.length == 0 || pageNumbers.length === 1 ? (
     " "
   ) : (

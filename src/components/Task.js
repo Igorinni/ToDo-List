@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 
 function Task({ task, deleteTask, checkTask, saveChangedTitle }) {
   const date = task.createdAt ? new Date(task.createdAt) : "";
-  const { loadingPage } = useSelector(state => state.todos);
+  const { loadingPage } = useSelector((state) => state.todos);
 
   const [editStatus, setEditStatus] = useState(false);
   const handleEditStatus = () => setEditStatus(!editStatus);
@@ -59,7 +59,7 @@ function Task({ task, deleteTask, checkTask, saveChangedTitle }) {
             onBlur={handleEditStatus}
             onKeyDown={(e) => {
               if (e.code === "Enter" || e.key === 13)
-                saveChangedTitle(e, task) && handleEditStatus();
+                saveChangedTitle(e.target.value, task) && handleEditStatus();
               if (e.code === "Escape") handleEditStatus();
             }}
             isDisabled={loadingPage}
@@ -79,7 +79,8 @@ function Task({ task, deleteTask, checkTask, saveChangedTitle }) {
         flexDirection="column"
         fontSize="18"
         flexBasis="5"
-        m='0' p='0'
+        m="0"
+        p="0"
       >
         <Text>
           {[date.getDate(), date.getMonth() + 1, date.getFullYear()].join("/")}

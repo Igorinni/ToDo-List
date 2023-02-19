@@ -8,18 +8,29 @@ import Pagination from "./components/Pagination";
 import { ChakraProvider, Box, Spinner } from "@chakra-ui/react";
 import theme from "./styles/theme";
 import AuthBattons from "./components/AuthBattons";
-import { registration, login, deleteUser } from "./services/RequestAuth";
 import { useDispatch, useSelector } from "react-redux";
-import { getTodos, addTodo, deleteTodo, checkTodo } from "./store/todoSlice";
-import { registerUser, loginUser, deleteAccount } from "./store/userSlice";
+import {
+  getTodos,
+  addTodo,
+  deleteTodo,
+  checkTodo,
+  cleanerErrorTodo,
+  saveChangeTaskTitle,
+} from "./store/todoSlice";
+import {
+  registerUser,
+  loginUser,
+  deleteAccount,
+  cleanerLocal,
+  cleanerErrorUser,
+} from "./store/userSlice";
 
 function App() {
   const dispatch = useDispatch();
-  const { todos, errorTodo, loadingPage } = useSelector((state) => state.todos);
-  // const { errorAuth, loadingAuth, token, username, userId } = useSelector(
-  //   (state) => state.user
-  // );
-  const { errorAuth, loadingAuth } = useSelector((state) => state.user);
+  const { errorTodo, loadingPage } = useSelector((state) => state.todos);
+  const { errorAuth, loadingAuth, usernameAuth } = useSelector(
+    (state) => state.user
+  );
 
   const [currentPage, setCurrentPage] = useState(1);
   const taskLimitPerPage = 5;
@@ -34,25 +45,28 @@ function App() {
   const handleSortingBy = (value) => setSortingBy(value);
 
   const [errorText, setErrorText] = useState(null);
-  const handleErrorText = (text) => {
-    setErrorText(text);
-  };
 
-  const [usernameAuth, setUsernameAuth] = useState(
-    localStorage.getItem("username")
-  );
-
-  // console.log('errorAuth: ', errorAuth);
-  // console.log('errorTodo: ', errorTodo);
-
-  const changeErrorText = useMemo(() => {
-    if (errorAuth) setErrorText(String(errorAuth));
-    if (errorTodo) setErrorText(String(errorTodo));
+  useEffect(() => {
+    if (errorAuth || errorTodo) {
+      setErrorText(errorAuth || errorTodo);
+      const time = setTimeout(() => {
+        setErrorText(null);
+        dispatch(cleanerErrorUser());
+        dispatch(cleanerErrorTodo());
+      }, 5000);
+      // clearTimeout(time); - не работает почему то
+    }
   }, [errorAuth, errorTodo]);
 
   const getTasks = async () => {
     if (!localStorage.getItem("token")) return null; // нужно, чтобы ошибка не вылетала, когда незалогинен
-    scanLocalStorage();
+    if (
+      !localStorage.getItem("token") ||
+      !localStorage.getItem("username") ||
+      !localStorage.getItem("userId")
+    ) {
+      dispatch(cleanerLocal());
+    }
     dispatch(
       getTodos({ filteringBy, sortingBy, taskLimitPerPage, currentPage })
     );
@@ -70,69 +84,34 @@ function App() {
     dispatch(checkTodo({ task })).then(() => getTasks());
   };
 
+  const saveChangedTitle = async (newValue, task) => {
+    dispatch(saveChangeTaskTitle({ newValue, task })).then(() => getTasks());
+  };
+
   useEffect(() => {
     getTasks();
   }, [filteringBy, sortingBy, currentPage, usernameAuth]);
 
-  useEffect(() => {
-    errorTodo !== null && handleErrorText(errorTodo);
-    errorTodo === null && setTimeout(() => handleErrorText(null), 4000);
-  }, [errorTodo]);
-
-  if (todos.length == 0 && currentPage > 1) {
-    setCurrentPage(currentPage - 1);
-  }
-
   const logining = async (candidate) => {
     dispatch(loginUser({ candidate })).then(() => {
-      setUsernameAuth(localStorage.getItem("username"));
       getTasks();
     });
   };
 
   const register = async (candidate) => {
     dispatch(registerUser({ candidate })).then(() => {
-      setUsernameAuth(localStorage.getItem("username"));
       getTasks();
     });
   };
 
   const deleteAcc = async () => {
-    try {
-      const str = "@@@";
-      dispatch(deleteAccount({ str })).then(() =>
-        setUsernameAuth(localStorage.getItem("username"))
-      );
-      // await deleteUser(localStorage.getItem("userId"));
-      // cleanLocalStorage();
-    } catch (error) {
-      // setErrorText(error.response.data.message);
-      console.log(`jopa 7`);
-    }
+    const userIdNow = localStorage.getItem("userId");
+    dispatch(deleteAccount({ userIdNow }));
   };
-
-  function cleanLocalStorage() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    localStorage.removeItem("userId");
-    setUsernameAuth("");
-  }
-
-  function scanLocalStorage() {
-    if (
-      !localStorage.getItem("token") ||
-      !localStorage.getItem("username") ||
-      !localStorage.getItem("userId")
-    ) {
-      cleanLocalStorage();
-    }
-  }
 
   return (
     <ChakraProvider theme={theme}>
-      {!(errorText === null) && (
-        <Error errorText={errorText} handleErrorText={handleErrorText} />
-      )}
+      {!(errorText === null) && <Error errorText={errorText} />}
       {loadingPage && (
         <Spinner
           position="absolute"
@@ -183,8 +162,6 @@ function App() {
         <AuthBattons
           logining={logining}
           register={register}
-          cleanLocalStorage={cleanLocalStorage}
-          usernameAuth={usernameAuth}
           deleteAcc={deleteAcc}
         />
         <Header />
@@ -201,13 +178,15 @@ function App() {
           checkTask={checkTask}
           getTasks={getTasks}
           setErrorText={setErrorText}
-          usernameAuth={usernameAuth}
+          saveChangedTitle={saveChangedTitle}
         />
-        <Pagination
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          taskLimitPerPage={taskLimitPerPage}
-        />
+        {usernameAuth && (
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            taskLimitPerPage={taskLimitPerPage}
+          />
+        )}
       </Box>
     </ChakraProvider>
   );
