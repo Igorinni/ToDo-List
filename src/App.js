@@ -23,6 +23,7 @@ import {
   deleteAccount,
   cleanerLocal,
   cleanerErrorUser,
+  setUsername,
 } from "./store/userSlice";
 
 function App() {
@@ -45,6 +46,10 @@ function App() {
   const handleSortingBy = (value) => setSortingBy(value);
 
   const [errorText, setErrorText] = useState(null);
+
+  useEffect(() => {
+    dispatch(setUsername());
+  }, []);
 
   useEffect(() => {
     if (errorAuth || errorTodo) {
@@ -106,7 +111,7 @@ function App() {
 
   const deleteAcc = async () => {
     const userIdNow = localStorage.getItem("userId");
-    dispatch(deleteAccount({ userIdNow }));
+    dispatch(deleteAccount({ userIdNow })).then(() => dispatch(cleanerLocal()));
   };
 
   return (

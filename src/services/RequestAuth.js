@@ -13,4 +13,7 @@ export const login = async (candidate) => {
   return res.data;
 };
 
-export const deleteUser = (id) => axiosInstance.delete(`user/${id}`);
+export const deleteUser = (id) => {
+  const res = axiosInstance.delete(`user/${id}`);
+  return res.data;
+};
