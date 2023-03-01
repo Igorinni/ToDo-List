@@ -1,5 +1,5 @@
 import Header from "./components/Header";
-import AddTaskInput from "./components/AddTaskInput";
+import AddTaskInput from "./components/add-task-input.tsx";
 import TaskList from "./components/TaskList";
 import Error from "./components/Error";
 import { useEffect, useState, useMemo } from "react";
@@ -16,7 +16,7 @@ import {
   checkTodo,
   cleanerErrorTodo,
   saveChangeTaskTitle,
-} from "./store/todoSlice";
+} from "./store/todo-slice.ts";
 import {
   registerUser,
   loginUser,

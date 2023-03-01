@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import App from "./App";
 import ErrorBoundary from "./components/ErrorBoundary";
-import store from "./store/index"
+import store from "./store/index.ts"
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
