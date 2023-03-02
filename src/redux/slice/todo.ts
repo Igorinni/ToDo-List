@@ -5,8 +5,22 @@ import {
   removeTask,
   saveStateTask,
   saveChangedTitleTask,
-} from '../../services/RequestApi'
-import { Task } from '../../general-types'
+} from '../../api/todo-list'
+import { CreateTask, ActuallyTask } from '../../general-types'
+
+type InitialState = {
+  todos: ActuallyTask[]
+  count: number
+  loadingPage: boolean
+  errorTodo: any
+}
+
+const initialState: InitialState = {
+  todos: [],
+  count: 0,
+  loadingPage: false,
+  errorTodo: null,
+}
 
 export const getTodos = createAsyncThunk(
   'todos/getTodos',
@@ -41,9 +55,9 @@ export const getTodos = createAsyncThunk(
 
 export const addTodo = createAsyncThunk(
   'todos/addTodo',
-  async function ({ newTask }: { newTask: Task }, { rejectWithValue }) {
+  async function ({ newTask }: { newTask: CreateTask }, { rejectWithValue }) {
     try {
-      await createTask(newTask)
+      await createTask({ newTask })
     } catch (error: any) {
       return rejectWithValue(error.response.data.message)
     }
@@ -52,9 +66,9 @@ export const addTodo = createAsyncThunk(
 
 export const deleteTodo = createAsyncThunk(
   'todos/deleteTodo',
-  async function ({ id }: { id: number }, { rejectWithValue }) {
+  async function ({ id }: { id: string }, { rejectWithValue }) {
     try {
-      await removeTask(id)
+      await removeTask({ id })
     } catch (error: any) {
       return rejectWithValue(error.message)
     }
@@ -63,9 +77,9 @@ export const deleteTodo = createAsyncThunk(
 
 export const checkTodo = createAsyncThunk(
   'todos/checkTodo',
-  async function ({ task }: { task: Task }, { rejectWithValue }) {
+  async function ({ task }: { task: ActuallyTask }, { rejectWithValue }) {
     try {
-      await saveStateTask(task)
+      await saveStateTask({task})
     } catch (error: any) {
       return rejectWithValue(error.message)
     }
@@ -75,11 +89,11 @@ export const checkTodo = createAsyncThunk(
 export const saveChangeTaskTitle = createAsyncThunk(
   'todos/saveChangeTaskTitle',
   async function (
-    { newValue, task }: { newValue: string; task: Task },
+    { newValue, task }: { newValue: string; task: ActuallyTask },
     { rejectWithValue }
   ) {
     try {
-      await saveChangedTitleTask(newValue, task)
+      await saveChangedTitleTask({newValue, task})
     } catch (error: any) {
       return rejectWithValue(error.message)
     }
@@ -88,12 +102,7 @@ export const saveChangeTaskTitle = createAsyncThunk(
 
 const todoSlice = createSlice({
   name: 'todos',
-  initialState: {
-    todos: [],
-    count: 0,
-    loadingPage: false,
-    errorTodo: null,
-  },
+  initialState,
   reducers: {
     cleanerErrorTodo(state) {
       state.errorTodo = null

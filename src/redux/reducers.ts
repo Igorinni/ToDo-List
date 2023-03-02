@@ -1,6 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit'
 import todos from './slice/todo'
-import user from './slice/userSlice'
+import user from './slice/user'
 
 const rootReducers = combineReducers({
   todos,

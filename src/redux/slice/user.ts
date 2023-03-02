@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { login, registration, deleteUser } from '../../services/RequestAuth'
+import { login, registration, deleteUser } from '../../api/auth'
 import { UserData } from '../../general-types'
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
   async function ({ userData }: { userData: UserData }, { rejectWithValue }) {
     try {
-      const res = await login(userData)
+      const res = await login({userData})
       return res
     } catch (error: any) {
       console.log('error из ЛОГИНА: ', error)
@@ -23,7 +23,7 @@ export const registerUser = createAsyncThunk(
   'user/registerUser',
   async function ({ userData }: { userData: UserData }, { rejectWithValue }) {
     try {
-      const res = await registration(userData)
+      const res = await registration({userData})
       return res
     } catch (error: any) {
       console.log('error из РЕГИСТРАЦИИ: ', error)
@@ -40,7 +40,7 @@ export const deleteAccount = createAsyncThunk(
   'user/deleteAccount',
   async function ({ userId }: { userId: string }, { rejectWithValue }) {
     try {
-      const res = await deleteUser(userId)
+      const res = await deleteUser({userId})
       return res
     } catch (error: any) {
       console.log('error из УДАЛЕНИЯ: ', error)

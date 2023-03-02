@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useAppSelector } from '../hooks/redux'
 import { Box, Button, Flex, Input, useMediaQuery } from '@chakra-ui/react'
-import { Task } from './../general-types'
+import { CreateTask } from './../general-types'
 
-function AddTaskInput({ addTask }: { addTask: (task: Task) => void }) {
+function AddTaskInput({ addTask }: { addTask: (task: CreateTask) => void }) {
   const { loadingPage } = useAppSelector((state) => state.todos)
 
   const [value, setValue] = useState('')

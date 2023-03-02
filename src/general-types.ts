@@ -1,4 +1,12 @@
-export type Task = {
+export type CreateTask = {
+  name: string
+  done: boolean
+  createdAt: number
+  updatedAt: number
+}
+
+export type ActuallyTask = {
+  uuid: string
   name: string
   done: boolean
   createdAt: number

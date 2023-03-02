@@ -10,7 +10,7 @@ import {
   FormLabel,
 } from '@chakra-ui/react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
-import { cleanerLocal } from '../redux/slice/userSlice'
+import { cleanerLocal } from '../redux/slice/user'
 import { UserData } from '../general-types'
 
 function AuthBattons({
