@@ -7,7 +7,7 @@ import ButtonFilterAndSort from "./components/ButtonFilterAndSort";
 import Pagination from "./components/Pagination";
 import { ChakraProvider, Box, Spinner } from "@chakra-ui/react";
 import theme from "./styles/theme";
-import AuthBattons from "./components/AuthBattons";
+import AuthBattons from "./components/auth-battons";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getTodos,
@@ -16,7 +16,7 @@ import {
   checkTodo,
   cleanerErrorTodo,
   saveChangeTaskTitle,
-} from "./store/todo-slice.ts";
+} from "./redux/slice/todo.ts";
 import {
   registerUser,
   loginUser,
@@ -24,7 +24,7 @@ import {
   cleanerLocal,
   cleanerErrorUser,
   setUsername,
-} from "./store/userSlice";
+} from "./redux/slice/userSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -97,21 +97,21 @@ function App() {
     getTasks();
   }, [filteringBy, sortingBy, currentPage, usernameAuth]);
 
-  const logining = async (candidate) => {
-    dispatch(loginUser({ candidate })).then(() => {
+  const logining = async (userData) => {
+    dispatch(loginUser({ userData })).then(() => {
       getTasks();
     });
   };
 
-  const register = async (candidate) => {
-    dispatch(registerUser({ candidate })).then(() => {
+  const register = async (userData) => {
+    dispatch(registerUser({ userData })).then(() => {
       getTasks();
     });
   };
 
   const deleteAcc = async () => {
-    const userIdNow = localStorage.getItem("userId");
-    dispatch(deleteAccount({ userIdNow })).then(() => dispatch(cleanerLocal()));
+    const userId = localStorage.getItem("userId");
+    dispatch(deleteAccount({ userId })).then(() => dispatch(cleanerLocal()));
   };
 
   return (
